@@ -1,0 +1,421 @@
+{
+  "motor_system": [
+    {
+      "id": "bldc_motor_40w",
+      "name": "48V BLDC Motor (40W)",
+      "category": "Motor System",
+      "min_cost": 900,
+      "max_cost": 1400,
+      "typical_cost": 1150,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-15"
+    },
+    {
+      "id": "bldc_motor_70w",
+      "name": "48V BLDC Motor (70W)",
+      "category": "Motor System",
+      "min_cost": 1300,
+      "max_cost": 1900,
+      "typical_cost": 1600,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-05-20"
+    },
+    {
+      "id": "bldc_motor_113w",
+      "name": "48V BLDC Motor (113W)",
+      "category": "Motor System",
+      "min_cost": 1800,
+      "max_cost": 2800,
+      "typical_cost": 2300,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-18"
+    },
+    {
+      "id": "bldc_motor_driver",
+      "name": "BLDC Motor Driver",
+      "category": "Motor System",
+      "min_cost": 250,
+      "max_cost": 700,
+      "typical_cost": 475,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-10"
+    },
+    {
+      "id": "fan_blade_assembly",
+      "name": "Fan Blade Assembly",
+      "category": "Motor System",
+      "min_cost": 150,
+      "max_cost": 450,
+      "typical_cost": 300,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-04-28"
+    }
+  ],
+  "cooling_system": [
+    {
+      "id": "honeycomb_pad_12",
+      "name": "Honeycomb Cooling Pad (12-inch)",
+      "category": "Cooling System",
+      "min_cost": 250,
+      "max_cost": 450,
+      "typical_cost": 350,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-12"
+    },
+    {
+      "id": "honeycomb_pad_14",
+      "name": "Honeycomb Cooling Pad (14-inch)",
+      "category": "Cooling System",
+      "min_cost": 400,
+      "max_cost": 700,
+      "typical_cost": 550,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-12"
+    },
+    {
+      "id": "honeycomb_pad_16",
+      "name": "Honeycomb Cooling Pad (16-inch)",
+      "category": "Cooling System",
+      "min_cost": 600,
+      "max_cost": 1000,
+      "typical_cost": 800,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-05-01"
+    },
+    {
+      "id": "water_pump_600lph",
+      "name": "600 LPH Water Pump",
+      "category": "Cooling System",
+      "min_cost": 180,
+      "max_cost": 450,
+      "typical_cost": 315,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-05-22"
+    },
+    {
+      "id": "water_distribution",
+      "name": "Water Distribution Assembly",
+      "category": "Cooling System",
+      "min_cost": 100,
+      "max_cost": 250,
+      "typical_cost": 175,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-04-15"
+    }
+  ],
+  "battery_system": [
+    {
+      "id": "lifepo4_150wh",
+      "name": "150Wh LiFePO4 Battery Pack",
+      "category": "Battery System",
+      "min_cost": 2000,
+      "max_cost": 3000,
+      "typical_cost": 2500,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-06-02"
+    },
+    {
+      "id": "lifepo4_250wh",
+      "name": "250Wh LiFePO4 Battery Pack",
+      "category": "Battery System",
+      "min_cost": 3500,
+      "max_cost": 5000,
+      "typical_cost": 4250,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-06-03"
+    },
+    {
+      "id": "lifepo4_450wh",
+      "name": "450Wh LiFePO4 Battery Pack",
+      "category": "Battery System",
+      "min_cost": 6500,
+      "max_cost": 9500,
+      "typical_cost": 8000,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-29"
+    },
+    {
+      "id": "bms_4s",
+      "name": "4S BMS Module",
+      "category": "Battery System",
+      "min_cost": 250,
+      "max_cost": 600,
+      "typical_cost": 425,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-14"
+    },
+    {
+      "id": "bms_16s",
+      "name": "16S BMS Module",
+      "category": "Battery System",
+      "min_cost": 500,
+      "max_cost": 1200,
+      "typical_cost": 850,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-14"
+    },
+    {
+      "id": "battery_enclosure",
+      "name": "Battery Enclosure",
+      "category": "Battery System",
+      "min_cost": 250,
+      "max_cost": 600,
+      "typical_cost": 425,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-04-11"
+    },
+    {
+      "id": "connectors_power",
+      "name": "XT60 / Anderson Connectors",
+      "category": "Battery System",
+      "min_cost": 50,
+      "max_cost": 250,
+      "typical_cost": 150,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-05-25"
+    },
+    {
+      "id": "fuse_circuit",
+      "name": "Fuse and Protection Circuit",
+      "category": "Battery System",
+      "min_cost": 50,
+      "max_cost": 200,
+      "typical_cost": 125,
+      "supplier_name": "Element14 India",
+      "supplier_website": "https://in.element14.com",
+      "last_updated": "2026-05-09"
+    }
+  ],
+  "solar_system": [
+    {
+      "id": "mono_panel_50w",
+      "name": "50W Mono Solar Panel",
+      "category": "Solar System",
+      "min_cost": 2200,
+      "max_cost": 2800,
+      "typical_cost": 2500,
+      "supplier_name": "Flipkart",
+      "supplier_website": "https://www.flipkart.com",
+      "last_updated": "2026-05-30"
+    },
+    {
+      "id": "mono_panel_100w",
+      "name": "100W Mono Solar Panel",
+      "category": "Solar System",
+      "min_cost": 3200,
+      "max_cost": 4500,
+      "typical_cost": 3850,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-06-01"
+    },
+    {
+      "id": "mono_panel_150w",
+      "name": "150W Mono Solar Panel",
+      "category": "Solar System",
+      "min_cost": 4500,
+      "max_cost": 6000,
+      "typical_cost": 5250,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-06-02"
+    },
+    {
+      "id": "mppt_charge_controller",
+      "name": "MPPT Charge Controller",
+      "category": "Solar System",
+      "min_cost": 700,
+      "max_cost": 2000,
+      "typical_cost": 1350,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-24"
+    },
+    {
+      "id": "mc4_connectors",
+      "name": "MC4 Connectors",
+      "category": "Solar System",
+      "min_cost": 100,
+      "max_cost": 300,
+      "typical_cost": 200,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-05-17"
+    },
+    {
+      "id": "solar_cable_set",
+      "name": "Solar Cable Set",
+      "category": "Solar System",
+      "min_cost": 150,
+      "max_cost": 400,
+      "typical_cost": 275,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-11"
+    }
+  ],
+  "electronics": [
+    {
+      "id": "esp32",
+      "name": "ESP32",
+      "category": "Electronics",
+      "min_cost": 250,
+      "max_cost": 500,
+      "typical_cost": 375,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-06-04"
+    },
+    {
+      "id": "stm32",
+      "name": "STM32 Microcontroller",
+      "category": "Electronics",
+      "min_cost": 300,
+      "max_cost": 800,
+      "typical_cost": 550,
+      "supplier_name": "Mouser India",
+      "supplier_website": "https://www.mouser.in",
+      "last_updated": "2026-05-05"
+    },
+    {
+      "id": "lcd_oled_display",
+      "name": "LCD / OLED Display",
+      "category": "Electronics",
+      "min_cost": 150,
+      "max_cost": 600,
+      "typical_cost": 375,
+      "supplier_name": "Robu.in",
+      "supplier_website": "https://robu.in",
+      "last_updated": "2026-05-26"
+    },
+    {
+      "id": "mosfet_driver",
+      "name": "MOSFET Driver Circuit",
+      "category": "Electronics",
+      "min_cost": 100,
+      "max_cost": 400,
+      "typical_cost": 250,
+      "supplier_name": "Element14 India",
+      "supplier_website": "https://in.element14.com",
+      "last_updated": "2026-04-22"
+    },
+    {
+      "id": "voltage_regulators",
+      "name": "Voltage Regulators",
+      "category": "Electronics",
+      "min_cost": 50,
+      "max_cost": 200,
+      "typical_cost": 125,
+      "supplier_name": "ElectronicsComp",
+      "supplier_website": "https://electronicscomp.com",
+      "last_updated": "2026-05-02"
+    },
+    {
+      "id": "wiring_harness",
+      "name": "Wiring Harness",
+      "category": "Electronics",
+      "min_cost": 100,
+      "max_cost": 300,
+      "typical_cost": 200,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-04-30"
+    },
+    {
+      "id": "pcb_mfg",
+      "name": "PCB Manufacturing",
+      "category": "Electronics",
+      "min_cost": 100,
+      "max_cost": 500,
+      "typical_cost": 300,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-15"
+    }
+  ],
+  "mechanical": [
+    {
+      "id": "plastic_cooler_body_12",
+      "name": "Plastic Cooler Body (12-inch)",
+      "category": "Mechanical",
+      "min_cost": 800,
+      "max_cost": 1200,
+      "typical_cost": 1000,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-25"
+    },
+    {
+      "id": "plastic_cooler_body_14",
+      "name": "Plastic Cooler Body (14-inch)",
+      "category": "Mechanical",
+      "min_cost": 1200,
+      "max_cost": 1800,
+      "typical_cost": 1500,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-25"
+    },
+    {
+      "id": "plastic_cooler_body_16",
+      "name": "Plastic Cooler Body (16-inch)",
+      "category": "Mechanical",
+      "min_cost": 1800,
+      "max_cost": 2800,
+      "typical_cost": 2300,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-25"
+    },
+    {
+      "id": "fasteners",
+      "name": "Fasteners & Screws Pack",
+      "category": "Mechanical",
+      "min_cost": 50,
+      "max_cost": 150,
+      "typical_cost": 100,
+      "supplier_name": "Amazon India",
+      "supplier_website": "https://www.amazon.in",
+      "last_updated": "2026-04-10"
+    },
+    {
+      "id": "packaging_materials",
+      "name": "Packaging Materials",
+      "category": "Mechanical",
+      "min_cost": 100,
+      "max_cost": 300,
+      "typical_cost": 200,
+      "supplier_name": "IndiaMART",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-04-18"
+    },
+    {
+      "id": "assembly_labor",
+      "name": "Assembly Labor",
+      "category": "Mechanical",
+      "min_cost": 300,
+      "max_cost": 800,
+      "typical_cost": 550,
+      "supplier_name": "Local Standard Contract",
+      "supplier_website": "https://www.indiamart.com",
+      "last_updated": "2026-05-01"
+    }
+  ]
+}
