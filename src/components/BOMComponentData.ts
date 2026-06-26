@@ -1,1499 +1,1320 @@
 import { ComponentItem } from './BOMTypes';
 
 export const ALL_COMPONENTS: ComponentItem[] = [
-  // 1. COMPRESSORS (Models: Danfoss SC15G, SC18CL, NLX15KK, FR8.5CL; Emerson ZP31K5E, AFE12C4E; Tecumseh AE4440Y, TYA2438YKES; Secop BD35F, BD50F, FR10G; Copeland ZP24K5E-PFV, CR32K6-PFV)
+  // 1. Solar Module
   {
-    id: 'comp-danfoss-sc15g',
-    partNumber: 'DF-SC15G-002',
-    name: 'Danfoss SC15G Hermetic Reciprocating Compressor',
-    category: 'Compressor',
-    brand: 'Danfoss',
-    price: 6800,
-    shortDesc: 'Reliable hermetic compressor engineered for high back pressure refrigeration and industrial liquid chillers.',
+    id: 'solar-renogy-100w',
+    partNumber: 'RNG-100D-SS',
+    name: 'Renogy 100W Monocrystalline Solar Panel',
+    category: 'Solar Module',
+    brand: 'Renogy',
+    price: 5500,
+    shortDesc: 'Compact high-efficiency monocrystalline PV panel, ideal for small-scale 12V battery charging systems.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '1.20 Ton (14,400 BTU/h)',
-      'Rated Power': '450 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R134a',
-      'COP': '1.55 W/W',
-      'Temp Range': '-15°C to +15°C',
-      'Current Draw': '2.14 A',
-      'Weight': '13.1 kg',
-      'Mounting Type': 'Spring Grommet base',
-      'Noise Level': '48 dBA'
+      'Rated Power': '100W',
+      'Open-Circuit Voltage (Voc)': '22.3V',
+      'Short-Circuit Current (Isc)': '5.86A',
+      'Optimum Operating Voltage (Vmp)': '18.6V',
+      'Optimum Operating Current (Imp)': '5.38A',
+      'Module Efficiency': '21.0%',
+      'Cell Type': 'Monocrystalline Silicon',
+      'Junction Box': 'IP65 Rated with MC4 Connectors',
+      'Max Series Fuse': '15A'
     },
-    material: 'Forged Cast Iron Shell',
-    efficiency: 'COP 1.55 (Standard High-Back)',
-    voltage: '220-240V AC 50Hz',
-    powerRating: '450W',
-    dimensions: '250 x 180 x 210 mm',
-    powerConsumption: '450W continuous load',
-    recommendedApp: 'Medium-cabinet hybrid compressor-assisted direct expansions.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
+    electricalRatings: {
+      voltage: '18.6V Vmp',
+      current: '5.38A Imp',
+      power: '100W',
+      efficiency: '21.0%'
     },
-    notes: 'Standard residential thermal workload. Base bracket fits standard 4-bolt mounts.'
+    dimensions: '1062 x 530 x 35 mm',
+    typicalApplications: '12V off-grid portable solar applications and minor cooling projects.',
+    datasheetPreview: 'RENOGY CLASS-A HIGH-EFFICIENCY CELL TECHNOLOGY\n- Temp. Coefficient (Pmax): -0.37%/°C\n- Temp. Coefficient (Voc): -0.28%/°C\n- Bypass diodes pre-installed in IP65 junction box to reduce power drop caused by shade.',
+    notes: 'Sturdy anodized aluminium frame. Excellent mechanical load resistance up to 5400 Pa.'
   },
   {
-    id: 'comp-danfoss-sc18cl',
-    partNumber: 'DF-SC18CL-005',
-    name: 'Danfoss SC18CL Heavy-Duty Chiller Compressor',
-    category: 'Compressor',
-    brand: 'Danfoss',
-    price: 8200,
-    shortDesc: 'LBP/MBP multi-refrigerant reciprocating compressor designed for high torque industrial duty cycles.',
+    id: 'solar-renogy-200w',
+    partNumber: 'RNG-200D-SS',
+    name: 'Renogy 200W 24V Monocrystalline Solar Panel',
+    category: 'Solar Module',
+    brand: 'Renogy',
+    price: 9800,
+    shortDesc: 'Mid-sized 24V monocrystalline panel delivering higher current density and power throughput.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '1.55 Ton (18,600 BTU/h)',
-      'Rated Power': '580 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R404A / R507',
-      'COP': '1.62 W/W',
-      'Temp Range': '-35°C to -10°C',
-      'Current Draw': '3.10 A',
-      'Weight': '13.7 kg',
-      'Mounting Type': 'Heavy duty base plate',
-      'Noise Level': '52 dBA'
+      'Rated Power': '200W',
+      'Open-Circuit Voltage (Voc)': '45.4V',
+      'Short-Circuit Current (Isc)': '5.74A',
+      'Optimum Operating Voltage (Vmp)': '37.6V',
+      'Optimum Operating Current (Imp)': '5.32A',
+      'Module Efficiency': '22.0%',
+      'Cell Type': 'Monocrystalline Silicon',
+      'Junction Box': 'IP67 Rated with MC4 Connectors',
+      'Max Series Fuse': '15A'
     },
-    material: 'Thickened Steel Enclosure',
-    efficiency: 'COP 1.62 (Low-Temp High-Torque)',
-    voltage: '220V AC 50/60Hz',
-    powerRating: '580W',
-    dimensions: '255 x 180 x 215 mm',
-    powerConsumption: '580W continuous load',
-    recommendedApp: 'High thermal mass desert hybrid chillers and cold stores.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '37.6V Vmp',
+      current: '5.32A Imp',
+      power: '200W',
+      efficiency: '22.0%'
     },
-    notes: 'Requires R404A refrigerant pipelines. Excellent performance in extremely low ambient ranges.'
+    dimensions: '1490 x 680 x 35 mm',
+    typicalApplications: '24V off-grid battery charging, hybrid solar-powered coolers and active ventilation rigs.',
+    datasheetPreview: 'RENOGY PRO-SERIES MONO PV CELL AT 37.6V\n- Temp. Coefficient (Pmax): -0.36%/°C\n- Low-iron tempered glass for high transmissivity.\n- Anti-reflective hydrophobic coating to prevent dust buildup.',
+    notes: 'Optimally matched with MPPT charge controllers to run 24V native DC motors.'
   },
   {
-    id: 'comp-danfoss-nlx15kk',
-    partNumber: 'DF-NLX15KK-001',
-    name: 'Danfoss NLX15KK Ultra-Low Energy Compressor',
-    category: 'Compressor',
-    brand: 'Danfoss',
+    id: 'solar-sunpower-400w',
+    partNumber: 'SPR-MAX3-400',
+    name: 'SunPower Maxeon 3 400W High-Efficiency Solar Panel',
+    category: 'Solar Module',
+    brand: 'SunPower',
+    price: 19500,
+    shortDesc: 'Premium copper-backed Maxeon cells delivering industry-leading durability and power density.',
+    availability: 'Low Stock',
+    specs: {
+      'Rated Power': '400W',
+      'Open-Circuit Voltage (Voc)': '75.6V',
+      'Short-Circuit Current (Isc)': '6.58A',
+      'Optimum Operating Voltage (Vmp)': '65.8V',
+      'Optimum Operating Current (Imp)': '6.08A',
+      'Module Efficiency': '22.6%',
+      'Cell Type': 'Maxeon Monocrystalline (Copper Backing)',
+      'Junction Box': 'IP68 Rated with locking MC4',
+      'Max Series Fuse': '20A'
+    },
+    electricalRatings: {
+      voltage: '65.8V Vmp',
+      current: '6.08A Imp',
+      power: '400W',
+      efficiency: '22.6%'
+    },
+    dimensions: '1690 x 1046 x 40 mm',
+    typicalApplications: 'High-power 48V native setups, commercial evaporative chillers and heavy desert installations.',
+    datasheetPreview: 'SUNPOWER MAXEON TECHNOLOGY GEN III CELL\n- Built on solid copper base for ultimate crack/corrosion immunity.\n- Rated for lowest degradation rate in solar: 0.2% per year over 25 years.\n- Outstanding performance in high temperature micro-climates.',
+    notes: 'Premium high-voltage output requiring high Voc MPPT charger tolerance.'
+  },
+
+  // 2. Battery Pack
+  {
+    id: 'batt-lifepo4-12v-100',
+    partNumber: 'LFP-12100-BMS',
+    name: 'LiFePO4 12V 100Ah Deep Cycle Battery Pack',
+    category: 'Battery Pack',
+    brand: 'Redodo',
+    price: 18500,
+    shortDesc: 'Highly reliable Lithium Iron Phosphate pack featuring 4000+ deep cycles and integrated 100A BMS.',
+    availability: 'In Stock',
+    specs: {
+      'Nominal Voltage': '12.8V',
+      'Capacity': '100Ah',
+      'Energy': '1280Wh',
+      'Cycle Life': '4000+ Cycles at 100% DoD',
+      'Integrated BMS': '100A Continuous Discharge',
+      'Max Charge Current': '50A',
+      'Cell Configuration': '4S1P Prismatic Cells',
+      'Weight': '11.0 kg'
+    },
+    electricalRatings: {
+      voltage: '12.8V',
+      current: '100A Max Discharge',
+      power: '1280Wh Capacity'
+    },
+    dimensions: '329 x 172 x 214 mm',
+    typicalApplications: '12V system battery backups, camping accessories, and portable evaporative cooler grids.',
+    datasheetPreview: 'LFP ACTIVE PASS-THROUGH BATTERY SPEC\n- Nominal Charging Cut-off: 14.6V\n- Low-Temp Charging Cut-off: 0°C (Automatic Protection)\n- Over-discharge, Over-current and Short-circuit hardware trip points.',
+    notes: 'Extremely lightweight compared to Lead-Acid counterparts, offering 100% usable capacity without degrading.'
+  },
+  {
+    id: 'batt-lifepo4-24v-50',
+    partNumber: 'LFP-24050-BMS',
+    name: 'LiFePO4 24V 50Ah Deep Cycle Battery Pack',
+    category: 'Battery Pack',
+    brand: 'Redodo',
+    price: 19500,
+    shortDesc: '24V LFP battery pack optimizing copper routing by halving current draw for 1280Wh energy capacity.',
+    availability: 'In Stock',
+    specs: {
+      'Nominal Voltage': '25.6V',
+      'Capacity': '50Ah',
+      'Energy': '1280Wh',
+      'Cycle Life': '4000+ Cycles at 100% DoD',
+      'Integrated BMS': '50A Continuous Discharge',
+      'Max Charge Current': '25A',
+      'Cell Configuration': '8S1P Prismatic Cells',
+      'Weight': '11.5 kg'
+    },
+    electricalRatings: {
+      voltage: '25.6V',
+      current: '50A Max Discharge',
+      power: '1280Wh Capacity'
+    },
+    dimensions: '329 x 172 x 214 mm',
+    typicalApplications: '24V native brushless motors and medium cooler configurations.',
+    datasheetPreview: 'LFP 8-SERIES SAFETY STANDARDS\n- Nominal Charging Cut-off: 29.2V\n- Low temperature heater pads NOT integrated; do not charge under 0°C.',
+    notes: 'Allows using thinner, lower-gauge distribution wires across the chassis.'
+  },
+  {
+    id: 'batt-lifepo4-48v-50',
+    partNumber: 'LFP-48050-SMART',
+    name: 'LiFePO4 48V 50Ah Smart Battery Module',
+    category: 'Battery Pack',
+    brand: 'Epoch Batteries',
+    price: 48000,
+    shortDesc: 'Premium 48V telecom-grade energy storage module with high-capacity smart BMS and CAN/RS485 telemetry.',
+    availability: 'Low Stock',
+    specs: {
+      'Nominal Voltage': '51.2V',
+      'Capacity': '50Ah',
+      'Energy': '2560Wh',
+      'Cycle Life': '5000+ Cycles at 80% DoD',
+      'Integrated BMS': '100A Continuous with Smart Bus',
+      'Max Charge Current': '50A',
+      'Cell Configuration': '16S1P Grade-A Cells',
+      'Weight': '22.0 kg'
+    },
+    electricalRatings: {
+      voltage: '51.2V',
+      current: '100A Max Discharge',
+      power: '2560Wh Capacity'
+    },
+    dimensions: '442 x 400 x 133 mm (3U Rack)',
+    typicalApplications: 'High-capacity 48V systems, industrial multi-day off-grid coolers and heavy telecom equipment.',
+    datasheetPreview: 'EPOCH 48V SMART MODULAR COMPLIANCE\n- Real-time cell balancing, SoC and SoH analytics over CAN Bus.\n- Built-in heating elements enabling charging down to -20°C.',
+    notes: 'Top tier safety and life cycle. Perfect match for high-voltage DC brushless blower motors.'
+  },
+  {
+    id: 'batt-liion-12v-50',
+    partNumber: 'NMC-12050-SLIM',
+    name: 'Lithium-Ion NMC 12V 50Ah Slimline Pack',
+    category: 'Battery Pack',
+    brand: 'Generic OEM',
+    price: 11500,
+    shortDesc: 'Ultra-compact and lightweight NMC battery pack, ideal for portable high-density designs.',
+    availability: 'In Stock',
+    specs: {
+      'Nominal Voltage': '11.1V',
+      'Capacity': '50Ah',
+      'Energy': '555Wh',
+      'Cycle Life': '1000 Cycles at 80% DoD',
+      'Integrated BMS': '40A Continuous',
+      'Max Charge Current': '20A',
+      'Cell Configuration': '3S20P 18650 Cells',
+      'Weight': '4.5 kg'
+    },
+    electricalRatings: {
+      voltage: '11.1V',
+      current: '40A Max Discharge',
+      power: '555Wh Capacity'
+    },
+    dimensions: '220 x 140 x 95 mm',
+    typicalApplications: 'Lightweight hand-held coolers, portable test fixtures, and low-footprint power banks.',
+    datasheetPreview: 'HIGH ENERGY DENSITY LITHIUM NICKEL COBALT\n- Working Voltage: 9.0V to 12.6V\n- High temperature protection cuts off discharging above 60°C.',
+    notes: 'Very high power density, but significantly shorter lifecycle than LiFePO4 cells.'
+  },
+  {
+    id: 'batt-lead-12v-100',
+    partNumber: 'AGM-12100-HD',
+    name: 'Lead Acid AGM 12V 100Ah Deep Cycle Battery',
+    category: 'Battery Pack',
+    brand: 'Mighty Max',
     price: 9500,
-    shortDesc: 'Variable speed ultra-high COP compressor using ecological Isobutane refrigerant for minimal solar load.',
-    availability: 'Low Stock',
-    specs: {
-      'Cooling Capacity': '1.0 Ton (12,000 BTU/h)',
-      'Rated Power': '320 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R600a',
-      'COP': '1.82 W/W',
-      'Temp Range': '-30°C to -5°C',
-      'Current Draw': '1.45 A',
-      'Weight': '11.2 kg',
-      'Mounting Type': 'Direct rubber damper',
-      'Noise Level': '44 dBA'
-    },
-    material: 'Alloy Core Shell',
-    efficiency: 'COP 1.82 (Eco High-COP)',
-    voltage: '220-240V AC 50Hz',
-    powerRating: '320W',
-    dimensions: '240 x 175 x 200 mm',
-    powerConsumption: '320W continuous load',
-    recommendedApp: 'High efficiency Solar direct-drive hybrid systems with R600a safety vents.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'Saves 30% solar wattage compared to standard reciprocating components.'
-  },
-  {
-    id: 'comp-danfoss-fr8.5cl',
-    partNumber: 'DF-FR85CL-009',
-    name: 'Danfoss FR8.5CL Compact Commercial Compressor',
-    category: 'Compressor',
-    brand: 'Danfoss',
-    price: 5500,
-    shortDesc: 'Compact hermetic compressor ideal for commercial water coolers and auxiliary solar expansion coils.',
+    shortDesc: 'Traditional sealed AGM lead-acid battery. Extremely heavy but highly cost-efficient.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '0.80 Ton (9,600 BTU/h)',
-      'Rated Power': '280 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R404A / R134a',
-      'COP': '1.40 W/W',
-      'Temp Range': '-30°C to +10°C',
-      'Current Draw': '1.30 A',
-      'Weight': '10.6 kg',
-      'Mounting Type': 'Standard Base plate',
-      'Noise Level': '46 dBA'
+      'Nominal Voltage': '12.0V',
+      'Capacity': '100Ah',
+      'Energy': '1200Wh (600Wh usable at 50% DoD)',
+      'Cycle Life': '500 Cycles at 50% DoD',
+      'Integrated BMS': 'None (Requires manual over-discharge limit)',
+      'Max Charge Current': '30A',
+      'Cell Configuration': 'Sealed Lead-Acid 6-Cell',
+      'Weight': '30.2 kg'
     },
-    material: 'Steel Shell & Copper Rotor',
-    efficiency: 'COP 1.40 (Utility Classic)',
-    voltage: '220V AC 50Hz',
-    powerRating: '280W',
-    dimensions: '245 x 175 x 205 mm',
-    powerConsumption: '280W continuous load',
-    recommendedApp: 'Small personal coolers or backup thermal chillers.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
+    electricalRatings: {
+      voltage: '12.0V',
+      current: '300A Cold Cranking',
+      power: '1200Wh Gross'
     },
-    notes: 'Extremely robust, handles voltage sags down to 180V without stalling.'
+    dimensions: '307 x 168 x 215 mm',
+    typicalApplications: 'Budget stationary backup grids and heavy localized cooling installations.',
+    datasheetPreview: 'SLA DEEP-CYCLE STORAGE PROTOCOLS\n- Recommended Charge: Constant Voltage 14.4V float 13.6V\n- Note: Avoid discharging below 11.5V to prevent permanent sulfation.',
+    notes: 'Extremely heavy (30kg). Usable capacity is practically restricted to 50Ah to prevent catastrophic damage.'
   },
+
+  // 3. Solar Charge Controller
   {
-    id: 'comp-emerson-zp31k5e',
-    partNumber: 'EM-ZP31K5E-R410',
-    name: 'Emerson Copeland Scroll ZP31K5E Rotary Compressor',
-    category: 'Compressor',
-    brand: 'Emerson',
-    price: 14500,
-    shortDesc: 'High efficiency scroll compressor delivering continuous displacement with extreme mechanical reliability.',
+    id: 'scc-renogy-rover-30a',
+    partNumber: 'ROV-30A-MPPT',
+    name: 'Renogy Rover 30A MPPT Charge Controller',
+    category: 'Solar Charge Controller',
+    brand: 'Renogy',
+    price: 6500,
+    shortDesc: 'Affordable MPPT controller with multi-stage smart tracking, LCD screen and auto-sensing system voltages.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '2.20 Ton (26,400 BTU/h)',
-      'Rated Power': '980 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R410A',
-      'COP': '2.64 W/W',
-      'Temp Range': '-10°C to +15°C',
-      'Current Draw': '4.50 A',
-      'Weight': '24.5 kg',
-      'Mounting Type': 'Heavy 4-point Flange',
-      'Noise Level': '60 dBA'
+      'Charging Technology': 'Maximum Power Point Tracking (MPPT)',
+      'Rated Charge Current': '30A',
+      'Max PV Input Voltage (Voc)': '100V DC',
+      'Battery System Voltage': '12V / 24V Auto-Sense',
+      'Max PV Input Power': '400W (12V) / 800W (24V)',
+      'Tracking Efficiency': '99%',
+      'Conversion Efficiency': '98%',
+      'Self-Consumption': '< 100mA'
     },
-    material: 'Reinforced Steel Scroll Cap',
-    efficiency: 'COP 2.64 (Scroll Industrial High-COP)',
-    voltage: '200-230V AC Single Phase',
-    powerRating: '980W',
-    dimensions: '290 x 240 x 380 mm',
-    powerConsumption: '980W continuous load',
-    recommendedApp: 'Heavy duty commercial 2.0 Ton air conditioners and high static duct blowers.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['2.0 Ton']
+    electricalRatings: {
+      voltage: '12V/24V Output',
+      current: '30A Output',
+      power: 'Max 800W PV',
+      efficiency: '98%'
     },
-    notes: 'Premium scroll design. Emits zero pulsation vibration. High starting torque.'
+    dimensions: '210 x 151 x 60 mm',
+    typicalApplications: 'Medium capacity solar panels and 12V or 24V battery charge loops.',
+    datasheetPreview: 'RENOGY ROVER MPPT ALGORITHM DEPLOYMENT\n- Auto-saves daily history statistics.\n- Selectable presets for Gel, Sealed, Flooded and Lithium profiles.',
+    notes: 'Compact unit with an integrated cooling heatsink. Lacks Bluetooth out of the box (requires dongle).'
   },
   {
-    id: 'comp-emerson-afe12c4e',
-    partNumber: 'EM-AFE12C4E-002',
-    name: 'Emerson Hermetic AFE12C4E Chiller',
-    category: 'Compressor',
-    brand: 'Emerson',
-    price: 8900,
-    shortDesc: 'Hermetic reciprocating compressor optimized for cold chain cooling loops and medium scale coolers.',
-    availability: 'Low Stock',
-    specs: {
-      'Cooling Capacity': '1.15 Ton (13,800 BTU/h)',
-      'Rated Power': '390 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R134a',
-      'COP': '1.50 W/W',
-      'Temp Range': '-20°C to +10°C',
-      'Current Draw': '1.80 A',
-      'Weight': '12.5 kg',
-      'Mounting Type': 'Spring Grommet base',
-      'Noise Level': '49 dBA'
-    },
-    material: 'Forged Cast Iron Shell',
-    efficiency: 'COP 1.50 (Reliable Classic)',
-    voltage: '220V AC 50Hz',
-    powerRating: '390W',
-    dimensions: '250 x 180 x 220 mm',
-    powerConsumption: '390W',
-    recommendedApp: 'Hybrid setups demanding high performance stability on R134a pipelines.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Very quiet operation. Features internal thermal overload protector.'
-  },
-  {
-    id: 'comp-tecumseh-ae4440y',
-    partNumber: 'TC-AE4440Y-001',
-    name: 'Tecumseh AE4440Y High-Back-Pressure Compressor',
-    category: 'Compressor',
-    brand: 'Tecumseh',
-    price: 6200,
-    shortDesc: 'High efficiency small casing compressor designed for intensive heat extraction loops.',
-    availability: 'In Stock',
-    specs: {
-      'Cooling Capacity': '1.00 Ton (12,000 BTU/h)',
-      'Rated Power': '350 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R134a',
-      'COP': '1.51 W/W',
-      'Temp Range': '-15°C to +15°C',
-      'Current Draw': '1.60 A',
-      'Weight': '9.8 kg',
-      'Mounting Type': 'Rubber Grommet footers',
-      'Noise Level': '47 dBA'
-    },
-    material: 'Sealed Carbon Steel Pressing',
-    efficiency: 'COP 1.51 (HBP Specialty)',
-    voltage: '220-240V AC 50Hz',
-    powerRating: '350W',
-    dimensions: '235 x 170 x 200 mm',
-    powerConsumption: '350W',
-    recommendedApp: 'Light commercial and household hybrid water cooling systems.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'Low starting current. Ideal for locations with weak off-grid AC inverters.'
-  },
-  {
-    id: 'comp-tecumseh-tya2438ykes',
-    partNumber: 'TC-TYA2438-004',
-    name: 'Tecumseh TYA2438YKES Large Commercial LBP',
-    category: 'Compressor',
-    brand: 'Tecumseh',
-    price: 11000,
-    shortDesc: 'Large volume low temperature compressor engineered for commercial multi-evaporator installations.',
-    availability: 'In Stock',
-    specs: {
-      'Cooling Capacity': '1.80 Ton (21,600 BTU/h)',
-      'Rated Power': '820 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R404A',
-      'COP': '1.58 W/W',
-      'Temp Range': '-40°C to -10°C',
-      'Current Draw': '3.90 A',
-      'Weight': '18.5 kg',
-      'Mounting Type': 'Rigid anchor plate',
-      'Noise Level': '55 dBA'
-    },
-    material: 'Alloy Structural Enclosure',
-    efficiency: 'COP 1.58 (LBP Powerhouse)',
-    voltage: '220V AC 50/60Hz',
-    powerRating: '820W',
-    dimensions: '280 x 210 x 260 mm',
-    powerConsumption: '820W',
-    recommendedApp: 'Dual-circuit heavy duty thermal systems under high load limits.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Requires dual ventilation fan modules to cool down the compressor cylinder head.'
-  },
-  {
-    id: 'comp-secop-bd35f',
-    partNumber: 'SC-BD35F-DC48',
-    name: 'Secop BD35F Brushless DC Micro Compressor',
-    category: 'Compressor',
-    brand: 'Secop Germany',
-    price: 4800,
-    shortDesc: 'Hermetic micro-compressor with integrated brushless motor and 12V/24V electronic controller board.',
-    availability: 'In Stock',
-    specs: {
-      'Cooling Capacity': '0.50 Ton (6,000 BTU/h)',
-      'Rated Power': '65 Watts',
-      'Voltage': '12V/24V DC Native',
-      'Refrigerant': 'R134a',
-      'COP': '1.45 W/W',
-      'Temp Range': '-30°C to +10°C',
-      'Current Draw': '5.40 A @ 12V',
-      'Weight': '2.2 kg',
-      'Mounting Type': 'Integrated mount bracket',
-      'Noise Level': '40 dBA'
-    },
-    material: 'Die-cast Cylinder Housing',
-    efficiency: 'COP 1.45 (Ultra-Low Solar DC)',
-    voltage: '12V / 24V DC Auto-Selection',
-    powerRating: '65W',
-    dimensions: '141 x 105 x 115 mm',
-    powerConsumption: '45W - 85W dynamic based on RPM',
-    recommendedApp: 'Solar direct-drive mobile or compact outdoor off-grid coolers.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'Direct photovoltaic hookup possible. Integrated controller protects against low solar panel battery voltages.'
-  },
-  {
-    id: 'comp-secop-bd50f',
-    partNumber: 'SC-BD50F-DC48',
-    name: 'Secop BD50F Dynamic Travel Cabinet Compressor',
-    category: 'Compressor',
-    brand: 'Secop Germany',
-    price: 5800,
-    shortDesc: 'Higher displacement brushless DC compressor supporting wide speed range for immediate cooling.',
-    availability: 'In Stock',
-    specs: {
-      'Cooling Capacity': '0.75 Ton (9,000 BTU/h)',
-      'Rated Power': '85 Watts',
-      'Voltage': '12V/24V/48V DC Native',
-      'Refrigerant': 'R134a / R290',
-      'COP': '1.52 W/W',
-      'Temp Range': '-30°C to +10°C',
-      'Current Draw': '3.50 A @ 24V',
-      'Weight': '2.4 kg',
-      'Mounting Type': 'Vibration-dampened base',
-      'Noise Level': '41 dBA'
-    },
-    material: 'Cast Iron Block & Copper Windings',
-    efficiency: 'COP 1.52 (High Displacement DC)',
-    voltage: '12V / 24V / 48V DC Adaptive',
-    powerRating: '85W',
-    dimensions: '141 x 105 x 120 mm',
-    powerConsumption: '50W - 110W active',
-    recommendedApp: 'Highly efficient off-grid solar cabins with 12V or 24V auxiliary power grids.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Compatible with EcoMedia SHT31 sensor automation triggers for power savings.'
-  },
-  {
-    id: 'comp-secop-fr10g',
-    partNumber: 'SC-FR10G-AC220',
-    name: 'Secop FR10G AC-Drive Industrial Compressor',
-    category: 'Compressor',
-    brand: 'Secop Germany',
-    price: 7100,
-    shortDesc: 'Heavy-duty reciprocating compressor with high heat absorption curves and cooling reliability.',
-    availability: 'In Stock',
-    specs: {
-      'Cooling Capacity': '1.05 Ton (12,600 BTU/h)',
-      'Rated Power': '410 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R134a',
-      'COP': '1.38 W/W',
-      'Temp Range': '-30°C to +15°C',
-      'Current Draw': '2.10 A',
-      'Weight': '10.3 kg',
-      'Mounting Type': 'Steel flange with rubber grommets',
-      'Noise Level': '46 dBA'
-    },
-    material: 'Forged Cast Iron Shell',
-    efficiency: 'COP 1.38 (Utility Workhorse)',
-    voltage: '220-240V AC 50Hz',
-    powerRating: '410W',
-    dimensions: '250 x 180 x 210 mm',
-    powerConsumption: '410W',
-    recommendedApp: 'Standard dual-evaporative industrial workspaces.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Traditional commercial workhorse. Highly resilient against start-stop stresses.'
-  },
-  {
-    id: 'comp-copeland-cr32k6',
-    partNumber: 'CP-CR32K6-PFV',
-    name: 'Copeland CR32K6-PFV Commercial Compressor',
-    category: 'Compressor',
-    brand: 'Copeland',
+    id: 'scc-victron-smart-100-30',
+    partNumber: 'SCC-10030-BLU',
+    name: 'Victron SmartSolar MPPT 100/30 Charge Controller',
+    category: 'Solar Charge Controller',
+    brand: 'Victron Energy',
     price: 12500,
-    shortDesc: 'Hermetic reciprocating compressor providing massive volume displacement for broad cooling loads.',
+    shortDesc: 'Ultra-fast MPPT controller with built-in Bluetooth, yielding maximum charge efficiency and cloud telemetry.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '2.00 Ton (24,000 BTU/h)',
-      'Rated Power': '920 Watts',
-      'Voltage': '220V AC',
-      'Refrigerant': 'R22 / R407C',
-      'COP': '2.15 W/W',
-      'Temp Range': '-10°C to +12°C',
-      'Current Draw': '4.80 A',
-      'Weight': '21.0 kg',
-      'Mounting Type': 'Heavy welded base plate',
-      'Noise Level': '58 dBA'
+      'Charging Technology': 'Ultra-Fast MPPT',
+      'Rated Charge Current': '30A',
+      'Max PV Input Voltage (Voc)': '100V DC',
+      'Battery System Voltage': '12V / 24V Auto-Sense',
+      'Max PV Input Power': '440W (12V) / 880W (24V)',
+      'Tracking Efficiency': '99.5%',
+      'Conversion Efficiency': '98.5%',
+      'Self-Consumption': '< 15mA'
     },
-    material: 'Thick Cast Carbon Steel Case',
-    efficiency: 'COP 2.15 (Commercial High Displacement)',
-    voltage: '208-230V AC Single Phase',
-    powerRating: '920W',
-    dimensions: '270 x 230 x 340 mm',
-    powerConsumption: '920W',
-    recommendedApp: 'High velocity commercial chillers and large solar-hybrid agricultural sheds.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V/24V Output',
+      current: '30A Output',
+      power: 'Max 880W PV',
+      efficiency: '98.5%'
     },
-    notes: 'Requires dual start capacitors for safe high compression launches. Runs optimally under heavy expansion caps.'
+    dimensions: '130 x 186 x 70 mm',
+    typicalApplications: 'Professional off-grid installations, IoT-enabled solar systems and advanced coolers.',
+    datasheetPreview: 'VICTRON SMARTSOLAR TELEMETRY PROTOCOL\n- Integrated VE.Direct pinout and VictronConnect Bluetooth module.\n- High-velocity MPP scanning even during rapid cloud shifts.',
+    notes: 'Extremely efficient with very low self-discharge rates. Outstanding 5-year warranty.'
   },
   {
-    id: 'comp-highly-dc48',
-    partNumber: 'HL-DC48R-TWIN',
-    name: 'Highly Rotary Twin-Cylinder BLDC Compressor',
-    category: 'Compressor',
-    brand: 'Copeland',
-    price: 7200,
-    shortDesc: 'Modern twin cylinder rotary scroll compressor natively designed for 48V solar battery configurations.',
+    id: 'scc-victron-smart-150-45',
+    partNumber: 'SCC-15045-PRO',
+    name: 'Victron SmartSolar MPPT 150/45 Charge Controller',
+    category: 'Solar Charge Controller',
+    brand: 'Victron Energy',
+    price: 24500,
+    shortDesc: 'Heavy-duty commercial charge controller supporting high voltage PV arrays up to 150V Voc and 48V systems.',
     availability: 'Low Stock',
     specs: {
-      'Cooling Capacity': '1.60 Ton (19,200 BTU/h)',
-      'Rated Power': '480 Watts',
-      'Voltage': '48V DC Native',
-      'Refrigerant': 'R410A / R32',
-      'COP': '1.75 W/W',
-      'Temp Range': '-15°C to +10°C',
-      'Current Draw': '10.0 A',
-      'Weight': '3.4 kg',
-      'Mounting Type': 'Hanging loop style',
-      'Noise Level': '43 dBA'
+      'Charging Technology': 'Ultra-Fast MPPT',
+      'Rated Charge Current': '45A',
+      'Max PV Input Voltage (Voc)': '150V DC',
+      'Battery System Voltage': '12V / 24V / 48V Auto-Sense',
+      'Max PV Input Power': '650W (12V) / 1300W (24V) / 2600W (48V)',
+      'Tracking Efficiency': '99.6%',
+      'Conversion Efficiency': '99.0%',
+      'Self-Consumption': '< 10mA'
     },
-    material: 'Hardened Anodized Aluminum Enclosure',
-    efficiency: 'COP 1.75 (Energy Star BLDC)',
-    voltage: '48V DC Native (PWM Driven)',
-    powerRating: '480W',
-    dimensions: '165 x 120 x 135 mm',
-    powerConsumption: '100W - 550W fully variable',
-    recommendedApp: 'High efficiency off-grid telecom shelters and desert solar hybrid water systems.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V/24V/48V Output',
+      current: '45A Output',
+      power: 'Max 2600W PV',
+      efficiency: '99.0%'
     },
-    notes: 'Native 48V DC. Removes inverter losses. Integrates seamlessly with MPPT smart drives.'
+    dimensions: '150 x 186 x 70 mm',
+    typicalApplications: 'High-power 48V battery systems, large commercial cooling systems, and multi-panel PV arrays.',
+    datasheetPreview: 'VICTRON 150V VOC PRO ALGORITHM\n- Handles high-voltage series connected solar panel matrices.\n- Electronic short-circuit and over-temperature safety limits.',
+    notes: 'Premium commercial grade, suited for large 48V battery banks and powerful BLDC motors.'
   },
   {
-    id: 'comp-bypass',
-    partNumber: 'BY-COMP-NODE',
-    name: 'Compressor Bypass Conduit Node',
-    category: 'Compressor',
-    brand: 'N/A (Evaporative Design)',
-    price: 0,
-    shortDesc: 'Direct-air structural layout frame. No compressor required when operating in pure evaporative designs.',
+    id: 'scc-generic-pwm-20a',
+    partNumber: 'PWM-20A-G1',
+    name: 'Generic 20A PWM Solar Charge Controller',
+    category: 'Solar Charge Controller',
+    brand: 'Generic OEM',
+    price: 1200,
+    shortDesc: 'Simple pulse-width modulation controller. Cost-efficient but yields lower charging efficiency.',
     availability: 'In Stock',
     specs: {
-      'Cooling Capacity': '0.00 Ton',
-      'Rated Power': '0 Watts',
-      'Voltage': 'None',
-      'Refrigerant': 'None',
-      'COP': 'N/A',
-      'Temp Range': '-40°C to +60°C',
-      'Current Draw': '0 A',
-      'Weight': '0.2 kg',
-      'Mounting Type': 'Snap-on bypass grid',
-      'Noise Level': '0 dBA'
+      'Charging Technology': 'Pulse-Width Modulation (PWM)',
+      'Rated Charge Current': '20A',
+      'Max PV Input Voltage (Voc)': '30V DC (12V Batt) / 55V DC (24V Batt)',
+      'Battery System Voltage': '12V / 24V Auto-Sense',
+      'Max PV Input Power': '240W (12V) / 480W (24V)',
+      'Tracking Efficiency': 'N/A (Non-MPPT)',
+      'Conversion Efficiency': '82%',
+      'Self-Consumption': '< 25mA'
     },
-    material: 'Acetal Resin',
-    efficiency: '100% Passive Bypass Flow',
-    voltage: 'None',
-    powerRating: '0W',
-    dimensions: '120 x 120 x 80 mm',
-    powerConsumption: '0W',
-    recommendedApp: 'Direct and Indirect water evaporation systems where compression cooling is bypassed.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V/24V Output',
+      current: '20A Output',
+      power: 'Max 480W PV',
+      efficiency: '82%'
     },
-    notes: 'Passive conduit. Excludes heavy electrical or fluid load entirely.'
+    dimensions: '133 x 70 x 35 mm',
+    typicalApplications: 'Low-cost entry-level solar kits, backup lighting systems, and experimental rigs.',
+    datasheetPreview: 'PWM DUAL-USB INTERFACE INTEGRATION\n- Integrated dual 5V 2A USB ports for phone charging.\n- Standard 3-stage charging: Bulk, Boost and Float.',
+    notes: 'Low charging efficiency because it drags the solar panel voltage down to the battery voltage, discarding excess power.'
   },
 
-  // 2. CONDENSER
+  // 4. DC-DC Converter
   {
-    id: 'cond-alu-micro',
-    partNumber: 'CO-ALM-12PF',
-    name: 'Aluminium Microchannel Condenser (12")',
-    category: 'Condenser',
-    brand: 'SubZero',
+    id: 'dcdc-buck-24v-12v-10a',
+    partNumber: 'DG-B-2412-10',
+    name: 'Daygreen 24V to 12V 10A Buck Converter',
+    category: 'DC-DC Converter',
+    brand: 'Daygreen',
     price: 1250,
-    shortDesc: 'Ultra light and highly conductive microchannel condenser with dust repellent resin coating.',
+    shortDesc: 'Step-down converter delivering stable 12V DC output from a 24V battery source, with IP68 waterproof rating.',
     availability: 'In Stock',
     specs: {
-      'Tube Area': '0.12 m²',
-      'Refrigerant Compatibility': 'R134a / R600a',
-      'Row Count': '1 Inline Row',
-      'Fin Design': 'Parallel flow multi-louver'
+      'Converter Type': 'Buck (Step-Down) Non-Isolated',
+      'Input Voltage Range': '18V - 35V DC',
+      'Output Voltage': '12.0V DC (Fixed)',
+      'Continuous Output Current': '10A',
+      'Rated Output Power': '120W',
+      'Conversion Efficiency': '96%',
+      'Waterproof Rating': 'IP68 Epoxy Encapsulated',
+      'Heat Dissipation': 'Die-cast Aluminium Enclosure'
     },
-    material: '3003 Grade Aluminum Alloy',
-    efficiency: '94% Heat Rejection Efficiency',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '300 x 320 x 20 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Compact hybrid compressors with 12" cabinet dimensions.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
+    electricalRatings: {
+      voltage: '24V to 12V',
+      current: '10A Output',
+      power: '120W Rated',
+      efficiency: '96%'
     },
-    notes: 'Extremely thin profile. High salt spray corrosion resistance (500 hrs ASTM B117).'
+    dimensions: '74 x 74 x 32 mm',
+    typicalApplications: 'Powering 12V DC water pumps and sensors from a primary 24V battery bank.',
+    datasheetPreview: 'DAYGREEN MILITARY-GRADE STEP-DOWN COMPLIANCE\n- Full protection: Over-voltage, Over-current, Short-circuit, Over-temp.\n- Mean Time Between Failures (MTBF): > 100,000 hours.',
+    notes: 'Extremely durable. Epoxied aluminum shell makes it perfect for humid evaporative cooler cabinets.'
   },
   {
-    id: 'cond-copper-dual',
-    partNumber: 'CO-COP-16DF',
-    name: 'Dual-Row Inner-Grooved Copper Condenser',
-    category: 'Condenser',
-    brand: 'Carrier Industries',
-    price: 1950,
-    shortDesc: 'Dual rows of grooved copper tubes with mechanical aluminum sine-wave helper fins for max surface exchange.',
+    id: 'dcdc-boost-12v-24v-10a',
+    partNumber: 'DG-B-1224-10',
+    name: 'Daygreen 12V to 24V 10A Boost Converter',
+    category: 'DC-DC Converter',
+    brand: 'Daygreen',
+    price: 1850,
+    shortDesc: 'Step-up converter to run 24V DC motor loads efficiently from a standard 12V battery system.',
     availability: 'In Stock',
     specs: {
-      'Tube Area': '0.24 m²',
-      'Refrigerant Compatibility': 'Universal (R134a, R410A, R404A)',
-      'Row Count': '2 Offset Rows',
-      'Fin Design': 'Corrugated inner grooved'
+      'Converter Type': 'Boost (Step-Up) Non-Isolated',
+      'Input Voltage Range': '9V - 20V DC',
+      'Output Voltage': '24.0V DC (Fixed)',
+      'Continuous Output Current': '10A',
+      'Rated Output Power': '240W',
+      'Conversion Efficiency': '95%',
+      'Waterproof Rating': 'IP68 Epoxy Encapsulated',
+      'Heat Dissipation': 'Finned Aluminium Case'
     },
-    material: 'Oxygen-Free Copper Tubes & Epoxy Fins',
-    efficiency: '97% Thermal Rejection Efficiency',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '360 x 380 x 32 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'High temperature desert zones. Pair with high static CFM fans.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V to 24V',
+      current: '10A Output',
+      power: '240W Rated',
+      efficiency: '95%'
     },
-    notes: 'Supports operating pressures up to 45 bar. Ideal for heavy R410A scroll setups.'
+    dimensions: '100 x 80 x 39 mm',
+    typicalApplications: 'Running heavy 24V brushless main motors from a cost-effective 12V battery array.',
+    datasheetPreview: 'HIGH-POWER STEP-UP CONVERTER CODE\n- High surge capability: supports motor initial start currents up to 15A.\n- Auto-shutoff when battery input falls below 8.5V to prevent deep discharge.',
+    notes: 'Requires adequate ventilation as boost conversion generates substantial localized heat at maximum load.'
   },
   {
-    id: 'cond-bypass',
-    partNumber: 'BY-COND-NODE',
-    name: 'Condenser Bypass Loop (Pure Evaporative)',
-    category: 'Condenser',
-    brand: 'N/A (Evaporative Design)',
-    price: 0,
-    shortDesc: 'Fluid loop shunt bypass tube. Condensers are bypassed in water evaporation modes.',
-    availability: 'In Stock',
-    specs: {
-      'Tube Area': '0.00 m²',
-      'Refrigerant Compatibility': 'None',
-      'Row Count': 'None',
-      'Fin Design': 'None'
-    },
-    material: 'PVC Fitting',
-    efficiency: 'N/A',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '100 x 50 x 50 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Evaporative chillers without secondary gas loops.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Bypasses plumbing to avoid pressure drag.'
-  },
-
-  // 3. EVAPORATOR
-  {
-    id: 'evap-honey-12',
-    partNumber: 'EV-HON-CEL12',
-    name: 'Honeycomb Wet Cooling Pad Alpha (12")',
-    category: 'Evaporator',
-    brand: 'EcoMedia Labs',
-    price: 350,
-    shortDesc: 'Phenolic resin impregnated cellulose water media with cross-fluting for water delivery.',
-    availability: 'In Stock',
-    specs: {
-      'Wet Bulb Saturation': '82%',
-      'Air Pressure Drop': '15 Pa @ 1.5 m/s',
-      'Self-Cleaning Cycle': 'Every 12 hrs'
-    },
-    material: 'Antimicrobial Cellulose Fiber Paper',
-    efficiency: '85% Evaporative Yield',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '300 x 300 x 50 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Standard compact direct evaporative water coolers.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'Requires a standard water distributor. Citric-acid washable to strip mineral salts.'
-  },
-  {
-    id: 'evap-honey-16',
-    partNumber: 'EV-HON-CEL16',
-    name: 'Honeycomb High-Density Pad Beta (16")',
-    category: 'Evaporator',
-    brand: 'EcoMedia Labs',
-    price: 800,
-    shortDesc: 'Industrial grade thick evaporation media with extreme structural density for massive air dry scrub.',
-    availability: 'In Stock',
-    specs: {
-      'Wet Bulb Saturation': '88%',
-      'Air Pressure Drop': '22 Pa @ 1.5 m/s',
-      'Self-Cleaning Cycle': 'Every 8 hrs'
-    },
-    material: 'Polymer Coated Cellulose Compound',
-    efficiency: '91% Evaporative Yield',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '400 x 400 x 100 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'High volume commercial air washers in desert terrains.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Extreme cooling capability under dry conditions. Maximum water holding capacity.'
-  },
-  {
-    id: 'evap-dx-copper-12',
-    partNumber: 'EV-DXC-12IN',
-    name: 'Direct-Expansion DX Copper Evaporator Coil (12")',
-    category: 'Evaporator',
-    brand: 'SubZero Cooling',
-    price: 2200,
-    shortDesc: 'Micro-grooved copper tube direct expansion evaporative coil for auxiliary dry air chillers.',
-    availability: 'Low Stock',
-    specs: {
-      'Expansion Mode': 'Direct expansion dry gas',
-      'Circuit LoopCount': '1 Continuous single-pass',
-      'Inner tube groove': '0.15 mm helical depth'
-    },
-    material: 'Deoxidized Copper & Blue-Fin Coated Aluminiums',
-    efficiency: 'COP 4.2 heat absorption factor',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '300 x 300 x 40 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Hybrid air chillers pairing up with 0.5 - 1.2 Ton compressors.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Requires skilled refrigeration soldering. Factory pressurized with Nitrogen.'
-  },
-  {
-    id: 'evap-dx-copper-16',
-    partNumber: 'EV-DXC-16IN',
-    name: 'DX Refined Large Evaporator Coil (16")',
-    category: 'Evaporator',
-    brand: 'SubZero Cooling',
-    price: 3100,
-    shortDesc: 'Commercial scale copper gas coil matched with heavy expansion valves and multi-cylinder compressors.',
-    availability: 'Backorder',
-    specs: {
-      'Expansion Mode': 'Direct expansion dry gas',
-      'Circuit LoopCount': '2 Parallel multi-pass',
-      'Inner tube groove': '0.22 mm helical depth'
-    },
-    material: 'Copper Coils & Anti-corrosive Epoxy Fins',
-    efficiency: 'COP 4.5 heat absorption factor',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '400 x 400 x 50 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Large hybrid climate units in commercial offices. Matches 1.5 - 2.0 Ton compressors.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Designed to prevent ice buildup. High capacity liquid header distributor included.'
-  },
-
-  // 4. EXPANSION DEVICE (New Category!)
-  {
-    id: 'exp-danfoss-tx2',
-    partNumber: 'EX-DF-TX2',
-    name: 'Danfoss TX2 Thermostatic Expansion Valve',
-    category: 'Expansion Device',
-    brand: 'Danfoss',
-    price: 1200,
-    shortDesc: 'Mechanical thermostatic expansion valve with interchangeable orifice assemblies for precise refrigerant dosing.',
-    availability: 'In Stock',
-    specs: {
-      'Valving Class': 'TXV (Thermostatic)',
-      'Subzero Rating': 'Down to -40°C',
-      'Orifice Support': 'Interchangeable Orifice 01 to 06',
-      'Refrigerant': 'R134a'
-    },
-    material: 'Brass Body & Stainless Steel Power Element',
-    efficiency: 'High dynamic control accuracy',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '85 x 60 x 45 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Hybrid compressors setups utilizing R134a. Highly recommended for Secop or Danfoss 12V/220V compressors.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Includes external bulb strap. Solder style inlet (3/8") and outlet (1/2") connections.'
-  },
-  {
-    id: 'exp-emerson-trae',
-    partNumber: 'EX-EM-TRAE',
-    name: 'Emerson TRAE Large Expansion Valve',
-    category: 'Expansion Device',
-    brand: 'Emerson',
-    price: 2200,
-    shortDesc: 'High-capacity, double-seat balanced port expansion-valve designed for commercial industrial scroll refrigeration.',
-    availability: 'In Stock',
-    specs: {
-      'Valving Class': 'TXV Balanced Port',
-      'Subzero Rating': 'Down to -45°C',
-      'Refrigerant': 'R410A / R404A',
-      'Equalizer Style': 'External equalization (1/4" flare)'
-    },
-    material: 'Cast Brass Body & Copper Bulb wire',
-    efficiency: 'Industrial heavy duty load damping',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '110 x 75 x 55 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Copeland hermetic scroll setups running on R410A or high capacity Danfoss chillers.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Requires dual flare connector tools. Ensures evaporator stays fully flooded without liquid slug back.'
-  },
-  {
-    id: 'exp-carel-e2v',
-    partNumber: 'EX-CR-E2V',
-    name: 'Carel E2V Proportional Electronic Expansion Valve',
-    category: 'Expansion Device',
-    brand: 'Carel',
-    price: 3800,
-    shortDesc: 'High-precision micro-step electronic expansion valve driving dynamic proportional refrigerant flow.',
-    availability: 'Low Stock',
-    specs: {
-      'Valving Class': 'EEV (Electronic stepper)',
-      'Drive Steps': '480 Full Steps',
-      'Response Time': '0.15 seconds',
-      'Refrigerant': 'Universal / Adaptive'
-    },
-    material: 'Stainless Steel needle & copper connections',
-    efficiency: '99% Perfect Evaporator Flooding',
-    voltage: '12V DC (From Smart Controller)',
-    powerRating: '8.4 Watts (During transition)',
-    dimensions: '120 x 40 x 30 mm',
-    powerConsumption: '1.5 Watts average holding',
-    recommendedApp: 'Premium smart climatic chambers and automated off-grid solar-cooling projects.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Requires connection to a Smart Controller with EEV step module. Delivers peak performance.'
-  },
-  {
-    id: 'exp-cap-036',
-    partNumber: 'EX-CAP-036',
-    name: 'Standard Copper Capillary Tube Mesh',
-    category: 'Expansion Device',
-    brand: 'Supreme',
-    price: 150,
-    shortDesc: 'A fixed restriction capillary roll made of pure copper, perfect for simple budget applications.',
-    availability: 'In Stock',
-    specs: {
-      'Valving Class': 'Fixed Capillary',
-      'Tube Inner Diameter': '0.036 inches (0.91 mm)',
-      'Active Length': '1.50 meters',
-      'Refrigerant': 'R134a / R600a'
-    },
-    material: 'Oxygen-Free Copper Capillary',
-    efficiency: 'Static expansion behavior',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '1.5 meter coiled length',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Low cost mobile hybrid coolers matching the tiny Secop BD35F compressor.',
-    combat: {
-      coolerTypes: ['Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'No moving parts. Vulnerable to grid debris; installation of an inline mesh filter-dryer is mandatory.'
-  },
-  {
-    id: 'exp-bypass',
-    partNumber: 'BY-EXP-NODE',
-    name: 'Expansion Device Bypass Conduit',
-    category: 'Expansion Device',
-    brand: 'N/A (Evaporative Design)',
-    price: 0,
-    shortDesc: 'Structural bypass conduit. No expansion device is required in purely evaporative cooling models.',
-    availability: 'In Stock',
-    specs: {
-      'Valving Class': 'Passive Bypass',
-      'Refrigerant': 'None',
-      'Operating Mode': 'Dry Air Vent'
-    },
-    material: 'Polycarbonate Union fitting',
-    efficiency: 'N/A',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '60 x 20 x 20 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Pure direct and indirect evaporative solutions.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Zero mechanical pressure loss. Used to neatly patch blank expander slots on the casing.'
-  },
-
-  // 5. FANS
-  {
-    id: 'fan-axial-12',
-    partNumber: 'FN-AXL-12IP',
-    name: '12" High-Velocity DC Axial Fan (40W)',
-    category: 'Fans',
-    brand: 'Delta Electronics',
-    price: 1150,
-    shortDesc: 'IP68 certified water-proof, salt-spray proof brushless DC fan designed for high humidity evaporative channels.',
-    availability: 'In Stock',
-    specs: {
-      'Airflow Output': '950 CFM',
-      'Shaft Speed': '1500 - 2400 RPM',
-      'Rotor Profile': '7 Sickle-curved blades',
-      'Operating Noise': '42 dBA'
-    },
-    material: 'Glass Fiber Reinforced PBT Composite',
-    efficiency: '91% Brushless DC Motor Eff.',
-    voltage: '48V DC Native (Handles 36-60V)',
-    powerRating: '40W Max',
-    dimensions: '300 x 300 x 80 mm',
-    powerConsumption: '10W - 40W dynamic speed',
-    recommendedApp: 'Direct solar agricultural ducts or residential compact chambers.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Features a 4-wire PWM feedback controller, enabling intelligent thermal speed syncing.'
-  },
-  {
-    id: 'fan-axial-14',
-    partNumber: 'FN-AXL-14PF',
-    name: '14" Aerofoil Sweep DC Axial Fan (70W)',
-    category: 'Fans',
-    brand: 'Delta Electronics',
-    price: 1600,
-    shortDesc: 'Optimized sweep balance fan featuring wide profile aerofoil blades to eliminate high-pitched motor whistle.',
-    availability: 'In Stock',
-    specs: {
-      'Airflow Output': '1450 CFM',
-      'Shaft Speed': '1200 - 2000 RPM',
-      'Rotor Profile': '5 Aerofoil sweep blades',
-      'Operating Noise': '45 dBA'
-    },
-    material: 'Anodized Aluminum Blades & PBT Hub',
-    efficiency: '93% Brushless DC Motor Eff.',
-    voltage: '48V DC Native',
-    powerRating: '70W Max',
-    dimensions: '350 x 350 x 90 mm',
-    powerConsumption: '20W - 70W variable',
-    recommendedApp: 'Desert coolers requiring flat performance delivery over long continuous operation.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [14],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Extremely well-balanced. Ideal for mounting flush behind wet honeycomb cooling media.'
-  },
-  {
-    id: 'fan-centrif-16',
-    partNumber: 'FN-CNF-16HE',
-    name: '16" Extreme Static Centrifugal Fan (113W)',
-    category: 'Fans',
-    brand: 'Nidec Japan',
-    price: 2300,
-    shortDesc: 'Backward-curved high static radial blower designed to push massive CFM behind thick wet media.',
-    availability: 'In Stock',
-    specs: {
-      'Airflow Output': '2150 CFM',
-      'Shaft Speed': '1800 RPM Constant',
-      'Rotor Profile': 'Backward-curved radial wheel',
-      'Operating Noise': '56 dBA'
-    },
-    material: 'Industrial Galvanized Steel Ring',
-    efficiency: '94.8% Brushless Motor Module',
-    voltage: '48V DC Native',
-    powerRating: '113W Max',
-    dimensions: '400 x 400 x 120 mm',
-    powerConsumption: '40W - 113W dynamic load',
-    recommendedApp: 'Duct climate setups, commercial workspaces with heavy mechanical air drag.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [16],
-      insulationThicknesses: ['15mm', '20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Superb performance overcoming high air resistance. Slightly louder sound footprint.'
-  },
-  {
-    id: 'fan-sanyo-silent',
-    partNumber: 'FN-SAN-SL16',
-    name: 'Sanyo Denki Silent 16" Magnetic Aero Fan',
-    category: 'Fans',
-    brand: 'Sanyo Denki Japan',
-    price: 3100,
-    shortDesc: 'Whisper quiet dual-ball magnetic levitation bracket fan supplying vast air volumes under low noise limits.',
-    availability: 'Low Stock',
-    specs: {
-      'Airflow Output': '2350 CFM',
-      'Shaft Speed': '800 - 1950 RPM',
-      'Rotor Profile': '9 Silent Aerofoil blades',
-      'Operating Noise': '34 dBA'
-    },
-    material: 'Polycarbonate Composite & Magnetic Rings',
-    efficiency: '96% Magnetic Levitated Motor Hub',
-    voltage: '48V DC Native',
-    powerRating: '120W Max',
-    dimensions: '400 x 400 x 100 mm',
-    powerConsumption: '35W - 120W adjustable',
-    recommendedApp: 'Premium residential hybrid units and offices requiring zero motor hum.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Zero friction magnetic bearings allow for an estimated 100,000 hour lifepan.'
-  },
-
-  // 6. CABINET MATERIAL
-  {
-    id: 'cab-abs-12',
-    partNumber: 'CA-ABS-12IN',
-    name: 'Reinforced UV-Stabilized ABS Cabinet',
-    category: 'Cabinet Material',
-    brand: 'Supreme Polymers',
-    price: 1500,
-    shortDesc: 'High durability snap-together ABS polymer frame with heavy internal anti-microbial water pan.',
-    availability: 'In Stock',
-    specs: {
-      'Water Reservoir': '45 Liters',
-      'Impact Strength': '38 kJ/m²',
-      'UV Shielding': 'UV-12 Rating (12 Yrs)'
-    },
-    material: 'UV-Stabilized Polycarbonate ABS Resins',
-    efficiency: 'Ultra light shell, Rust-proof forever',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '520 x 480 x 680 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Compact residential and home office transportable solar setups.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12],
-      insulationThicknesses: ['10mm', '20mm'],
-      coolingCapacities: ['1.0 Ton']
-    },
-    notes: 'Lightweight. Highly localized dampening of high frequency motor noise.'
-  },
-  {
-    id: 'cab-galv-14',
-    partNumber: 'CA-G90-14ST',
-    name: 'Galvanized G90 Steel Structural Casing',
-    category: 'Cabinet Material',
-    brand: 'Tata Steel',
-    price: 2800,
-    shortDesc: 'Zinc primed mechanical casing formed from high density steel coils, painted with glossy epoxy powder.',
-    availability: 'In Stock',
-    specs: {
-      'Water Reservoir': '80 Liters',
-      'Shell Thickness': '1.2 mm G90',
-      'Corrosion Class': 'C4 High protection class'
-    },
-    material: 'Tata G90 Hot-Dip Galvanized Iron Sheets',
-    efficiency: 'Extreme mechanical rigidity',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '650 x 600 x 850 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Industrial shopfloors or agricultural yards exposed to high physical abuse.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Includes structural lifting eyes. Needs heavy duty lockable caster wheels.'
-  },
-  {
-    id: 'cab-ss304-large',
-    partNumber: 'CA-304-16SS',
-    name: 'Marine Grade 304 Stainless Cabinet',
-    category: 'Cabinet Material',
-    brand: 'Jindal Steel',
-    price: 5500,
-    shortDesc: 'TIG-welded, highly polished stainless steel framework designed for zero rust despite continuous moisture spray.',
-    availability: 'Backorder',
-    specs: {
-      'Water Reservoir': '120 Liters',
-      'Steel Grade': 'Sourced 304 Austenitic',
-      'Nickel Yield Ratio': '8.15% Nickel'
-    },
-    material: 'AISI 304 Food-Grade Stainless Steel',
-    efficiency: 'Lifelong structural integrity',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '750 x 700 x 1000 mm',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Premium medical labs, high salinity coastal environments, or clean pharma sites.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [14, 16],
-      insulationThicknesses: ['20mm', '30mm'],
-      coolingCapacities: ['1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Extremely sanitary, easily sterilized. High reflective finish restricts solar heat soak.'
-  },
-
-  // 7. INSULATION
-  {
-    id: 'ins-pe-10',
-    partNumber: 'IN-PEH-10X',
-    name: '10mm Polyethylene Closed-Cell Foam Sheet',
-    category: 'Insulation',
-    brand: 'Supreme Industries',
-    price: 450,
-    shortDesc: 'Lightweight polyolefin underlay with cross-linked cells and double-sided solar grade aluminum foils.',
-    availability: 'In Stock',
-    specs: {
-      'Thermal Conductivity': '0.032 W/mK',
-      'Water Absorption Ratio': '< 0.05% by Volume',
-      'Vapor Resistance': 'R-3.2 Metric'
-    },
-    material: 'Cross-Linked Polyethylene Foam & Foil',
-    efficiency: 'R-3.2 Good thermal block',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '2000 x 1000 x 10 mm Roll',
-    powerConsumption: 'None',
-    recommendedApp: 'Direct-evaporation personal cabinets with light thermal mass constraints.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton']
-    },
-    notes: 'Includes integrated heavy contact dry adhesive. Quick to cut and wrap.'
-  },
-  {
-    id: 'ins-rubber-20',
-    partNumber: 'IN-ELM-20X',
-    name: '20mm Elastomeric Nitrile Rubber Sheet',
-    category: 'Insulation',
-    brand: 'K-Flex Italy',
-    price: 750,
-    shortDesc: 'Extremely flexible synthetic elastomeric nitrile foam sheet displaying superb thermal barrier specs in humid channels.',
-    availability: 'In Stock',
-    specs: {
-      'Thermal Conductivity': '0.028 W/mK',
-      'Water Absorption Ratio': '< 0.01% by Volume',
-      'Vapor Resistance': 'R-5.5 High barrier'
-    },
-    material: 'Flexible Nitrile Rubber foam',
-    efficiency: 'R-5.5 Excellent thermal isolation',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '1500 x 1000 x 20 mm Sheet',
-    powerConsumption: 'None',
-    recommendedApp: 'Premium hybrid air handlers, completely sealing dynamic condensation lines.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['20mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Highly resistant to fungal and mold blooms. Class 0 fire safety rating.'
-  },
-  {
-    id: 'ins-poly-30',
-    partNumber: 'IN-PIR-30X',
-    name: '30mm Rigid Polyisocyanurate (PIR) Board',
-    category: 'Insulation',
-    brand: 'Thermax India',
-    price: 1200,
-    shortDesc: 'Ultra high efficiency rigid PIR structural board faced on both sides with lock woven fiberglass skins.',
-    availability: 'In Stock',
-    specs: {
-      'Thermal Conductivity': '0.021 W/mK',
-      'Water Absorption Ratio': '< 0.002% by Volume',
-      'Vapor Resistance': 'R-8.5 Commercial Shield'
-    },
-    material: 'Polyisocyanurate Core & Woven Glass Foil',
-    efficiency: 'R-8.5 Maximal Thermal Decoupling',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '1200 x 600 x 30 mm Board',
-    powerConsumption: 'None',
-    recommendedApp: 'Industrial cooling vaults or heavy dessert containers directly facing sun heat.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Extremely rigid. Helps brace galvanized sheets, structurally reinforcing broad side cabinets.'
-  },
-
-  // 8. CONTROLLER
-  {
-    id: 'ctrl-mppt-250w',
-    partNumber: 'CT-MPT-250A',
-    name: 'Zazen Solar-Direct MPPT Hub Controller',
-    category: 'Controller',
-    brand: 'Zazen Climate Labs',
-    price: 1350,
-    shortDesc: 'Basic solar tracker containing 250W MPPT solar battery controller with dual variable output rails.',
-    availability: 'In Stock',
-    specs: {
-      'Tracking Algorithm': 'Ultra-fast variable MPPT',
-      'Solar Input Limit': '95 Volts VOC Max',
-      'Auxiliary Relay Output': '2x Independent DC Switches'
-    },
-    material: 'FR4 Multi-Layer Board with Heatsink',
-    efficiency: '98% Solar tracking efficiency',
-    voltage: '12V / 24V Auto-Select',
-    powerRating: '250W Sourced',
-    dimensions: '120 x 85 x 35 mm',
-    powerConsumption: '1.2 Watts standby draw',
-    recommendedApp: 'Affordable compact household direct solar coolers with 12V elements.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Features onboard high temperature cut-off logic. Simple screw terminal connections.'
-  },
-  {
-    id: 'ctrl-nordic-smart',
-    partNumber: 'CT-NDS-BT99',
-    name: 'Tri-Mode Adaptive Smart Controller with BT',
-    category: 'Controller',
-    brand: 'Nordic Semiconductor',
+    id: 'dcdc-buckboost-9v36v-12v',
+    partNumber: 'BB-93612-08',
+    name: 'Buck-Boost Stable 12V Regulator',
+    category: 'DC-DC Converter',
+    brand: 'Generic OEM',
     price: 2450,
-    shortDesc: 'Industrial IoT hub with built-in Bluetooth 5.2 mesh, executing variable PWM loops across fans and pumps.',
+    shortDesc: 'Wide range buck-boost regulator delivering precise 12.0V output regardless of battery voltage fluctuations.',
     availability: 'In Stock',
     specs: {
-      'Tracking Algorithm': 'Multi-phase predictive MPPT',
-      'Solar Input Limit': '150 Volts VOC Max',
-      'Wireless Control': 'BLE 5.2 / 2.4G Wifi Integrated'
+      'Converter Type': 'Buck-Boost (Automatic Step-Up/Down)',
+      'Input Voltage Range': '9V - 36V DC',
+      'Output Voltage': '12.0V DC (Fixed)',
+      'Continuous Output Current': '8A',
+      'Rated Output Power': '96W',
+      'Conversion Efficiency': '94%',
+      'Waterproof Rating': 'IP67 Dust & Splashing Proof',
+      'Heat Dissipation': 'Aluminium plate heatsink'
     },
-    material: 'Premium FR4 Matte Black PCB & Alloys',
-    efficiency: '99% System Synchronization rate',
-    voltage: '48V Native (Handles 12-80V)',
-    powerRating: '400W Peak',
-    dimensions: '140 x 95 x 40 mm',
-    powerConsumption: '2.4 Watts continuous logger',
-    recommendedApp: 'Premium automated off-grid towers and hybrid units demanding real-time app telemetry.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '9-36V to 12V',
+      current: '8A Output',
+      power: '96W Rated',
+      efficiency: '94%'
     },
-    notes: 'Includes external MODBUS RJ45 socket and terminal slots for step control of electronic expansion valves (EEV).'
+    dimensions: '74 x 74 x 32 mm',
+    typicalApplications: 'Powering sensitive electronics (such as ESP32, STM32, or high-accuracy humidity sensors).',
+    datasheetPreview: 'AUTOMATIC SEAMLESS BUCK-BOOST TRANSLATION\n- Excellent for handling extreme battery voltage sagging under heavy motor starts.\n- High-frequency switching ripple: < 50mVp-p.',
+    notes: 'Solves the issue where 12V LFP batteries dip under load and cause microcontrollers to crash/brownout.'
+  },
+  {
+    id: 'dcdc-buck-48v-24v-15a',
+    partNumber: 'DG-B-4824-15',
+    name: 'Daygreen 48V to 24V 15A Step-Down Converter',
+    category: 'DC-DC Converter',
+    brand: 'Daygreen',
+    price: 3200,
+    shortDesc: 'High-current 360W buck converter to step down 48V primary power grids for 24V system accessories.',
+    availability: 'In Stock',
+    specs: {
+      'Converter Type': 'Buck (Step-Down) Non-Isolated',
+      'Input Voltage Range': '30V - 60V DC',
+      'Output Voltage': '24.0V DC (Fixed)',
+      'Continuous Output Current': '15A',
+      'Rated Output Power': '360W',
+      'Conversion Efficiency': '97%',
+      'Waterproof Rating': 'IP68 Epoxy Encapsulated',
+      'Heat Dissipation': 'Heavily Finned Die-cast Aluminium Case'
+    },
+    electricalRatings: {
+      voltage: '48V to 24V',
+      current: '15A Output',
+      power: '360W Rated',
+      efficiency: '97%'
+    },
+    dimensions: '100 x 80 x 39 mm',
+    typicalApplications: 'Powering 24V auxiliary blowers and high-flow water pumps from a 48V telecom-grade battery bank.',
+    datasheetPreview: 'HIGH POWER INDUSTRIAL CONVERTER INTERCONNECT\n- Incorporates synchronous rectification technology to minimize heat output.\n- Input transient reverse polarity protection built in.',
+    notes: 'Premium converter, highly efficient and stable. Ideal for large system integration.'
+  },
+  {
+    id: 'dcdc-not-needed',
+    partNumber: 'SYS-BUS-DIRECT',
+    name: 'Direct System Bus (No Converter)',
+    category: 'DC-DC Converter',
+    brand: 'Generic OEM',
+    price: 0,
+    shortDesc: 'Bypass connection to run all components directly from matching primary system voltage lines.',
+    availability: 'In Stock',
+    specs: {
+      'Converter Type': 'Direct Copper Connection (No conversion)',
+      'Input Voltage Range': '12V / 24V / 48V',
+      'Output Voltage': 'Direct Bypass',
+      'Continuous Output Current': 'N/A',
+      'Rated Output Power': 'N/A',
+      'Conversion Efficiency': '100% (Zero Conversion Loss)',
+      'Waterproof Rating': 'N/A',
+      'Heat Dissipation': 'None Required'
+    },
+    electricalRatings: {
+      voltage: 'System Bus Voltage',
+      current: 'Direct Current',
+      power: 'Direct Power',
+      efficiency: '100%'
+    },
+    dimensions: 'N/A',
+    typicalApplications: 'Systems where solar, batteries, and all motor loads share identical nominal voltages.',
+    datasheetPreview: 'DIRECT METALLIC INTERCONNECT\n- Eliminates conversion losses completely.\n- Simplifies wire routing and reduces Bill of Materials costs.',
+    notes: 'Ensure all downstream devices match battery operating voltages.'
   },
 
-  // 9. SENSORS
+  // 5. Motor Controller
   {
-    id: 'sens-sht31-temp',
-    partNumber: 'SE-SHT-31HY',
-    name: 'Sensirion SHT31 Air Condition Sensor Node',
-    category: 'Sensors',
-    brand: 'Sensirion Swiss',
-    price: 350,
-    shortDesc: 'High reliability solid-state microchip sensor tracking inlet humidity and dry temp levels.',
+    id: 'mctrl-bldc-48v-30a',
+    partNumber: 'KLS4830S',
+    name: 'Kelly KLS-S 24V-48V 30A BLDC Motor Controller',
+    category: 'Motor Controller',
+    brand: 'Kelly Controls',
+    price: 7800,
+    shortDesc: 'Programmable sinusoidal motor controller supporting regenerative braking and high-speed brushless motors.',
     availability: 'In Stock',
     specs: {
-      'Humidity Precision': '+/- 2% RH relative',
-      'Temperature Precision': '+/- 0.2°C absolute',
-      'Bus Communication': 'I2C protocol interface'
+      'Motor Compatibility': 'Brushless DC (BLDC) with Hall Sensors',
+      'Nominal Voltage Range': '24V - 48V DC',
+      'Max Peak Current': '100A (30s peak)',
+      'Continuous Phase Current': '30A',
+      'PWM Frequency': '20 kHz',
+      'Control Mode': 'Sinusoidal FOC (Field Oriented Control)',
+      'Communication Interface': 'RS232 / CAN Bus / UART',
+      'Protection Features': 'Over-temp, Over-volt, Under-volt, Rotor stall lockout'
     },
-    material: 'Silicon Microchip & PTFE Vapor Hood',
-    efficiency: 'Factory pre-calibrated',
-    voltage: '3.3V - 5.0V DC input',
-    powerRating: '0.01 Watts',
-    dimensions: '15 x 15 x 5 mm Module',
-    powerConsumption: '0.005 Watts',
-    recommendedApp: 'Continuous real-time optimization of wet-bulb/dry-bulb evaporation efficiency.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '24V - 48V DC',
+      current: '30A Continuous',
+      power: 'Max 1500W',
+      efficiency: '97%'
     },
-    notes: 'Protective membrane allows placement directly inside high airflow wet paths without condensation failure.'
+    dimensions: '108 x 78 x 43 mm',
+    typicalApplications: 'Driving 24V or 48V high-torque BLDC main blower fans with smooth rotational speed profiles.',
+    datasheetPreview: 'KELLY KLS-S FOC ALGORITHM STANDARDS\n- Configurable via PC or Android app (via Bluetooth adapter).\n- Multi-stage thermal fallback protection to protect power MOSFETs.',
+    notes: 'Premium FOC controller, providing ultra-silent motor operations (no high-frequency motor whining).'
   },
   {
-    id: 'sens-ultra-level',
-    partNumber: 'SE-MBU-LVL9',
-    name: 'Ultrasonic Submersible Water Level Module',
-    category: 'Sensors',
-    brand: 'MaxBotix USA',
-    price: 425,
-    shortDesc: 'Sealed waterproof ultrasonic transceiver detecting depth of water pan to disable pump dry run.',
+    id: 'mctrl-bldc-24v-20a',
+    partNumber: 'JY01-BLDC-G2',
+    name: 'JY01 Brushless Motor Driver Board (24V 20A)',
+    category: 'Motor Controller',
+    brand: 'Generic OEM',
+    price: 1650,
+    shortDesc: 'Affordable, compact bare PCB driver board for sensorless or sensored brushless DC fans and motors.',
     availability: 'In Stock',
     specs: {
-      'Detection Limit': '2 cm to 150 cm depth',
-      'Sound Beam Width': 'Minimal tight angle dispersion',
-      'Ingress Protection': 'IP67 Submersible face'
+      'Motor Compatibility': 'BLDC (Sensored / Sensorless)',
+      'Nominal Voltage Range': '12V - 36V DC',
+      'Max Peak Current': '25A',
+      'Continuous Current': '20A',
+      'PWM Support': '1 kHz - 20 kHz Analog/PWM input',
+      'Control Mode': 'Trapezoidal commutation',
+      'Communication Interface': 'None (Direct analogue control pins)',
+      'Protection Features': 'Over-current protection, rotor stall locking'
     },
-    material: 'Corrosion-proof Polycarbonate Ring',
-    efficiency: '99% depth precision',
-    voltage: '5V DC',
-    powerRating: '0.1 Watts',
-    dimensions: '35 x 20 x 20 mm',
-    powerConsumption: '0.08 Watts',
-    recommendedApp: 'Automated water tank level indicators and protective low water shutdowns.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V - 36V DC',
+      current: '20A Continuous',
+      power: 'Max 480W',
+      efficiency: '93%'
     },
-    notes: 'Connects directly to the Nordic smart controller. Sends automated trip warning if water is low.'
-  },
-
-  // 10. LIGHTING
-  {
-    id: 'light-led-3w',
-    partNumber: 'LI-OSM-3WLB',
-    name: 'IP65 Low-Draw Ambient LED Lightbar',
-    category: 'Lighting',
-    brand: 'Osram Opto',
-    price: 180,
-    shortDesc: 'High efficiency linear light strip throwing rich diffuse glow for status indicator or interior light.',
-    availability: 'In Stock',
-    specs: {
-      'Luminous Flux': '320 Lumens output',
-      'Color Temperature': '4000K Neutral daylight',
-      'Vapor Shielding': 'IP65 Extruded silicone'
-    },
-    material: 'High diffusion clear elastomer',
-    efficiency: '110 lm/W high lighting yield',
-    voltage: '12V DC Sourced',
-    powerRating: '3 Watts',
-    dimensions: '300 x 10 x 5 mm',
-    powerConsumption: '3 Watts operating load',
-    recommendedApp: 'Interior diagnostics light or night visibility lighting loops.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
-    },
-    notes: 'Impervious to high ambient humidity. Includes heavy 3M backing tape.'
+    dimensions: '63 x 45 x 18 mm',
+    typicalApplications: 'Direct driver for medium-scale 24V brushless axial fans and blower systems.',
+    datasheetPreview: 'JY01 INTEGRATED SENSORLESS STARTUP COMPLIANCE\n- Supports tachometer pulse output for closed-loop RPM monitoring.\n- Simple potentiometer hookup for manual velocity setting.',
+    notes: 'Bare PCB without enclosure. Requires mounting on a metal heatsink for continuous operation above 10A.'
   },
   {
-    id: 'light-uvc',
-    partNumber: 'LI-PHL-8WUV',
-    name: 'Philips UVC Antimicrobial Sanitizer Tube',
-    category: 'Lighting',
-    brand: 'Philips Holland',
-    price: 980,
-    shortDesc: 'Cold-cathode ultraviolet germicidal tube radiating intense 253.7nm light inside water pan.',
+    id: 'mctrl-brushed-12v-40a',
+    partNumber: 'MDD10A-MD',
+    name: 'Cytron Smart Brushed DC Motor Driver (12V-24V 40A)',
+    category: 'Motor Controller',
+    brand: 'Cytron',
+    price: 2450,
+    shortDesc: 'Dual-channel high current brushed DC driver board with lock-antiphase and sign-magnitude PWM modes.',
     availability: 'In Stock',
     specs: {
-      'Spectral Peak': '253.7 nm (UVC band)',
-      'UV Output Power': '2.1 Watts active radiant',
-      'Life hours': '9,000 hrs rating'
+      'Motor Compatibility': 'Brushed DC Motors',
+      'Nominal Voltage Range': '5V - 30V DC',
+      'Max Peak Current': '80A (10s peak)',
+      'Continuous Current': '40A',
+      'PWM Support': 'Up to 20 kHz PWM inputs',
+      'Control Mode': 'Dual H-Bridge MOSFET gating',
+      'Communication Interface': 'TTL Serial / PWM / Analog Control',
+      'Protection Features': 'Over-current limiting with red status LED'
     },
-    material: 'Fused pure quartz glass tube',
-    efficiency: '99.9% Microbial sterilization',
-    voltage: '24V DC ballast integrated',
-    powerRating: '8 Watts',
-    dimensions: '210 x 16 x 16 mm',
-    powerConsumption: '8 Watts continuous',
-    recommendedApp: 'Anti-algae, anti-bacterial protection in health clinic solar coolers and offices.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '5V - 30V DC',
+      current: '40A Continuous',
+      power: 'Max 960W',
+      efficiency: '96%'
     },
-    notes: 'Must be shielded from user eyes. Highly efficient at blocking biological slime on wet cellulose media.'
+    dimensions: '84 x 59 x 20 mm',
+    typicalApplications: 'Powering 12V brushed blower motors and high-current mechanical swings.',
+    datasheetPreview: 'CYTRON MDD10A SMART SERIES\n- Features manual push-buttons for on-board testing of motor spin direction.\n- Solid state H-bridge provides extremely fast response speeds.',
+    notes: 'Great driver for robust brushed DC motors. Lacks CAN bus, but works flawlessly with ESP32/Pico PWM pins.'
   },
 
-  // 11. ELECTRICAL COMPONENTS
+  // 6. Main Motor
   {
-    id: 'elec-all-xt60',
-    partNumber: 'EL-AMS-12AWG',
-    name: '12AWG Heavy Copper Wire Harness & XT60',
-    category: 'Electrical Components',
-    brand: 'Amass Connectors',
-    price: 250,
-    shortDesc: 'Silicone insulated high-flex solar wiring loom complete with spark-free XT60 connectors.',
+    id: 'motor-bldc-48v-350w',
+    partNumber: 'AF-M48350-BL',
+    name: 'AmpFlow 48V 350W Brushless DC Motor',
+    category: 'Main Motor',
+    brand: 'AmpFlow',
+    price: 8900,
+    shortDesc: 'High efficiency, high torque industrial-grade brushless motor engineered for heavy-duty fan blades.',
     availability: 'In Stock',
     specs: {
-      'Wire Metric': '12 AWG copper core x2',
-      'Conductor Resistance': '< 0.004 Ohms per meter',
-      'Current Limit': '30 Amps continuous'
+      'Motor Type': 'Brushless DC (BLDC) Inner Rotor',
+      'Rated Voltage': '48V DC',
+      'Rated Power': '350W',
+      'Rated RPM': '3000 RPM',
+      'Rated Torque': '1.11 Nm',
+      'Rated Current': '8.2 A',
+      'Peak Current': '24.0 A',
+      'Peak Efficiency': '88%',
+      'Bearing Type': 'Double Sealed Ball Bearings',
+      'Shaft Diameter': '10 mm with keyway'
     },
-    material: 'Silicone Sheath & Oxygen-Free copper strings',
-    efficiency: '99.9% Power delivery index',
-    voltage: '600V Max',
-    powerRating: '1.2 kW',
-    dimensions: '1.5 meter total cable',
-    powerConsumption: 'Negligible micro-heat scale',
-    recommendedApp: 'Safe off-grid connections between solar panels, storage, and controllers.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '48V DC',
+      current: '8.2A Rated',
+      power: '350W Continuous',
+      efficiency: '88%'
     },
-    notes: 'Fully flame retardant. Extremely flexible, doesn\'t crack in sub-zero winters.'
+    dimensions: '80 x 80 x 120 mm',
+    typicalApplications: 'Primary air blower for commercial evaporative coolers or large-scale exhaust setups.',
+    datasheetPreview: 'AMPFLOW BLDC HIGH TORQUE SPEC SHEET\n- Dual-direction spin. Neodymium magnets (NdFeB) for compact size.\n- Integrated temperature sensor to signal controller during thermal stress.',
+    notes: 'Outstanding power-to-weight ratio. Must be paired with a compatible brushless motor controller.'
   },
   {
-    id: 'elec-bre-box',
-    partNumber: 'EL-SNE-MCB32',
-    name: 'IP67 Weatherproof DC Breaker box',
-    category: 'Electrical Components',
-    brand: 'Schneider Electric',
+    id: 'motor-bldc-24v-150w',
+    partNumber: 'GM-M24150-BL',
+    name: 'Golden Motor 24V 150W Brushless DC Motor',
+    category: 'Main Motor',
+    brand: 'Golden Motor',
+    price: 4800,
+    shortDesc: 'Highly reliable 24V brushless motor offering high efficiency, quiet operation and long service life.',
+    availability: 'In Stock',
+    specs: {
+      'Motor Type': 'Brushless DC (BLDC) Inner Rotor',
+      'Rated Voltage': '24V DC',
+      'Rated Power': '150W',
+      'Rated RPM': '2500 RPM',
+      'Rated Torque': '0.57 Nm',
+      'Rated Current': '7.4 A',
+      'Peak Efficiency': '85%',
+      'Bearing Type': 'Sealed Precision Bearings',
+      'Shaft Diameter': '8 mm with D-cut'
+    },
+    electricalRatings: {
+      voltage: '24V DC',
+      current: '7.4A Rated',
+      power: '150W Continuous',
+      efficiency: '85%'
+    },
+    dimensions: '70 x 70 x 95 mm',
+    typicalApplications: 'Medium duty axial fans, multi-speed evaporative blowers and custom fan manifolds.',
+    datasheetPreview: 'GOLDEN MOTOR COMPACT HIGH VELOCITY DATA\n- Low electromagnetic interference (EMI).\n- Fully balanced rotor to eliminate structural cabinet vibrations.',
+    notes: 'Extremely quiet. Works beautifully with standard 24V LFP batteries and basic BLDC drivers.'
+  },
+  {
+    id: 'motor-brushed-12v-80w',
+    partNumber: 'JE-M12080-BR',
+    name: 'Johnson Electric 12V 80W Brushed DC Motor',
+    category: 'Main Motor',
+    brand: 'Johnson Electric',
+    price: 2450,
+    shortDesc: 'Classic carbon-brushed DC motor delivering solid starting torque at an entry-level price point.',
+    availability: 'In Stock',
+    specs: {
+      'Motor Type': 'Permanent Magnet Brushed DC (PMDC)',
+      'Rated Voltage': '12V DC',
+      'Rated Power': '80W',
+      'Rated RPM': '2000 RPM',
+      'Rated Torque': '0.38 Nm',
+      'Rated Current': '8.9 A',
+      'Peak Efficiency': '78%',
+      'Bearing Type': 'Sintered Bronze Sleeve Bearings',
+      'Shaft Diameter': '6.35 mm (1/4") shaft'
+    },
+    electricalRatings: {
+      voltage: '12V DC',
+      current: '8.9A Rated',
+      power: '80W Continuous',
+      efficiency: '78%'
+    },
+    dimensions: '60 x 60 x 85 mm',
+    typicalApplications: 'Small portable cooling fans, air circulation pumps, and active cabinet venting.',
+    datasheetPreview: 'JOHNSON ELECTRIC CARBON BRUSH MATRIX\n- Replaceable brushes for extended mechanical life.\n- High starting torque allows starting under high static loads.',
+    notes: 'Simple to drive (can run directly off a 12V battery with a simple switch or cheap brushed ESC).'
+  },
+
+  // 7. Water Pump
+  {
+    id: 'pump-dc-12v-5w',
+    partNumber: 'JT-180-12',
+    name: 'JT-180 Miniature Brushless Water Pump (12V)',
+    category: 'Water Pump',
+    brand: 'Generic OEM',
     price: 450,
-    shortDesc: 'Hermetic circuit protection board enclosing a 32A DIN-mounted solar DC miniature circuit breaker.',
+    shortDesc: 'Compact submersible or inline water pump running on brushless magnetic drive, highly energy efficient.',
     availability: 'In Stock',
     specs: {
-      'Trip Current': '32 Amps continuous',
-      'Surge Rating': '6.0 kA mechanical',
-      'Sealing Rating': 'IP67 fully sealed'
+      'Pump Mechanism': 'Brushless Magnetic Drive Centrifugal',
+      'Operating Voltage': '12V DC',
+      'Max Flow Rate': '350 Liters/Hour (1.54 GPM)',
+      'Max Static Head': '2.0 meters (6.5 feet)',
+      'Rated Current': '0.40 A',
+      'Power Consumption': '4.8W',
+      'Waterproof Rating': 'IP68 Submersible',
+      'Lifespan': '> 30,000 hours'
     },
-    material: 'High-Impact Flame-Retardant ABS Base',
-    efficiency: 'Instantly breaks in <10ms on shorts',
-    voltage: '12V - 500V DC Sourced',
-    powerRating: 'None',
-    dimensions: '160 x 120 x 95 mm Box',
-    powerConsumption: '0 Watts',
-    recommendedApp: 'Safe outdoor agricultural yards where solar arrays can suffer high voltage lightning surges.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V DC',
+      current: '0.40A',
+      power: '4.8W',
+      efficiency: '89%'
     },
-    notes: 'Includes integrated cable packing glands. Standard DIN-rail mount interior.'
+    dimensions: '55 x 38 x 42 mm',
+    typicalApplications: 'Circulating water to wet cooling pads in portable 1.0 Ton evaporative coolers.',
+    datasheetPreview: 'JT-180 SUBMERSED FLUID FLUX\n- Designed for continuous 24/7 quiet operation (< 35 dBA).\n- Note: Centrifugal pump cannot self-prime; must be submersed in water.',
+    notes: 'Zero mechanical seal friction, eliminating water leak points. Consumes tiny solar load.'
+  },
+  {
+    id: 'pump-dc-24v-15w',
+    partNumber: 'JT-550-24',
+    name: 'JT-550 High-Flow Brushless Pump (24V)',
+    category: 'Water Pump',
+    brand: 'Generic OEM',
+    price: 1250,
+    shortDesc: 'Higher voltage, heavy-flow submersible pump designed for bigger water distribution systems.',
+    availability: 'In Stock',
+    specs: {
+      'Pump Mechanism': 'Brushless Magnetic Centrifugal',
+      'Operating Voltage': '24V DC',
+      'Max Flow Rate': '1000 Liters/Hour (4.4 GPM)',
+      'Max Static Head': '5.0 meters (16.4 feet)',
+      'Rated Current': '0.60 A',
+      'Power Consumption': '14.4W',
+      'Waterproof Rating': 'IP68 Submersible',
+      'Inlet / Outlet Size': '12 mm outer diameter'
+    },
+    electricalRatings: {
+      voltage: '24V DC',
+      current: '0.60A',
+      power: '14.4W',
+      efficiency: '91%'
+    },
+    dimensions: '82 x 48 x 52 mm',
+    typicalApplications: 'Large commercial cooling pad supply, multi-stage filtration loops, and tall vertical risers.',
+    datasheetPreview: 'JT-550 CALIBRATED PRESSURE HEAD\n- High torque impeller prevents clogging from minor scale buildup.\n- Safe for operation with saline or grey water spray.',
+    notes: 'Very high flow for its small 15W rating, ensuring fast pad saturation during peak heat periods.'
+  },
+  {
+    id: 'pump-dc-12v-15w',
+    partNumber: 'SF-DP12-15',
+    name: 'SEAFLO Positive Displacement Diaphragm Pump (12V)',
+    category: 'Water Pump',
+    brand: 'SEAFLO',
+    price: 2450,
+    shortDesc: 'Self-priming positive displacement diaphragm pump delivering high pressure for misting nozzles.',
+    availability: 'In Stock',
+    specs: {
+      'Pump Mechanism': '3-Chamber Positive Displacement Diaphragm',
+      'Operating Voltage': '12V DC',
+      'Max Flow Rate': '450 Liters/Hour (1.2 GPM)',
+      'Max Pressure': '35 PSI (2.4 Bar)',
+      'Rated Current': '1.25 A',
+      'Power Consumption': '15W',
+      'Waterproof Rating': 'IP66 Dust & Splash Proof',
+      'Self-Priming': 'Up to 1.8m (6 feet) dry lift'
+    },
+    electricalRatings: {
+      voltage: '12V DC',
+      current: '1.25A',
+      power: '15W',
+      efficiency: '80%'
+    },
+    dimensions: '160 x 100 x 60 mm',
+    typicalApplications: 'Running high-pressure water misting nozzles to boost evaporative efficiency in low humidity.',
+    datasheetPreview: 'SEAFLO 21-SERIES DIAPHRAGM MANUAL\n- Capable of running dry without damage.\n- Integrated pressure demand switch turns pump off automatically at high pressure limits.',
+    notes: 'Self-priming ability allows placing the pump above the water level for easier dry-access servicing.'
   },
 
-  // 12. ACCESSORIES
+  // 8. Swing Motor
   {
-    id: 'acc-cast-set',
-    partNumber: 'AC-REX-ROLL5',
-    name: 'Rexello Heavy Caster Roller Set (x4)',
-    category: 'Accessories',
-    brand: 'Rexello Castors',
-    price: 200,
-    shortDesc: 'Four premium 360-degree swiveling rollers including two locking foot tabs to anchor the unit.',
+    id: 'swing-servo-5v',
+    partNumber: 'MG996R-SG',
+    name: 'TowerPro MG996R High-Torque Metal Gear Servo',
+    category: 'Swing Motor',
+    brand: 'TowerPro',
+    price: 450,
+    shortDesc: 'Classic metal gear servo with high positioning torque, ideal for precise damper steering.',
     availability: 'In Stock',
     specs: {
-      'Swivel Type': 'Smooth dual-ball tracks',
-      'Load Boundary': '120 kg mechanical total',
-      'Locking System': 'Dual wheel tread locks'
+      'Motor Type': 'Coreless Brushed DC with Metal Gearbox',
+      'Operating Voltage': '4.8V - 6.6V DC',
+      'Stall Torque': '1.1 Nm (at 6.0V)',
+      'Rotation Angle': '0° to 180° Configurable',
+      'Speed': '60° in 0.16 seconds',
+      'Average Current': '0.50 A',
+      'Control Protocol': 'PWM Duty Cycle (50Hz standard)',
+      'Feedback Type': 'Potentiometer internal position'
     },
-    material: 'Deep zinc plated steel structures & low friction Polyurethane',
-    efficiency: 'Minimal rolling resistance rolling core',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '75 x 50 x 60 mm Base',
-    powerConsumption: 'None',
-    recommendedApp: 'Portable water cooling units that undergo daily indoor relocation.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '5V DC',
+      current: '0.50A Average',
+      power: '2.5W',
+      efficiency: '75%'
     },
-    notes: 'Soft compound tread prevents any scratching or squeaking on hard marble levels.'
+    dimensions: '40.7 x 19.7 x 42.9 mm',
+    typicalApplications: 'Steering internal directional air louvers or louvre sweep cycles in smart coolers.',
+    datasheetPreview: 'MG996R POSITIONING MATRIX\n- All steel gears for extreme wear resistance.\n- Standard 3-pin connector (VCC, GND, PWM Signal).',
+    notes: 'Needs stable 5V rail. Avoid running directly off noisy 12V system rails. Position controllable directly via microcontroller.'
   },
   {
-    id: 'acc-active-carb',
-    partNumber: 'AC-3M-CARB22',
-    name: '3M Scent-Control Active Carbon Pre-Filter',
-    category: 'Accessories',
-    brand: '3M India Sourced',
-    price: 350,
-    shortDesc: 'Porous carbon composite block panel acting as an air intake pre-filter scrubbing particulate matter and odor.',
+    id: 'swing-stepper-12v',
+    partNumber: 'N17-40-S',
+    name: 'NEMA 17 Hybrid Stepper Motor (12V)',
+    category: 'Swing Motor',
+    brand: 'Generic OEM',
+    price: 950,
+    shortDesc: 'Precise bipolar stepper motor, ideal for quiet, continuous, and micro-stepped swing motions.',
     availability: 'In Stock',
     specs: {
-      'Pore Clearance': '15 Microns standard mesh',
-      'Odor scrubbing': '93% efficiency rating',
-      'Average lifepan': '6 Months variable use'
+      'Motor Type': 'Bipolar Stepper (1.8°/step, 200 steps/rev)',
+      'Operating Voltage': '12V DC (Nominal)',
+      'Holding Torque': '0.40 Nm',
+      'Rated Current': '1.50 A per phase',
+      'Phase Resistance': '1.6 Ohms',
+      'Phase Inductance': '3.2 mH',
+      'Rotation Angle': '360° Continuous Rotation',
+      'Connector': '4-Pin JST PH Female'
     },
-    material: 'Activated premium coconut shell carbon block',
-    efficiency: 'Filters 92.5% dust and mold spores',
-    voltage: 'None',
-    powerRating: 'None',
-    dimensions: '300 x 300 x 12 mm Sheet',
-    powerConsumption: 'None',
-    recommendedApp: 'Damp coolers working inside smoky kitchens, roadside retail spaces, or offices.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative', 'Hybrid Compressor-Assisted'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V DC',
+      current: '1.50A per phase',
+      power: '6.0W',
+      efficiency: '85%'
     },
-    notes: 'Highly recommended to keep cellulose pad from clogging with fine mud dust over autumn.'
+    dimensions: '42 x 42 x 40 mm',
+    typicalApplications: 'High-accuracy continuous sweep grids, dynamic custom cooling manifolds.',
+    datasheetPreview: 'NEMA 17 BIPOLAR CALIBRATED STEP\n- Double shaft option. Step accuracy ±5%.\n- Temperature rise max 80°C under full continuous hold.',
+    notes: 'Requires a stepper driver chip (like A4988 or TMC2208) to trigger step/direction signals from controller.'
   },
   {
-    id: 'acc-pump-12v',
-    partNumber: 'AC-SZ-PUMP12',
-    name: 'SubZero 12V Hydro-Cooling Pump Module',
-    category: 'Accessories',
-    brand: 'SubZero',
+    id: 'swing-sync-12v',
+    partNumber: 'TYC-50-12V',
+    name: 'Tyco 12V DC Synchronous Oscillation Motor',
+    category: 'Swing Motor',
+    brand: 'Generic OEM',
     price: 650,
-    shortDesc: 'A high-rise submersible brushless water pump featuring ceramic shaft to circulate water over cellulose wet pad.',
+    shortDesc: 'AC-style low RPM gearbox synchronous motor running on 12V DC, ideal for auto-swing structures.',
     availability: 'In Stock',
     specs: {
-      'Flow Rate': '8.0 Liters/min (LPM)',
-      'Pressure Head': '2.2 meters max rise',
-      'Shaft Core': 'Ceramic wear-free magnetic shaft'
+      'Motor Type': 'Permanent Magnet DC Geared Swing',
+      'Operating Voltage': '12V DC',
+      'Speed': '5 to 6 RPM',
+      'Output Torque': '0.80 Nm',
+      'Power Consumption': '3.0W',
+      'Rotation Angle': '90° Mechanical Sweep Arm Built-in',
+      'Rotation Direction': 'CW / CCW (Automatic reverse upon stall limit)',
+      'Shaft Type': '7 mm Flat D-shaft'
     },
-    material: 'Epoxy-Sealed Polycarbonate casing',
-    efficiency: '92% Hydraulic Power ratio',
-    voltage: '12V DC',
-    powerRating: '12 Watts',
-    dimensions: '80 x 50 x 55 mm',
-    powerConsumption: '12 Watts',
-    recommendedApp: 'Wet-bulb evaporative delivery and dynamic water cycling loops.',
-    combat: {
-      coolerTypes: ['Pure Evaporative Direct', 'Indirect Evaporative'],
-      cabinetSizes: [12, 14, 16],
-      insulationThicknesses: ['10mm', '20mm', '30mm'],
-      coolingCapacities: ['1.0 Ton', '1.5 Ton', '2.0 Ton']
+    electricalRatings: {
+      voltage: '12V DC',
+      current: '0.25A',
+      power: '3.0W',
+      efficiency: '70%'
     },
-    notes: 'Dry run protection support via level sensor pairing. Runs cold with zero hum.'
+    dimensions: '50 x 50 x 24 mm',
+    typicalApplications: 'Traditional continuous left-to-right auto-swing louvres with no programming required.',
+    datasheetPreview: 'TYC-50 DC OSICLLATING GEARBOX\n- Heavy-duty nylon gearbox for near silent running.\n- Zero controller code required: spins continuously when 12V is applied.',
+    notes: 'Super simple deployment. Connects directly to main 12V load output without complex microcontroller drivers.'
+  },
+
+  // 9. Sensors
+  {
+    id: 'sensor-sht31',
+    partNumber: 'SHT31-D-SENS',
+    name: 'Sensirion SHT31-D Temp/Humidity Sensor',
+    category: 'Sensors',
+    brand: 'Sensirion',
+    price: 450,
+    shortDesc: 'Highly accurate, chemically resistive sensor to monitor dry bulb and wet bulb temperatures.',
+    availability: 'In Stock',
+    specs: {
+      'Sensor Type': 'Digital Temperature & Relative Humidity',
+      'Temperature Accuracy': '±0.2°C (range 0°C to 90°C)',
+      'Humidity Accuracy': '±2% RH (range 0% to 100% RH)',
+      'Interface': 'I2C (Address 0x44 or 0x45)',
+      'Supply Voltage': '2.4V to 5.5V DC',
+      'Response Time': '8 seconds (t63%)',
+      'Filter': 'PTFE membrane cover for water protection'
+    },
+    electricalRatings: {
+      voltage: '3.3V / 5V DC',
+      current: '2.0mA',
+      power: '0.01W',
+      efficiency: '100%'
+    },
+    dimensions: '18 x 16 x 3 mm',
+    typicalApplications: 'Measuring real-time relative humidity to calculate evaporative cooling efficacy.',
+    datasheetPreview: 'SHT31 CHIP-SCALE TEMPERATURE SPEC\n- Fully calibrated and linearized digital output.\n- Chemically resistive to chlorine and alkaline mineral scaling.',
+    notes: 'The industry standard for accurate environmental measurements. Placed in the inlet air corridor.'
+  },
+  {
+    id: 'sensor-ultrasonic',
+    partNumber: 'MB-1013-LV',
+    name: 'MaxBotix Ultrasonic Water Level Transceiver',
+    category: 'Sensors',
+    brand: 'MaxBotix',
+    price: 2450,
+    shortDesc: 'Acoustic rangefinder to measure water reservoir level accurately, preventing dry pump runs.',
+    availability: 'In Stock',
+    specs: {
+      'Sensor Type': 'Acoustic Ultrasonic Distance Sensor',
+      'Resolution': '1 mm',
+      'Sensing Range': '30 cm to 500 cm (11.8" to 196")',
+      'Accuracy': '±1% of reading',
+      'Supply Voltage': '2.7V to 5.5V DC',
+      'Average Current': '3.1mA',
+      'Output Formats': 'Analogue Voltage, Pulse Width, Serial TTL'
+    },
+    electricalRatings: {
+      voltage: '5V DC',
+      current: '3.1mA',
+      power: '0.015W',
+      efficiency: '100%'
+    },
+    dimensions: '22 x 20 x 25 mm',
+    typicalApplications: 'Continuous water depth monitoring to automatically trigger water refill valves or shut down dry pumps.',
+    datasheetPreview: 'MAXBOTIX MB1013 ACOUSTIC FILTER\n- Narrow beam angle to avoid reading container side-wall rib reflections.\n- Auto-compensation for changes in humidity and air temp.',
+    notes: 'Must be mounted at the top of the reservoir tank looking downward.'
+  },
+  {
+    id: 'sensor-ina219',
+    partNumber: 'INA219-PWR',
+    name: 'INA219 High-Side DC Power & Current Monitor',
+    category: 'Sensors',
+    brand: 'Texas Instruments',
+    price: 220,
+    shortDesc: 'I2C-based power monitor measuring battery voltage and system current up to 3.2A with a 0.1 Ohm shunt.',
+    availability: 'In Stock',
+    specs: {
+      'Sensor Type': 'High-Side Current & Voltage Sensor',
+      'Bus Voltage Range': '0V to 26V DC',
+      'Max Measurable Current': '±3.2A',
+      'Measurement Resolution': '0.8 mA',
+      'Interface': 'I2C bus (Multi-address compatible)',
+      'Supply Voltage': '3.0V to 5.5V DC',
+      'Shunt Resistor': '0.1 Ohm alloy resistor'
+    },
+    electricalRatings: {
+      voltage: '3.3V / 5V DC',
+      current: '1.0mA',
+      power: '0.005W',
+      efficiency: '99%'
+    },
+    dimensions: '22 x 20 x 4 mm',
+    typicalApplications: 'Real-time telemetry to track power usage from small fans and sensors.',
+    datasheetPreview: 'TI INA219 SMART SHUNT PROTOCOL\n- Directly outputs power in milliwatts over I2C.\n- High precision alloy shunt prevents calibration drift.',
+    notes: 'Simple to deploy, but current is strictly limited to 3.2A. Exceeding this will burn out the shunt.'
+  },
+  {
+    id: 'sensor-ina226',
+    partNumber: 'INA226-PRO',
+    name: 'INA226 High-Current Power Monitor (36V 15A)',
+    category: 'Sensors',
+    brand: 'Texas Instruments',
+    price: 480,
+    shortDesc: 'Premium power monitoring chip with ultra-low shunt resistance, tracking high currents up to 15A.',
+    availability: 'In Stock',
+    specs: {
+      'Sensor Type': 'Bidirectional Current & Power Monitor',
+      'Bus Voltage Range': '0V to 36V DC',
+      'Max Measurable Current': '±15.0A (Scaleable with custom shunt)',
+      'Measurement Resolution': '0.1 mA',
+      'Interface': 'I2C (Up to 16 programmable addresses)',
+      'Shunt Resistor': '0.01 Ohm copper-manganese shunt',
+      'Bus Voltage Accuracy': '0.1% Max Deviation'
+    },
+    electricalRatings: {
+      voltage: '3.3V / 5V DC',
+      current: '1.0mA',
+      power: '0.005W',
+      efficiency: '99.5%'
+    },
+    dimensions: '22 x 20 x 4 mm',
+    typicalApplications: 'Tracking solar generation, battery status, and motor draw in 24V setups.',
+    datasheetPreview: 'INA226 CHIP-SCALE TELEMETRY CODES\n- Built-in programmable conversion time and alert pinouts.\n- Capable of measuring shunt voltage down to 10 microvolts.',
+    notes: 'Superior current capabilities. Perfect for tracking real-time motor efficiency.'
+  },
+
+  // 10. Controller PCB
+  {
+    id: 'pcb-esp32-wroom',
+    partNumber: 'ESP32-WROOM-32E',
+    name: 'Espressif ESP32-WROOM MCU Board',
+    category: 'Controller PCB',
+    brand: 'Espressif Systems',
+    price: 350,
+    shortDesc: 'Highly popular dual-core microcontroller with built-in Wi-Fi and Bluetooth, perfect for IoT coolers.',
+    availability: 'In Stock',
+    specs: {
+      'Processor': 'Xtensa Dual-Core 32-bit LX6 (240 MHz)',
+      'GPIO Pin Count': '26 Pin Out',
+      'On-Board Flash': '4 MB',
+      'Connectivity': 'Wi-Fi 802.11 b/g/n & Bluetooth v4.2 BR/EDR/BLE',
+      'ADC Resolution': '12-bit (Multi-channel)',
+      'Operating Voltage': '3.3V DC (IO Level)',
+      'Input Voltage (USB)': '5.0V DC'
+    },
+    electricalRatings: {
+      voltage: '3.3V DC',
+      current: '80mA (Peak 240mA during Wi-Fi transmission)',
+      power: '0.26W',
+      efficiency: '95%'
+    },
+    dimensions: '48 x 28 x 12 mm',
+    typicalApplications: 'Hosting wireless dashboards, local webservers, and PID environmental loop controls.',
+    datasheetPreview: 'ESPRESSIF ESP32 IOT ARCHITECTURE\n- Low-power sleep modes down to 15 microamps.\n- Built-in hardware PWM generators and I2C controllers.',
+    notes: 'Outstanding firmware community. Allows remote monitoring via mobile phones.'
+  },
+  {
+    id: 'pcb-rp2040-pico',
+    partNumber: 'RP2-PICO-W',
+    name: 'Raspberry Pi Pico W',
+    category: 'Controller PCB',
+    brand: 'Raspberry Pi',
+    price: 580,
+    shortDesc: 'Excellent dual ARM Cortex-M0+ microcontroller with smart PIO state machines and Wi-Fi interface.',
+    availability: 'In Stock',
+    specs: {
+      'Processor': 'Dual ARM Cortex-M0+ (133 MHz)',
+      'GPIO Pin Count': '26 Pin Out',
+      'On-Board Flash': '2 MB',
+      'Connectivity': 'Single-band 2.4GHz Wi-Fi (Infineon CYW43439)',
+      'Programmable IO': '8 State-machine PIO Blocks',
+      'ADC Resolution': '12-bit (3 Channels)',
+      'Operating Voltage': '3.3V DC'
+    },
+    electricalRatings: {
+      voltage: '3.3V DC',
+      current: '45mA',
+      power: '0.15W',
+      efficiency: '96%'
+    },
+    dimensions: '51 x 21 x 4 mm',
+    typicalApplications: 'Industrial real-time control, high-speed PWM motor pacing, and educational coding.',
+    datasheetPreview: 'RP2040 SMART PIO ARCHITECTURE\n- PIO allows executing high frequency subroutines without CPU load.\n- Dual-core setup allows splitting sensor reads and motor loops.',
+    notes: 'No built-in Bluetooth (Wi-Fi only on this model). Extremely cheap and reliable.'
+  },
+  {
+    id: 'pcb-stm32-bluepill',
+    partNumber: 'STM32F103-BP',
+    name: 'STM32F103C8T6 Blue Pill MCU Board',
+    category: 'Controller PCB',
+    brand: 'STMicroelectronics',
+    price: 390,
+    shortDesc: 'Rugged 32-bit ARM Cortex-M3 board with high-speed ADC converters and hardware CAN Bus support.',
+    availability: 'In Stock',
+    specs: {
+      'Processor': 'ARM Cortex-M3 (72 MHz)',
+      'GPIO Pin Count': '32 Pin Out',
+      'On-Board Flash': '64 KB',
+      'Connectivity': 'Hardware CAN 2.0B, USB 2.0 FS, SPI, I2C, USART',
+      'ADC Resolution': '12-bit (10 Channels)',
+      'Operating Voltage': '3.3V DC',
+      'Timers': '4-channel advanced motor control timers'
+    },
+    electricalRatings: {
+      voltage: '3.3V DC',
+      current: '35mA',
+      power: '0.11W',
+      efficiency: '97%'
+    },
+    dimensions: '53 x 22 x 5 mm',
+    typicalApplications: 'Noise-resistant industrial control, CAN-bus integration, and fast closed-loop motor driving.',
+    datasheetPreview: 'STM32 HIGH-SPEED MOTOR ENCODER CODES\n- Advanced timers support hardware quadrature encoders.\n- Superior electrical noise and ESD tolerance.',
+    notes: 'Requires an external programmer (like ST-Link v2) to flash firmware. No wireless connectivity.'
+  },
+  {
+    id: 'pcb-custom-esp32',
+    partNumber: 'CC-ESP32-S3',
+    name: 'Custom Industrial Solar Cooler Controller PCB',
+    category: 'Controller PCB',
+    brand: 'Zazen Solar',
+    price: 3200,
+    shortDesc: 'All-in-one controller board integrating ESP32-S3, power monitor, relay gate drivers, and screw terminals.',
+    availability: 'Low Stock',
+    specs: {
+      'Processor': 'Xtensa Dual-Core 32-bit ESP32-S3 (240 MHz)',
+      'GPIO Pin Count': '18 Industrial Screw Terminals',
+      'On-Board Flash': '8 MB with 2MB PSRAM',
+      'Power Input': '12V / 24V DC Wide Input Range',
+      'On-board Power Monitor': 'Integrated INA226 (measures battery voltage/current)',
+      'Gate Drivers': '3 Opto-isolated high-side MOSFET ports (up to 15A continuous)',
+      'Connectivity': 'Dual-band Wi-Fi, BLE 5.0, RS485 Transceiver'
+    },
+    electricalRatings: {
+      voltage: '12V - 24V DC Input',
+      current: '150mA base (Supports driving external loads up to 15A)',
+      power: '1.8W static',
+      efficiency: '92% buck conversion efficiency'
+    },
+    dimensions: '100 x 85 x 20 mm',
+    typicalApplications: 'Professional off-grid evaporative coolers, custom smart solar applications.',
+    datasheetPreview: 'ZAZEN INDUSTRIAL SMART COOLER BOARD SPEC\n- Features high-current screw terminal blocks for secure connections.\n- Built-in TVS transient surge protection diodes and auto-resettable fuses.',
+    notes: 'Highly professional, rugged design. Avoids loose breadboard jumpers and wire nests completely.'
+  },
+
+  // 11. Protection Circuit
+  {
+    id: 'prot-fuse-block',
+    partNumber: 'FB-ATO-06',
+    name: '6-Way ATO Safety Fuse Block with LED indicators',
+    category: 'Protection Circuit',
+    brand: 'Blue Sea Systems',
+    price: 850,
+    shortDesc: 'Automotive fuse holder featuring blown-fuse warning LEDs and a clear protective cover.',
+    availability: 'In Stock',
+    specs: {
+      'Circuit Type': '6-Circuit common bus terminal block',
+      'Maximum Voltage': '32V DC',
+      'Maximum Current': '30A per circuit (100A total panel)',
+      'Fuse Style': 'Standard ATO / ATC Blade Fuses',
+      'Screw Terminals': '#8-32 Screws with captive star washers',
+      'Ground Bus': 'None (Requires separate ground block)'
+    },
+    electricalRatings: {
+      voltage: '32V DC Max',
+      current: '30A Max per circuit',
+      power: 'N/A (Passive)'
+    },
+    dimensions: '85 x 65 x 38 mm',
+    typicalApplications: 'Isolating and protecting individual loads (fans, water pumps, controller) with matching fuses.',
+    datasheetPreview: 'BLUE SEA 5025 COMPLIANT CIRCUITS\n- Red LED lights up immediately when a fuse blows.\n- Ignition protected - safe for locations near battery gasses.',
+    notes: 'Provides a highly professional safety foundation. Fuses are sold separately.'
+  },
+  {
+    id: 'prot-mcb-dc-63a',
+    partNumber: 'MCB-DC-2P-63',
+    name: 'Midnite Solar 2-Pole 63A DC MCB',
+    category: 'Protection Circuit',
+    brand: 'Midnite Solar',
+    price: 1450,
+    shortDesc: 'Industrial-grade DIN-rail mounted DC circuit breaker, serving as a main battery disconnect switch.',
+    availability: 'In Stock',
+    specs: {
+      'Breaker Type': 'Miniature Circuit Breaker (MCB) 2-Pole',
+      'Operating Voltage': '125V DC Max',
+      'Rated Current': '63A',
+      'Interrupt Capacity': '10,000 Amps',
+      'Mounting Type': 'Standard 35mm DIN Rail',
+      'Wire Range': '14 AWG to 2 AWG'
+    },
+    electricalRatings: {
+      voltage: '125V DC Max',
+      current: '63A Trip Rating',
+      power: 'N/A (Passive)'
+    },
+    dimensions: '79 x 35 x 75 mm',
+    typicalApplications: 'Main power isolation switch, placed directly between battery bank and system bus.',
+    datasheetPreview: 'MIDNITE SOLAR 2-POLE MAGNETIC TRIP\n- Magnetic-thermal mechanism prevents nuisance tripping in hot climates.\n- Bi-directional terminal ratings.',
+    notes: 'An essential safety component for high-power (24V or 48V) battery packs.'
+  },
+  {
+    id: 'prot-tvs-diode-pack',
+    partNumber: 'TVS-SMAJ-KIT',
+    name: 'TVS Transient Surge Protection Diode Pack',
+    category: 'Protection Circuit',
+    brand: 'Littelfuse',
+    price: 350,
+    shortDesc: 'Silicon transient voltage suppressors, protecting sensitive microcontroller pins from motor inductive surges.',
+    availability: 'In Stock',
+    specs: {
+      'Diode Types': 'Bidirectional TVS Diodes (SMAJ15CA / SMAJ30CA / SMAJ58CA)',
+      'Response Time': '< 1.0 picosecond',
+      'Peak Pulse Power': '400 Watts (10/1000us pulse)',
+      'Clamping Voltages': 'Calibrated for 12V, 24V or 48V bus systems',
+      'Reverse Standoff Volt': '15V / 30V / 58V'
+    },
+    electricalRatings: {
+      voltage: 'Up to 58V Stand-off',
+      current: 'N/A',
+      power: '400W Pulse Limit'
+    },
+    dimensions: 'SMD Package',
+    typicalApplications: 'Protecting ESP32 and sensor pins from voltage spikes when water pumps or fan motors are turned on/off.',
+    datasheetPreview: 'LITTELFUSE SMAJ SERIES CODES\n- Low incremental surge resistance.\n- High reliability and thermal resistance.',
+    notes: 'Should be soldered as close as possible to the input pins of sensitive microcontrollers.'
+  },
+
+  // 12. Connectors & Wiring
+  {
+    id: 'conn-xt60-pack',
+    partNumber: 'AM-XT60H-M',
+    name: 'Amass XT60-H Connectors (5 Pairs)',
+    category: 'Connectors & Wiring',
+    brand: 'Amass',
+    price: 450,
+    shortDesc: 'Authentic Amass gold-plated bullet connectors with safety sheaths, ideal for secure battery connections.',
+    availability: 'In Stock',
+    specs: {
+      'Connector Type': 'Male/Female High-Current Bullet Connector',
+      'Rated Current': '30A Continuous',
+      'Peak Current': '60A Max Pulse (< 2 mins)',
+      'Material': 'Gold-Plated Brass and High-temp Nylon Casing',
+      'Compatible Wire Gauge': '12 AWG - 14 AWG',
+      'Contact Resistance': '0.55 milliohms'
+    },
+    electricalRatings: {
+      voltage: '500V DC Max',
+      current: '30A Continuous / 60A Peak',
+      power: 'N/A'
+    },
+    dimensions: '16 x 16 x 8 mm (per pair)',
+    typicalApplications: 'Quick-disconnect battery lines, main solar panel feeds, and high-current motor power cables.',
+    datasheetPreview: 'AMASS XT60-H CONNECTOR MECHANICAL SPEC\n- Includes back sheaths, removing the need for heat-shrink tubing over solder joints.\n- Polarized housing prevents reverse polarity plugging.',
+    notes: 'The gold standard for reliable, high-current, vibrating applications.'
+  },
+  {
+    id: 'conn-xt90-pack',
+    partNumber: 'AM-XT90S-AS',
+    name: 'Amass XT90-S Anti-Spark Connectors (3 Pairs)',
+    category: 'Connectors & Wiring',
+    brand: 'Amass',
+    price: 750,
+    shortDesc: 'Heavy-duty connectors with integrated anti-spark resistors, preventing arcing during connection.',
+    availability: 'In Stock',
+    specs: {
+      'Connector Type': 'Male/Female Anti-Spark Connector',
+      'Rated Current': '45A Continuous',
+      'Peak Current': '90A Max Pulse',
+      'Anti-Spark System': 'Integrated pre-charge resistor in female housing',
+      'Compatible Wire Gauge': '8 AWG - 10 AWG',
+      'Contact Resistance': '0.30 milliohms'
+    },
+    electricalRatings: {
+      voltage: '500V DC Max',
+      current: '45A Continuous / 90A Peak',
+      power: 'N/A'
+    },
+    dimensions: '22 x 20 x 10 mm (per pair)',
+    typicalApplications: 'Connecting high-voltage 48V battery modules to prevent scary connector arcing and damage.',
+    datasheetPreview: 'XT90S PATENDED ANTI-SPARK TECHNOLOGY\n- Step-one contact routes current through a 5.1 Ohm resistor to pre-charge capacitor banks.\n- Prevents pin erosion from electric arcs.',
+    notes: 'Highly recommended for 24V or 48V systems containing big capacitive motor controllers.'
+  },
+  {
+    id: 'conn-silicone-12awg',
+    partNumber: 'SIL-12AWG-10',
+    name: '12 AWG Superflex Silicone Wire (5m Red + 5m Black)',
+    category: 'Connectors & Wiring',
+    brand: 'BNTECHGO',
+    price: 1150,
+    shortDesc: 'Ultra-flexible 12 gauge stranded tinned copper wire with high temperature resistant silicone insulation.',
+    availability: 'In Stock',
+    specs: {
+      'Wire Type': 'High-Stranded Flexible Silicone Cable',
+      'Conductor Gauge': '12 AWG (3.31 mm² area)',
+      'Strand Count': '680 strands of 0.08 mm tinned copper',
+      'Insulation Material': 'High-temp Silicone Rubber',
+      'Temperature Rating': '-60°C to +200°C',
+      'Rated Current Limit': '88 Amps continuous peak',
+      'Outer Diameter': '4.5 mm'
+    },
+    electricalRatings: {
+      voltage: '600V Max Rating',
+      current: '88A Rating in open air',
+      power: 'N/A'
+    },
+    dimensions: '10 meters total length (5m Red, 5m Black)',
+    typicalApplications: 'Heavy motor phase wires, battery distribution trunks, and general high-current distribution.',
+    datasheetPreview: 'BNTECHGO SUPERFLEX CABLE STANDARD\n- Stranded tinned copper prevents oxidation and corrosion in humid air.\n- Extremely flexible - bends easily around tight cabinet corners.',
+    notes: 'Much easier to route than stiff PVC insulation wire. Highly durable.'
+  },
+  {
+    id: 'conn-jst-ph2-kit',
+    partNumber: 'JST-PH-20-KIT',
+    name: 'JST-PH 2.0mm Sensor Connector Kit (120 Pcs)',
+    category: 'Connectors & Wiring',
+    brand: 'Generic OEM',
+    price: 550,
+    shortDesc: 'A complete assortment of 2.0mm pitch terminal housings, crimps, and board headers.',
+    availability: 'In Stock',
+    specs: {
+      'Connector Pitch': '2.0 mm',
+      'Housing Sizes': '2-Pin, 3-Pin, 4-Pin, 5-Pin, 6-Pin housings',
+      'Maximum Voltage': '100V AC/DC',
+      'Maximum Current': '2.0A continuous',
+      'Contact Material': 'Phosphor Bronze tin-plated',
+      'Housing Material': 'Nylon66 UL94V-0'
+    },
+    electricalRatings: {
+      voltage: '100V Max',
+      current: '2.0A Max',
+      power: 'N/A'
+    },
+    dimensions: 'Storage box: 130 x 65 x 22 mm',
+    typicalApplications: 'Terminating environmental sensors and low-power servo swing connections.',
+    datasheetPreview: 'JST-PH COMPACT CRIMP CONNECTOR STANDARDS\n- Ideal for low profile wire-to-board interconnects.\n- Friction locking mechanism prevents vibration disconnects.',
+    notes: 'Requires a specialized JST crimping tool (like PA-09 or SN-28B) to attach terminals to wire.'
   }
 ];

@@ -2,41 +2,37 @@ export interface ComponentItem {
   id: string;
   partNumber: string;
   name: string;
-  category: string;
+  category: CategoryType;
   brand: string;
   price: number;
   shortDesc: string;
   availability: 'In Stock' | 'Low Stock' | 'Backorder';
   specs: Record<string, string>;
-  material: string;
-  efficiency: string;
-  voltage: string;
-  powerRating: string;
-  dimensions: string;
-  powerConsumption: string;
-  recommendedApp: string;
-  combat: {
-    coolerTypes: string[];
-    cabinetSizes: number[];
-    insulationThicknesses: string[];
-    coolingCapacities: string[];
+  electricalRatings: {
+    voltage: string;
+    current: string;
+    power: string;
+    efficiency?: string;
   };
+  dimensions: string;
+  typicalApplications: string;
+  datasheetPreview: string;
   notes: string;
 }
 
 export const CATEGORIES = [
-  'Compressor',
-  'Condenser',
-  'Evaporator',
-  'Expansion Device',
-  'Fans',
-  'Cabinet Material',
-  'Insulation',
-  'Controller',
+  'Solar Module',
+  'Battery Pack',
+  'Solar Charge Controller',
+  'DC-DC Converter',
+  'Motor Controller',
+  'Main Motor',
+  'Water Pump',
+  'Swing Motor',
   'Sensors',
-  'Lighting',
-  'Electrical Components',
-  'Accessories'
+  'Controller PCB',
+  'Protection Circuit',
+  'Connectors & Wiring'
 ] as const;
 
 export type CategoryType = typeof CATEGORIES[number];

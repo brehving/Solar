@@ -418,9 +418,13 @@ export default function App() {
                 </div>
                 <SizingBOMGenerator
                   panelWattage={panelWattage}
+                  setPanelWattage={setPanelWattage}
                   activeCooler={activeCooler}
+                  setSelectedCoolerId={setSelectedCoolerId}
                   mpptEnabled={mpptEnabled}
+                  setMpptEnabled={setMpptEnabled}
                   irradiancePercent={irradiancePercent}
+                  setIrradiancePercent={setIrradiancePercent}
                 />
               </div>
             )}

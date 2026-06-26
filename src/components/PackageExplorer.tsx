@@ -24,7 +24,7 @@ import {
   XCircle,
   Activity,
   Gauge,
-  DollarSign
+  IndianRupee
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -818,7 +818,7 @@ export function PackageExplorer({ onBack }: PackageExplorerProps) {
         {[
           { id: 'overview', label: 'Product Overview', icon: Layers },
           { id: 'features', label: 'Package Features', icon: Table },
-          { id: 'pricing', label: 'Pricing', icon: DollarSign },
+          { id: 'pricing', label: 'Pricing', icon: IndianRupee },
           { id: 'market', label: 'Market Comparison', icon: LineChart },
           { id: 'bom', label: '🔧 Hardware BOM', icon: Cpu }
         ].map((tab) => {
