@@ -24,7 +24,9 @@ import {
   Sliders, 
   DollarSign,
   Compass,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Menu,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -60,6 +62,7 @@ export default function App() {
   // Router-like state to manage current page/tab: 
   // 'calculator' | 'charts' | 'bom' | 'simulation' | 'packages'
   const [activeTab, setActiveTab] = useState<'calculator' | 'charts' | 'bom' | 'simulation' | 'packages'>('calculator');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Load selected cooler specifications
   const activeCooler = useMemo(() => {
@@ -98,51 +101,62 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans antialiased">
       
       {/* Global Header Banner */}
-      <header className="bg-white border-b border-slate-200/80 sticky top-0 z-40 px-6 py-4.5 shadow-xs">
-        <div className="w-full max-w-[95%] xl:max-w-[94%] 2xl:max-w-[1800px] min-[1920px]:max-w-[1920px] min-[2200px]:max-w-[2150px] min-[2560px]:max-w-[95vw] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <header className="bg-white border-b border-slate-200/80 sticky top-0 z-40 px-4 py-3 sm:px-6 sm:py-4.5 shadow-xs">
+        <div className="w-full max-w-[95%] xl:max-w-[94%] 2xl:max-w-[1800px] min-[1920px]:max-w-[1920px] min-[2200px]:max-w-[2150px] min-[2560px]:max-w-[95vw] mx-auto flex items-center justify-between gap-4">
           
           {/* Logo & Headline */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-650 flex items-center justify-center text-white font-mono font-bold tracking-tight shadow-sm">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-650 flex items-center justify-center text-white font-mono font-bold tracking-tight shadow-sm text-base sm:text-lg flex-shrink-0">
               ⚡
             </div>
             <div>
-              <h1 className="text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-2">
+              <h1 className="text-sm sm:text-base md:text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5 flex-wrap">
                 SOLAR DIRECT DRIVE
-                <span className="text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-100 px-2 py-0.5 rounded font-mono font-bold">DC BUS NATIVE</span>
+                <span className="text-[8px] sm:text-[10px] bg-indigo-50 text-indigo-700 border border-indigo-100 px-1.5 py-0.5 rounded font-mono font-bold">DC BUS</span>
               </h1>
-              <p className="text-xs text-slate-500 font-medium">Sizing Calculator & Configuration Simulator</p>
+              <p className="text-[10px] sm:text-xs text-slate-500 font-medium">Sizing Calculator & Configuration Simulator</p>
             </div>
           </div>
 
-          {/* Core system status badge */}
-          <div className="flex items-center gap-3">
-            <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-2xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              Low Voltage 48V DC Safe System
+          {/* Right side controls: Hamburger on mobile, Badge+Reset on Desktop */}
+          <div className="flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-3">
+              <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Low Voltage 48V DC Safe System
+              </div>
+              <button 
+                onClick={() => {
+                  setSelectedCoolerId('14-inch');
+                  setPanelWattage(110);
+                  setIrradiancePercent(85);
+                  setMpptEnabled(true);
+                  setSimulatedHour(12);
+                  setIsTimeSimActive(false);
+                  setActiveTab('calculator');
+                }}
+                className="text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 border border-transparent hover:border-slate-200 px-3 py-1.5 rounded-lg transition-all"
+                title="Reset configuration defaults"
+              >
+                Reset Configuration
+              </button>
             </div>
-            <button 
-              onClick={() => {
-                setSelectedCoolerId('14-inch');
-                setPanelWattage(110);
-                setIrradiancePercent(85);
-                setMpptEnabled(true);
-                setSimulatedHour(12);
-                setIsTimeSimActive(false);
-                setActiveTab('calculator');
-              }}
-              className="text-xs font-medium text-slate-500 hover:text-slate-800 hover:bg-slate-100 border border-transparent hover:border-slate-200 px-3 py-1.5 rounded-lg transition-all"
-              title="Reset configuration defaults"
+            
+            {/* Mobile menu trigger button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 focus:outline-none transition-all cursor-pointer animate-[pulse_3s_infinite]"
+              aria-label="Toggle navigation menu"
             >
-              Reset Configuration
+              <Menu className="w-5.5 h-5.5" />
             </button>
           </div>
           
         </div>
       </header>
 
-      {/* Main Tabbed Navigation bar */}
-      <nav className="bg-slate-100 border-b border-slate-200/60 py-2 px-6">
+      {/* Main Tabbed Navigation bar for Desktop */}
+      <nav className="hidden md:block bg-slate-100 border-b border-slate-200/60 py-2 px-6">
         <div className="w-full max-w-[95%] xl:max-w-[94%] 2xl:max-w-[1800px] min-[1920px]:max-w-[1920px] min-[2200px]:max-w-[2150px] min-[2560px]:max-w-[95vw] mx-auto flex flex-wrap gap-2">
           {[
             { id: 'calculator', label: '⚡ Sizing Calculator', icon: Sliders },
@@ -175,8 +189,103 @@ export default function App() {
         </div>
       </nav>
 
+      {/* Mobile Drawer Navigation overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop blur overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 md:hidden"
+            />
+            {/* Slide-out Panel */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-0 bottom-0 w-full max-w-[280px] bg-white shadow-2xl z-50 p-6 flex flex-col justify-between md:hidden border-l border-slate-100"
+            >
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                  <div>
+                    <h3 className="font-extrabold text-slate-900 text-sm tracking-tight">Navigation</h3>
+                    <p className="text-[10px] text-slate-400 font-mono">SOLAR DIRECT DC</p>
+                  </div>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100 border border-slate-200 cursor-pointer transition-all"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {[
+                    { id: 'calculator', label: 'Sizing Calculator', icon: Sliders },
+                    { id: 'charts', label: 'Sizing Curves & Charts', icon: TrendingUp },
+                    { id: 'bom', label: 'BOM Cost Estimator', icon: FileSpreadsheet },
+                    { id: 'simulation', label: 'Battery Buffer Simulator', icon: Battery },
+                    { id: 'packages', label: 'Bundle Package Explorer', icon: ShoppingBag }
+                  ].map(tab => {
+                    const isSelected = activeTab === tab.id;
+                    const IconComp = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveTab(tab.id as any);
+                          setIsMobileMenuOpen(false);
+                          if (tab.id === 'simulation') {
+                            setIsTimeSimActive(true);
+                          }
+                        }}
+                        className={`w-full px-4 py-3 rounded-xl text-xs font-bold tracking-tight transition-all cursor-pointer flex items-center gap-3 ${
+                          isSelected
+                            ? 'bg-indigo-600 text-white shadow-sm font-extrabold'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                        }`}
+                      >
+                        <IconComp className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-slate-450'}`} />
+                        <span>{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Status and Reset controls inside drawer on mobile */}
+              <div className="space-y-3.5 pt-4 border-t border-slate-100">
+                <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 p-3 rounded-xl text-[10.5px] font-semibold flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
+                  <span>Low Voltage 48V DC Safe System</span>
+                </div>
+                <button
+                  onClick={() => {
+                    setSelectedCoolerId('14-inch');
+                    setPanelWattage(110);
+                    setIrradiancePercent(85);
+                    setMpptEnabled(true);
+                    setSimulatedHour(12);
+                    setIsTimeSimActive(false);
+                    setActiveTab('calculator');
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="w-full text-xs font-bold text-slate-600 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 py-2.5 rounded-xl transition-all text-center cursor-pointer"
+                >
+                  Reset Configuration
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Body */}
-      <main className="flex-1 w-full max-w-[95%] xl:max-w-[94%] 2xl:max-w-[1800px] min-[1920px]:max-w-[1920px] min-[2200px]:max-w-[2150px] min-[2560px]:max-w-[95vw] mx-auto px-6 py-8 md:py-12">
+      <main className="flex-1 w-full max-w-[95%] xl:max-w-[94%] 2xl:max-w-[1800px] min-[1920px]:max-w-[1920px] min-[2200px]:max-w-[2150px] min-[2560px]:max-w-[95vw] mx-auto px-4 py-6 md:px-6 md:py-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -194,10 +303,10 @@ export default function App() {
               <div className="space-y-12">
                 
                 {/* Visualizer and Slider Grid layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 items-stretch">
                   
                   {/* Left Column: Interactive Settings Input deck (5 cols) */}
-                  <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs space-y-6">
+                  <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-8 flex flex-col justify-between shadow-xs space-y-6">
                     
                     <div>
                       <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider">Input System Tuning</span>

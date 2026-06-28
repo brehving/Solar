@@ -1622,7 +1622,7 @@ export function SizingBOMGenerator({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full max-w-lg bg-white shadow-2xl z-50 flex flex-col justify-between border-l border-slate-200"
+              className="fixed top-0 right-0 h-full w-full max-w-full md:max-w-lg bg-white shadow-2xl z-50 flex flex-col justify-between border-l border-slate-200"
             >
               {/* Drawer Header */}
               <div className="p-5 border-b border-slate-100 flex items-start justify-between bg-slate-950 text-white flex-shrink-0">

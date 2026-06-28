@@ -953,101 +953,103 @@ export function PackageExplorer({ onBack }: PackageExplorerProps) {
                 </div>
 
                 {/* Schematic space */}
-                <div className="aspect-[16/9] bg-slate-950 rounded-2xl relative border border-slate-900 flex flex-col justify-between p-4 overflow-hidden">
-                  {/* Grid background */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] opacity-15 pointer-events-none" />
+                <div className="overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0">
+                  <div className="aspect-[16/9] min-w-[460px] sm:min-w-0 bg-slate-950 rounded-2xl relative border border-slate-900 flex flex-col justify-between p-4 overflow-hidden">
+                    {/* Grid background */}
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] opacity-15 pointer-events-none" />
 
-                  {/* Top Row nodes */}
-                  <div className="flex justify-between items-start relative z-10">
-                    {/* Solar Panel Box */}
-                    <div className={`p-2.5 rounded-xl border text-center transition w-[130px] ${
-                      activeModel.hasSolar
-                        ? 'bg-amber-950/20 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)] opacity-100'
-                        : 'bg-slate-900/60 border-slate-850 text-slate-600 opacity-30 line-through'
-                    }`}>
-                      <Sun className="w-5 h-5 mx-auto mb-1 animate-[pulse_2s_infinite]" />
-                      <span className="text-[9px] font-extrabold uppercase block">Solar PV Generation</span>
-                      <span className="text-[8.5px] block opacity-85 mt-0.5">
-                        {activeModel.hasSolar ? `${Math.round(solarSunIntensity * 1.2)}W Output` : 'Optional PV'}
-                      </span>
-                    </div>
-
-                    {/* Central Bus Switch */}
-                    <div className="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center w-[130px] relative">
-                      <span className="text-[8px] text-slate-500 block uppercase font-bold tracking-widest">REGULATOR BUS</span>
-                      <span className="text-[10.5px] text-indigo-400 font-black block mt-0.5">48V DC Standard</span>
-                      <span className="text-[9px] text-slate-400 block mt-0.5">Current: Stable</span>
-                    </div>
-
-                    {/* Battery Storage Box */}
-                    <div className={`p-2.5 rounded-xl border text-center transition w-[130px] ${
-                      activeModel.hasBattery
-                        ? 'bg-emerald-950/20 border-emerald-500 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.15)] opacity-100'
-                        : 'bg-slate-900/60 border-slate-850 text-slate-600 opacity-30 line-through'
-                    }`}>
-                      <Battery className="w-5 h-5 mx-auto mb-1" />
-                      <span className="text-[9px] font-extrabold uppercase block">LFP Storage Buffer</span>
-                      <span className="text-[8.5px] block opacity-85 mt-0.5">
-                        {activeModel.hasBattery ? 'Buffered 48.2V Ready' : 'Optional LFP'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Flow pipeline diagram lines */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <svg className="w-full h-full" viewBox="0 0 450 250">
-                      {/* Solar grid flow */}
-                      <path
-                        d="M100,55 L220,105"
-                        fill="none"
-                        stroke={activeModel.hasSolar && solarSunIntensity > 15 ? '#fbbf24' : '#1e293b'}
-                        strokeWidth="2.5"
-                        strokeDasharray="6, 6"
-                        className={activeModel.hasSolar && solarSunIntensity > 15 ? 'animate-[dash_1s_linear_infinite]' : ''}
-                      />
-
-                      {/* Battery grid flow */}
-                      <path
-                        d="M350,55 L230,105"
-                        fill="none"
-                        stroke={activeModel.hasBattery ? '#10b981' : '#1e293b'}
-                        strokeWidth="2.5"
-                        strokeDasharray="6, 6"
-                        className={activeModel.hasBattery ? 'animate-[dash_1s_linear_infinite]' : ''}
-                      />
-
-                      {/* Bus to Fan line */}
-                      <path
-                        d="M225,140 L225,185"
-                        fill="none"
-                        stroke="#6366f1"
-                        strokeWidth="3.5"
-                        strokeDasharray="8, 8"
-                        className="animate-[dash_1.5s_linear_infinite]"
-                      />
-                      
-                      <style dangerouslySetInnerHTML={{ __html: `
-                        @keyframes dash {
-                          to {
-                            stroke-dashoffset: -20;
-                          }
-                        }
-                      ` }} />
-                    </svg>
-                  </div>
-
-                  {/* Bottom Fan Shroud Component */}
-                  <div className="flex justify-center relative z-10">
-                    <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl w-[200px] flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                        {renderCoolerGraphic(12, true, coolerSpeedStep > 1)}
-                      </div>
-                      <div className="text-left leading-tight font-mono">
-                        <span className="text-[9.5px] font-black text-white block uppercase">Chassis Fan Load</span>
-                        <span className="text-[8.5px] text-slate-400 block mt-0.5">
-                          Draw: {Math.round(activeSizeSpec.powerDraw * (coolerSpeedStep * 0.33))}W Peak
+                    {/* Top Row nodes */}
+                    <div className="flex justify-between items-start relative z-10">
+                      {/* Solar Panel Box */}
+                      <div className={`p-2.5 rounded-xl border text-center transition w-[130px] ${
+                        activeModel.hasSolar
+                          ? 'bg-amber-950/20 border-amber-500 text-amber-300 shadow-[0_0_10px_rgba(245,158,11,0.15)] opacity-100'
+                          : 'bg-slate-900/60 border-slate-850 text-slate-600 opacity-30 line-through'
+                      }`}>
+                        <Sun className="w-5 h-5 mx-auto mb-1 animate-[pulse_2s_infinite]" />
+                        <span className="text-[9px] font-extrabold uppercase block">Solar PV Generation</span>
+                        <span className="text-[8.5px] block opacity-85 mt-0.5">
+                          {activeModel.hasSolar ? `${Math.round(solarSunIntensity * 1.2)}W Output` : 'Optional PV'}
                         </span>
-                        <span className="text-[8.5px] text-emerald-400 font-extrabold block mt-0.5">Turbine Engaged</span>
+                      </div>
+
+                      {/* Central Bus Switch */}
+                      <div className="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center w-[130px] relative">
+                        <span className="text-[8px] text-slate-500 block uppercase font-bold tracking-widest">REGULATOR BUS</span>
+                        <span className="text-[10.5px] text-indigo-400 font-black block mt-0.5">48V DC Standard</span>
+                        <span className="text-[9px] text-slate-400 block mt-0.5">Current: Stable</span>
+                      </div>
+
+                      {/* Battery Storage Box */}
+                      <div className={`p-2.5 rounded-xl border text-center transition w-[130px] ${
+                        activeModel.hasBattery
+                          ? 'bg-emerald-950/20 border-emerald-500 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.15)] opacity-100'
+                          : 'bg-slate-900/60 border-slate-850 text-slate-600 opacity-30 line-through'
+                      }`}>
+                        <Battery className="w-5 h-5 mx-auto mb-1" />
+                        <span className="text-[9px] font-extrabold uppercase block">LFP Storage Buffer</span>
+                        <span className="text-[8.5px] block opacity-85 mt-0.5">
+                          {activeModel.hasBattery ? 'Buffered 48.2V Ready' : 'Optional LFP'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Flow pipeline diagram lines */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <svg className="w-full h-full" viewBox="0 0 450 250">
+                        {/* Solar grid flow */}
+                        <path
+                          d="M100,55 L220,105"
+                          fill="none"
+                          stroke={activeModel.hasSolar && solarSunIntensity > 15 ? '#fbbf24' : '#1e293b'}
+                          strokeWidth="2.5"
+                          strokeDasharray="6, 6"
+                          className={activeModel.hasSolar && solarSunIntensity > 15 ? 'animate-[dash_1s_linear_infinite]' : ''}
+                        />
+
+                        {/* Battery grid flow */}
+                        <path
+                          d="M350,55 L230,105"
+                          fill="none"
+                          stroke={activeModel.hasBattery ? '#10b981' : '#1e293b'}
+                          strokeWidth="2.5"
+                          strokeDasharray="6, 6"
+                          className={activeModel.hasBattery ? 'animate-[dash_1s_linear_infinite]' : ''}
+                        />
+
+                        {/* Bus to Fan line */}
+                        <path
+                          d="M225,140 L225,185"
+                          fill="none"
+                          stroke="#6366f1"
+                          strokeWidth="3.5"
+                          strokeDasharray="8, 8"
+                          className="animate-[dash_1.5s_linear_infinite]"
+                        />
+                        
+                        <style dangerouslySetInnerHTML={{ __html: `
+                          @keyframes dash {
+                            to {
+                              stroke-dashoffset: -20;
+                            }
+                          }
+                        ` }} />
+                      </svg>
+                    </div>
+
+                    {/* Bottom Fan Shroud Component */}
+                    <div className="flex justify-center relative z-10">
+                      <div className="bg-slate-900 border border-slate-800 p-2.5 rounded-xl w-[200px] flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                          {renderCoolerGraphic(12, true, coolerSpeedStep > 1)}
+                        </div>
+                        <div className="text-left leading-tight font-mono">
+                          <span className="text-[9.5px] font-black text-white block uppercase">Chassis Fan Load</span>
+                          <span className="text-[8.5px] text-slate-400 block mt-0.5">
+                            Draw: {Math.round(activeSizeSpec.powerDraw * (coolerSpeedStep * 0.33))}W Peak
+                          </span>
+                          <span className="text-[8.5px] text-emerald-400 font-extrabold block mt-0.5">Turbine Engaged</span>
+                        </div>
                       </div>
                     </div>
                   </div>

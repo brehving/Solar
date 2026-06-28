@@ -634,14 +634,14 @@ export function SizingAnalytics({
             <span className="text-[8px] uppercase font-mono font-black text-slate-400 block mb-1">
               Select time slot to sync simulator state:
             </span>
-            <div className="grid grid-cols-7 gap-1">
+            <div className="flex sm:grid sm:grid-cols-7 gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               {dailyProfile.map(pt => {
                 const isMatch = pt.hour === simulatedHour;
                 return (
                   <button
                     key={pt.hour}
                     onClick={() => handleTimeSlotSync(pt.hour, pt.irradiance)}
-                    className={`py-1 rounded-sm text-[8px] font-mono border font-bold transition-all truncate text-center ${
+                    className={`py-1 flex-1 min-w-[42px] sm:min-w-0 rounded-sm text-[8px] font-mono border font-bold transition-all truncate text-center ${
                       isMatch
                         ? 'bg-indigo-600 border-indigo-600 text-white'
                         : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'
@@ -712,14 +712,14 @@ export function SizingAnalytics({
             <span className="text-[8px] uppercase font-mono font-black text-slate-400 block mb-1">
               Select time slot to sync simulator state:
             </span>
-            <div className="grid grid-cols-7 gap-1">
+            <div className="flex sm:grid sm:grid-cols-7 gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               {dailyProfile.map(pt => {
                 const isMatch = pt.hour === simulatedHour;
                 return (
                   <button
                     key={pt.hour}
                     onClick={() => handleTimeSlotSync(pt.hour, pt.irradiance)}
-                    className={`py-1 rounded-sm text-[8px] font-mono border font-bold transition-all truncate text-center ${
+                    className={`py-1 flex-1 min-w-[42px] sm:min-w-0 rounded-sm text-[8px] font-mono border font-bold transition-all truncate text-center ${
                       isMatch
                         ? 'bg-sky-600 border-sky-600 text-white'
                         : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-100'
