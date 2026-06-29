@@ -241,6 +241,16 @@ export function PackageExplorer({ onBack }: PackageExplorerProps) {
   // Page structure tabs as requested
   const [activeTab, setActiveTab] = useState<'overview' | 'features' | 'pricing' | 'market' | 'bom'>('overview');
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  React.useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
   // Unified selections
   const [selectedSize, setSelectedSize] = useState<string>('14-inch');
   const [selectedModelId, setSelectedModelId] = useState<string>('model-5');
@@ -1091,59 +1101,115 @@ export function PackageExplorer({ onBack }: PackageExplorerProps) {
               
               {/* Feature comparison table */}
               <div className="md:col-span-8 bg-slate-950/40 border border-white/5 p-4 rounded-2xl overflow-x-auto">
-                <div className="min-w-[500px] space-y-2 font-mono">
-                  {/* Table Header */}
-                  <div className="grid grid-cols-12 gap-2 text-[10px] font-black uppercase text-slate-500 py-2 border-b border-white/5 px-2 bg-slate-900/30">
-                    <div className="col-span-5 text-left text-indigo-400">System Integration Model</div>
-                    <div className="col-span-2 text-center">Solar Ready</div>
-                    <div className="col-span-2 text-center">LFP Battery</div>
-                    <div className="col-span-3 text-center">AC Auxiliary charging</div>
+                {isMobile ? (
+                  <div className="space-y-4">
+                    {PORTFOLIO_MODELS.map((item) => {
+                      const isSelected = item.id === selectedModelId;
+                      return (
+                        <div
+                          key={item.id}
+                          onClick={() => setSelectedModelId(item.id)}
+                          className={`p-4 rounded-2xl border transition-all text-left flex flex-col gap-3.5 cursor-pointer ${
+                            isSelected
+                              ? 'bg-indigo-950/20 border-indigo-500/60 shadow-[0_0_12px_rgba(99,102,241,0.15)]'
+                              : 'bg-slate-950/80 border-slate-900/40 hover:border-slate-800'
+                          }`}
+                        >
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-400 block">{item.badge}</span>
+                              <h4 className="text-sm font-extrabold text-white mt-0.5">{item.name}</h4>
+                            </div>
+                            {isSelected && (
+                              <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-indigo-500 text-slate-950 uppercase tracking-wider">
+                                Selected
+                              </span>
+                            )}
+                          </div>
+
+                          <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                            {item.subtitle}
+                          </p>
+
+                          <div className="grid grid-cols-3 gap-2.5 pt-1.5 border-t border-white/5 text-[10px] font-mono">
+                            <div className="bg-slate-900/80 p-2 rounded-xl border border-white/5 flex flex-col items-center text-center">
+                              <span className="text-slate-500 uppercase text-[8px] block">Solar Ready</span>
+                              <span className={`font-bold mt-1 ${item.hasSolar ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                {item.hasSolar ? 'Supported' : 'No'}
+                              </span>
+                            </div>
+                            <div className="bg-slate-900/80 p-2 rounded-xl border border-white/5 flex flex-col items-center text-center">
+                              <span className="text-slate-500 uppercase text-[8px] block">LFP Battery</span>
+                              <span className={`font-bold mt-1 ${item.hasBattery ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                {item.hasBattery ? 'Supported' : 'No'}
+                              </span>
+                            </div>
+                            <div className="bg-slate-900/80 p-2 rounded-xl border border-white/5 flex flex-col items-center text-center">
+                              <span className="text-slate-500 uppercase text-[8px] block">AC Charge</span>
+                              <span className={`font-bold mt-1 ${item.hasAcCharging ? 'text-emerald-400' : 'text-rose-450'}`}>
+                                {item.hasAcCharging ? 'Yes' : 'No'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+                ) : (
+                  <div className="min-w-[500px] space-y-2 font-mono">
+                    {/* Table Header */}
+                    <div className="grid grid-cols-12 gap-2 text-[10px] font-black uppercase text-slate-500 py-2 border-b border-white/5 px-2 bg-slate-900/30">
+                      <div className="col-span-5 text-left text-indigo-400">System Integration Model</div>
+                      <div className="col-span-2 text-center">Solar Ready</div>
+                      <div className="col-span-2 text-center">LFP Battery</div>
+                      <div className="col-span-3 text-center">AC Auxiliary charging</div>
+                    </div>
 
-                  {PORTFOLIO_MODELS.map((item) => {
-                    const isSelected = item.id === selectedModelId;
-                    return (
-                      <div
-                        key={item.id}
-                        className={`grid grid-cols-12 gap-2 items-center text-center p-3 rounded-xl border transition ${
-                          isSelected
-                            ? 'bg-indigo-950/20 border-indigo-500/60 shadow-[0_0_12px_rgba(99,102,241,0.15)]'
-                            : 'bg-slate-950/80 border-slate-900/40 hover:border-slate-800'
-                        }`}
-                      >
-                        <div className="col-span-5 text-left flex flex-col justify-center">
-                          <span className="font-extrabold text-[12px] text-white block">
-                            {item.name} {isSelected && <span className="text-[8.5px] font-extrabold px-1.5 py-0.5 rounded bg-indigo-500 text-slate-950 ml-1.5 uppercase tracking-wide">Selected</span>}
-                          </span>
-                          <span className="text-[9px] text-slate-455 truncate block font-light mt-0.5">{item.badge}</span>
-                        </div>
+                    {PORTFOLIO_MODELS.map((item) => {
+                      const isSelected = item.id === selectedModelId;
+                      return (
+                        <div
+                          key={item.id}
+                          className={`grid grid-cols-12 gap-2 items-center text-center p-3 rounded-xl border transition ${
+                            isSelected
+                              ? 'bg-indigo-950/20 border-indigo-500/60 shadow-[0_0_12px_rgba(99,102,241,0.15)]'
+                              : 'bg-slate-950/80 border-slate-900/40 hover:border-slate-800'
+                          }`}
+                        >
+                          <div className="col-span-5 text-left flex flex-col justify-center">
+                            <span className="font-extrabold text-[12px] text-white block">
+                              {item.name} {isSelected && <span className="text-[8.5px] font-extrabold px-1.5 py-0.5 rounded bg-indigo-500 text-slate-950 ml-1.5 uppercase tracking-wide">Selected</span>}
+                            </span>
+                            <span className="text-[9px] text-slate-455 truncate block font-light mt-0.5">{item.badge}</span>
+                          </div>
 
-                        {/* Solar Direct Support */}
-                        <div className="col-span-2 flex justify-center">
-                          <span className={`p-1 rounded-md flex items-center justify-center ${item.hasSolar ? 'bg-emerald-500/10 text-emerald-450 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'} w-6 h-6 text-xs font-black`}>
-                            {item.hasSolar ? '✓' : '✕'}
-                          </span>
-                        </div>
+                          {/* Solar Direct Support */}
+                          <div className="col-span-2 flex justify-center">
+                            <span className={`p-1 rounded-md flex items-center justify-center ${item.hasSolar ? 'bg-emerald-500/10 text-emerald-450 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'} w-6 h-6 text-xs font-black`}>
+                              {item.hasSolar ? '✓' : '✕'}
+                            </span>
+                          </div>
 
-                        {/* Battery buffer */}
-                        <div className="col-span-2 flex justify-center">
-                          <span className={`p-1 rounded-md flex items-center justify-center ${item.hasBattery ? 'bg-emerald-500/10 text-emerald-450 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'} w-6 h-6 text-xs font-black`}>
-                            {item.hasBattery ? '✓' : '✕'}
-                          </span>
-                        </div>
+                          {/* Battery buffer */}
+                          <div className="col-span-2 flex justify-center">
+                            <span className={`p-1 rounded-md flex items-center justify-center ${item.hasBattery ? 'bg-emerald-500/10 text-emerald-450 border border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20'} w-6 h-6 text-xs font-black`}>
+                              {item.hasBattery ? '✓' : '✕'}
+                            </span>
+                          </div>
 
-                        {/* AC charging */}
-                        <div className="col-span-3 flex justify-center text-[10px] uppercase font-bold text-slate-300">
-                          {item.hasAcCharging ? (
-                            <span className="text-emerald-450 border border-emerald-500/20 bg-emerald-500/10 rounded px-2 py-0.5 text-[8px]">Active grid charging</span>
-                          ) : (
-                            <span className="text-slate-500 border border-slate-850 bg-slate-900 rounded px-2 py-0.5 text-[8px]">Daylight Only PV</span>
-                          )}
+                          {/* AC charging */}
+                          <div className="col-span-3 flex justify-center text-[10px] uppercase font-bold text-slate-300">
+                            {item.hasAcCharging ? (
+                              <span className="text-emerald-450 border border-emerald-500/20 bg-emerald-500/10 rounded px-2 py-0.5 text-[8px]">Active grid charging</span>
+                            ) : (
+                              <span className="text-slate-500 border border-slate-850 bg-slate-900 rounded px-2 py-0.5 text-[8px]">Daylight Only PV</span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* Selected Model Focus card */}

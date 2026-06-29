@@ -80,6 +80,16 @@ export function SizingBOMGenerator({
   // Current active step of the wizard (1-indexed)
   const [activeStep, setActiveStep] = useState<number>(1);
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
   // Active sub-category filter for Step 10 (Sensors & Electronics)
   const [step10SubCat, setStep10SubCat] = useState<CategoryType>('Sensors');
 
@@ -89,6 +99,7 @@ export function SizingBOMGenerator({
   const [selectedVoltage, setSelectedVoltage] = useState<string>('ALL');
   const [selectedAvailability, setSelectedAvailability] = useState<string>('ALL');
   const [filterOnlyCompatible, setFilterOnlyCompatible] = useState<boolean>(true);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState<boolean>(false);
 
   // Active Selected Components (Category -> Component ID)
   const [selectedComponents, setSelectedComponents] = useState<Record<CategoryType, string>>({
@@ -748,7 +759,7 @@ export function SizingBOMGenerator({
     <div id="solar-electronics-bom-console" className="space-y-6">
       
       {/* 1. COMPACT FIXED COSTING BAR */}
-      <div className="bg-slate-900 text-white rounded-2xl p-4 md:p-6 shadow-xl border border-slate-800">
+      <div className="bg-slate-900 text-white rounded-2xl p-4 md:p-6 shadow-xl border border-slate-800 sticky top-[58px] sm:top-[68px] z-30 lg:relative lg:top-0">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-0.5 rounded-full uppercase font-mono font-bold tracking-wider">
@@ -1067,8 +1078,150 @@ export function SizingBOMGenerator({
                 </div>
               )}
 
-              {/* CATALOG FILTER PANEL */}
-              <div className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
+              {/* CATALOG FILTER PANEL (MOBILE TRIGGER & DESKTOP PANEL) */}
+              <div className="block sm:hidden">
+                <div className="flex items-center justify-between gap-3 bg-slate-50 border border-slate-200 p-4 rounded-2xl shadow-xs">
+                  <div className="flex items-center gap-2">
+                    <Sliders className="w-5 h-5 text-indigo-600" />
+                    <div>
+                      <span className="text-xs font-extrabold text-slate-900 block leading-none">Catalog Filters</span>
+                      <span className="text-[10px] text-slate-500 font-mono mt-0.5 block">
+                        Active: {((selectedBrand !== 'ALL' ? 1 : 0) + (selectedVoltage !== 'ALL' ? 1 : 0) + (selectedAvailability !== 'ALL' ? 1 : 0) + (searchQuery ? 1 : 0) + (filterOnlyCompatible ? 1 : 0))}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsMobileFiltersOpen(true)}
+                    className="px-4 py-2.5 bg-indigo-650 hover:bg-indigo-600 text-white font-mono text-[11px] font-black rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-md shadow-indigo-900/10"
+                  >
+                    <span>Adjust Filters</span>
+                  </button>
+                </div>
+
+                {/* Mobile Slide-Out Bottom Drawer */}
+                <AnimatePresence>
+                  {isMobileFiltersOpen && (
+                    <>
+                      {/* Backdrop */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.5 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setIsMobileFiltersOpen(false)}
+                        className="fixed inset-0 bg-black z-50"
+                      />
+                      {/* Drawer Content */}
+                      <motion.div
+                        initial={{ y: '100%' }}
+                        animate={{ y: 0 }}
+                        exit={{ y: '100%' }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+                        className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[32px] p-6 pb-8 z-50 border-t border-slate-200 shadow-2xl flex flex-col max-h-[85vh] overflow-y-auto"
+                      >
+                        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-5" />
+                        
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-3.5 mb-5">
+                          <div className="flex items-center gap-2">
+                            <Sliders className="w-5 h-5 text-indigo-600" />
+                            <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight">Filter Catalog</h4>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setSearchQuery('');
+                              setSelectedBrand('ALL');
+                              setSelectedVoltage('ALL');
+                              setSelectedAvailability('ALL');
+                              setFilterOnlyCompatible(true);
+                            }}
+                            className="text-xs font-bold text-rose-600 hover:text-rose-700 cursor-pointer"
+                          >
+                            Reset All
+                          </button>
+                        </div>
+
+                        <div className="space-y-4 text-xs font-mono">
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase font-black tracking-wider text-slate-500 block">Search Keywords</label>
+                            <div className="relative">
+                              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                              <input
+                                type="text"
+                                placeholder="Search name, brand, part..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 outline-none text-slate-850 placeholder-slate-400 focus:bg-white focus:border-indigo-500 text-xs font-bold min-h-[44px]"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase font-black tracking-wider text-slate-500 block">Brand Manufacturer</label>
+                            <select
+                              value={selectedBrand}
+                              onChange={(e) => setSelectedBrand(e.target.value)}
+                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none text-slate-700 font-bold cursor-pointer focus:bg-white focus:border-indigo-500 min-h-[44px]"
+                            >
+                              <option value="ALL">All Brands</option>
+                              {categoryBrandsList.map(b => (
+                                <option key={b} value={b}>{b}</option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase font-black tracking-wider text-slate-500 block">Nominal Voltage</label>
+                            <select
+                              value={selectedVoltage}
+                              onChange={(e) => setSelectedVoltage(e.target.value)}
+                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none text-slate-700 font-bold cursor-pointer focus:bg-white focus:border-indigo-500 min-h-[44px]"
+                            >
+                              <option value="ALL">All Voltages</option>
+                              <option value="12V">12V Nominal</option>
+                              <option value="24V">24V Nominal</option>
+                              <option value="48V">48V Nominal</option>
+                            </select>
+                          </div>
+
+                          <div className="space-y-1.5">
+                            <label className="text-[10px] uppercase font-black tracking-wider text-slate-500 block">Stock Availability</label>
+                            <select
+                              value={selectedAvailability}
+                              onChange={(e) => setSelectedAvailability(e.target.value)}
+                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 outline-none text-slate-700 font-bold cursor-pointer focus:bg-white focus:border-indigo-500 min-h-[44px]"
+                            >
+                              <option value="ALL">All Stocks</option>
+                              <option value="In Stock">In Stock Only</option>
+                              <option value="Low Stock">Low Stock Only</option>
+                            </select>
+                          </div>
+
+                          <div className="pt-2">
+                            <label className="flex items-center gap-3 text-xs text-slate-700 cursor-pointer bg-slate-50 border border-slate-200 p-3.5 rounded-xl font-bold">
+                              <input
+                                type="checkbox"
+                                checked={filterOnlyCompatible}
+                                onChange={(e) => setFilterOnlyCompatible(e.target.checked)}
+                                className="rounded border-slate-300 text-indigo-650 focus:ring-indigo-500 w-4 h-4 cursor-pointer"
+                              />
+                              <span>Only show compatible items</span>
+                            </label>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => setIsMobileFiltersOpen(false)}
+                          className="w-full mt-6 py-4 bg-slate-900 hover:bg-slate-950 text-white font-mono text-xs font-black rounded-2xl cursor-pointer shadow-lg min-h-[48px]"
+                        >
+                          Close & Apply Filters
+                        </button>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Desktop Inline Filters Panel */}
+              <div className="hidden sm:block bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-3">
                   <div className="flex items-center gap-2 text-xs font-mono text-slate-700">
                     <Sliders className="w-4 h-4 text-blue-500" />
@@ -1143,6 +1296,140 @@ export function SizingBOMGenerator({
                     const isSelected = selectedComponents[activeCategory] === item.id;
                     const { compatible, reason } = checkCompatibility(item);
 
+                    let bannerGradient = "from-slate-700 to-slate-950";
+                    let iconComp = <Layers className="w-12 h-12 text-slate-300" />;
+                    if (item.category === 'Solar Module') {
+                      iconComp = <Sun className="w-12 h-12 text-amber-400" />;
+                      bannerGradient = "from-amber-600 to-amber-950";
+                    } else if (item.category === 'Battery Pack') {
+                      iconComp = <Battery className="w-12 h-12 text-emerald-400" />;
+                      bannerGradient = "from-emerald-600 to-emerald-950";
+                    } else if (item.category === 'Solar Charge Controller') {
+                      iconComp = <Zap className="w-12 h-12 text-blue-400" />;
+                      bannerGradient = "from-blue-600 to-blue-950";
+                    } else if (item.category === 'Main Motor') {
+                      iconComp = <Activity className="w-12 h-12 text-sky-400" />;
+                      bannerGradient = "from-sky-600 to-sky-950";
+                    } else if (item.category === 'Controller PCB') {
+                      iconComp = <Cpu className="w-12 h-12 text-indigo-400" />;
+                      bannerGradient = "from-indigo-600 to-indigo-950";
+                    }
+
+                    if (isMobile) {
+                      return (
+                        <div
+                          key={item.id}
+                          className={`bg-white rounded-3xl border-2 transition-all p-6 flex flex-col gap-6 shadow-md ${
+                            isSelected
+                              ? 'border-indigo-600 ring-4 ring-indigo-550/10'
+                              : !compatible
+                              ? 'border-slate-150 opacity-70'
+                              : 'border-slate-200'
+                          }`}
+                        >
+                          {/* Large Image/Banner Section */}
+                          <div className={`w-full h-52 bg-gradient-to-br ${bannerGradient} rounded-2xl flex flex-col items-center justify-center relative overflow-hidden shadow-inner`}>
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.18),transparent)] animate-[pulse_5s_infinite]" />
+                            <div className="p-4 bg-white/10 rounded-full backdrop-blur-md border border-white/20">
+                              {iconComp}
+                            </div>
+                            <span className="text-[10px] uppercase font-mono font-black tracking-widest text-white/80 mt-4 bg-black/20 px-3 py-1 rounded-full border border-white/10">
+                              {item.category}
+                            </span>
+                          </div>
+
+                          {/* Brand, Name, and SKU */}
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-mono text-indigo-600 uppercase font-black tracking-widest">
+                                {item.brand}
+                              </span>
+                              <span
+                                className={`text-[10px] font-mono font-black px-3 py-1 rounded-full ${
+                                  item.availability === 'In Stock'
+                                    ? 'bg-emerald-50 border-2 border-emerald-250 text-emerald-800'
+                                    : 'bg-amber-50 border-2 border-amber-250 text-amber-800'
+                                }`}
+                              >
+                                {item.availability}
+                              </span>
+                            </div>
+                            
+                            <h5 className="font-black text-slate-950 text-xl leading-tight">
+                              {item.name}
+                            </h5>
+                            
+                            <span className="text-[11px] font-mono text-slate-500 block">
+                              SKU Code: <strong className="text-slate-800">{item.partNumber}</strong>
+                            </span>
+                          </div>
+
+                          {/* Short Description */}
+                          <p className="text-sm text-slate-600 font-medium leading-relaxed">
+                            {item.shortDesc}
+                          </p>
+
+                          {/* Large Specifications Rows */}
+                          <div className="space-y-2 bg-slate-50 p-4.5 rounded-2xl border border-slate-150/80 font-mono text-xs">
+                            <span className="text-[10px] uppercase font-black text-slate-450 block mb-2 tracking-wider">Specifications Checklist:</span>
+                            {Object.entries(item.specs).slice(0, 4).map(([key, value]) => (
+                              <div key={key} className="flex justify-between items-center py-1.5 border-b border-slate-200/50 last:border-0">
+                                <span className="text-slate-400 font-bold uppercase text-[10px]">{key}</span>
+                                <span className="text-slate-900 font-extrabold text-right truncate max-w-[180px]">{value}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Incompatibility Block */}
+                          {!compatible && (
+                            <div className="p-4 bg-rose-50 border-2 border-rose-250 rounded-2xl text-xs font-mono text-rose-800 leading-relaxed flex items-start gap-2.5">
+                              <AlertCircle className="w-5 h-5 text-rose-650 flex-shrink-0 mt-0.5" />
+                              <span><strong>Incompatibility Alert:</strong> {reason}</span>
+                            </div>
+                          )}
+
+                          {/* Pricing block */}
+                          <div className="flex justify-between items-center bg-slate-50 p-4.5 rounded-2xl border border-slate-150/80">
+                            <span className="text-xs font-mono font-extrabold text-slate-400 uppercase">Estimated Unit Cost:</span>
+                            <span className="text-2xl font-mono font-black text-slate-950">
+                              ₹{item.price.toLocaleString('en-IN')}
+                            </span>
+                          </div>
+
+                          {/* Large Action Buttons */}
+                          <div className="flex flex-col gap-3 pt-2">
+                            {isSelected ? (
+                              <div className="w-full bg-emerald-550 text-white font-mono text-sm py-4 rounded-2xl flex items-center justify-center gap-2 font-black shadow-lg shadow-emerald-500/10 min-h-[50px]">
+                                <Check className="w-5 h-5 stroke-[3]" />
+                                Part Selected
+                              </div>
+                            ) : (
+                              <button
+                                disabled={!compatible}
+                                onClick={() => handleSelectComponent(activeCategory, item.id)}
+                                className={`w-full font-mono text-sm py-4 rounded-2xl transition font-black flex items-center justify-center gap-2 cursor-pointer shadow-md min-h-[50px] ${
+                                  compatible 
+                                    ? 'bg-indigo-600 hover:bg-indigo-550 text-white shadow-indigo-905/10' 
+                                    : 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
+                                }`}
+                              >
+                                <Plus className="w-5 h-5 stroke-[3]" />
+                                Add Component to BOM
+                              </button>
+                            )}
+
+                            <button
+                              onClick={() => setExplorerDetailId(item.id)}
+                              className="w-full bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-250 py-3.5 rounded-2xl transition cursor-pointer flex items-center justify-center gap-2 text-xs font-bold font-mono min-h-[48px]"
+                            >
+                              <Eye className="w-4 h-4" />
+                              Inspect Part File (SKU)
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    }
+
                     return (
                       <div
                         key={item.id}
@@ -1155,6 +1442,13 @@ export function SizingBOMGenerator({
                         }`}
                       >
                         <div>
+                          {isMobile && (
+                            <div className={`w-full h-40 bg-gradient-to-br ${bannerGradient} rounded-xl flex flex-col items-center justify-center relative overflow-hidden shadow-sm border border-slate-100 mb-4`}>
+                              <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.15),transparent)] animate-[pulse_6s_infinite]" />
+                              {iconComp}
+                              <span className="text-[9px] uppercase font-mono font-bold tracking-widest text-white/60 mt-3">{item.category}</span>
+                            </div>
+                          )}
                           <div className="flex items-start justify-between gap-2 border-b border-slate-100 pb-2.5">
                             <div>
                               <span className="text-[8px] font-mono text-slate-400 uppercase tracking-widest block font-bold">

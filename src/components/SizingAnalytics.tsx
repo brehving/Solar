@@ -68,6 +68,16 @@ export function SizingAnalytics({
   setIsTimeSimActive,
 }: SizingAnalyticsProps) {
 
+  const [isMobile, setIsMobile] = React.useState<boolean>(false);
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Daily profile values as requested:
   // 6 AM: 10%, 8 AM: 30%, 10 AM: 70%, 12 PM: 100%, 2 PM: 90%, 4 PM: 60%, 6 PM: 10%
   const dailyProfile = useMemo(() => [
@@ -315,159 +325,307 @@ export function SizingAnalytics({
       </div>
 
       {/* METRIC DASHBOARD WIDGET CARDS ROW */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-[1600px]:grid-cols-8 gap-4" id="analytics-telemetry-grid">
-        
-        {/* CARD 1: SOLAR POWER METRICS */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-pv-power">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Available Solar Power</span>
-            <span className="p-1 rounded-lg bg-amber-50 text-amber-600">
-              <Sun className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-slate-900 font-mono">
-              {calculatedState.availablePower}W
+      {isMobile ? (
+        <div className="flex flex-col gap-6" id="analytics-telemetry-grid-mobile">
+          {/* MOBILE CARD 1: SOLAR POWER METRICS */}
+          <div className="bg-gradient-to-br from-amber-500/10 to-amber-650/5 border border-amber-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-pv-power-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-amber-500 text-white shadow-md shadow-amber-500/25">
+                <Sun className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Available Solar Power</span>
+                <div className="text-3xl font-black text-slate-900 font-mono mt-0.5">
+                  {calculatedState.availablePower}W
+                </div>
+              </div>
             </div>
-            <div className="text-[10px] text-slate-500 font-mono mt-1">
-              Rated: {panelWattage}W Panel @ {currentIrradiance}% sun
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Panel Capacity: <span className="font-extrabold text-slate-900 font-mono">{panelWattage}W</span> at <span className="font-extrabold text-slate-900 font-mono">{currentIrradiance}%</span> sun intensity.
+            </div>
+          </div>
+
+          {/* MOBILE CARD 2: COOLER LOAD */}
+          <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-650/5 border border-indigo-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-cooler-load-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-indigo-500 text-white shadow-md shadow-indigo-500/25">
+                <Cpu className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Cooler Load Demand</span>
+                <div className="text-3xl font-black text-slate-900 font-mono mt-0.5">
+                  {coolerWattage}W
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Target Device: <span className="font-extrabold text-indigo-700">{activeCooler.name}</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 3: POWER BALANCE */}
+          <div className={`bg-gradient-to-br ${powerBalance >= 0 ? 'from-emerald-500/10 to-emerald-650/5 border-emerald-500/30' : 'from-rose-500/10 to-rose-655/5 border-rose-500/30'} border rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs`} id="card-power-balance-mobile">
+            <div className="flex items-center gap-5">
+              <span className={`p-4 rounded-2xl ${powerBalance >= 0 ? 'bg-emerald-500 shadow-emerald-500/25' : 'bg-rose-500 shadow-rose-500/25'} text-white shadow-md`}>
+                <Zap className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Power Balance (Δ)</span>
+                <div className={`text-3xl font-black font-mono mt-0.5 ${powerBalance >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+                  {powerBalance >= 0 ? `+${powerBalance}W` : `${powerBalance}W`}
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Operational Status: <span className="font-extrabold text-slate-900">{balanceStateTheme.statusDesc}</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 4: FAN MOTOR SPEED STATE */}
+          <div className="bg-gradient-to-br from-sky-500/10 to-sky-650/5 border border-sky-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-fan-speed-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-sky-500 text-white shadow-md shadow-sky-500/25 animate-[spin_10s_linear_infinite]">
+                <Wind className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Cooling Fan Speed</span>
+                <div className="text-3xl font-black text-slate-900 font-mono mt-0.5">
+                  {calculatedState.fanSpeed}%
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Throttling Level: <span className="font-extrabold text-slate-900">{calculatedState.mode}</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 5: PUMP SPEED */}
+          <div className="bg-gradient-to-br from-blue-500/10 to-blue-650/5 border border-blue-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-pump-state-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-blue-500 text-white shadow-md shadow-blue-500/25">
+                <Percent className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Water Pump Speed</span>
+                <div className="text-3xl font-black text-slate-900 font-mono mt-0.5">
+                  {calculatedState.pumpSpeed}
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Supply Integration: <span className="font-extrabold text-slate-900 font-mono">Active direct flow rate</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 6: OPERATING MODE */}
+          <div className="bg-gradient-to-br from-purple-500/10 to-purple-650/5 border border-purple-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-operating-mode-text-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-purple-500 text-white shadow-md shadow-purple-500/25">
+                <Gauge className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Operational Mode</span>
+                <div className={`text-3xl font-black mt-0.5 ${calculatedState.mode === 'Shutdown' ? 'text-rose-600' : 'text-slate-900'}`}>
+                  {calculatedState.mode}
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Load Protection: <span className="font-extrabold text-slate-900 font-mono">{calculatedState.percentageOfLoad}% power match</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 7: MINIMUM IRRADIANCE REQUIRED */}
+          <div className="bg-gradient-to-br from-teal-500/10 to-teal-655/5 border border-teal-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-min-irr-needed-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-teal-500 text-white shadow-md shadow-teal-500/25">
+                <Clock className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Min Sun Required</span>
+                <div className="text-3xl font-black text-slate-900 font-mono mt-0.5">
+                  {minIrrForFullSpeed === 'unreachable' ? 'Unreachable' : `${minIrrForFullSpeed}%`}
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Necessary threshold for <span className="font-extrabold text-slate-900 font-mono">100% full-speed fan output</span>
+            </div>
+          </div>
+
+          {/* MOBILE CARD 8: RECOMMENDED SOLAR PANEL SIZE */}
+          <div className="bg-gradient-to-br from-indigo-500/10 to-purple-650/5 border border-purple-500/30 rounded-[28px] p-6.5 flex flex-col justify-between shadow-xs" id="card-recommended-panel-mobile">
+            <div className="flex items-center gap-5">
+              <span className="p-4 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md shadow-indigo-500/25">
+                <Award className="w-8 h-8 stroke-[2.5]" />
+              </span>
+              <div>
+                <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block">Best Match Panel</span>
+                <div className="text-3xl font-black text-indigo-700 font-mono mt-0.5">
+                  {recPanelSizePeak}W
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 pt-4.5 border-t border-slate-200/60 text-xs text-slate-600 font-medium">
+              Peak Recommendation with <span className="font-extrabold text-indigo-700 font-mono">+20% safety margin</span>
             </div>
           </div>
         </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 min-[1600px]:grid-cols-8 gap-5" id="analytics-telemetry-grid">
+          
+          {/* CARD 1: SOLAR POWER METRICS */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-pv-power">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Available Solar Power</span>
+              <span className="p-1.5 rounded-xl bg-amber-50 text-amber-600">
+                <Sun className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-slate-900 font-mono">
+                {calculatedState.availablePower}W
+              </div>
+              <div className="text-[10.5px] text-slate-500 font-mono mt-1">
+                Rated: {panelWattage}W Panel @ {currentIrradiance}% sun
+              </div>
+            </div>
+          </div>
 
-        {/* CARD 2: COOLER LOAD */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-cooler-load">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Cooler Load Demand</span>
-            <span className="p-1 rounded-lg bg-indigo-50 text-indigo-600">
-              <Cpu className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-slate-900 font-mono">
-              {coolerWattage}W
+          {/* CARD 2: COOLER LOAD */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-cooler-load">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Cooler Load Demand</span>
+              <span className="p-1.5 rounded-xl bg-indigo-50 text-indigo-600">
+                <Cpu className="w-5 h-5" />
+              </span>
             </div>
-            <div className="text-[10px] text-slate-500 mt-1 truncate">
-              {activeCooler.name}
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-slate-900 font-mono">
+                {coolerWattage}W
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1 truncate">
+                {activeCooler.name}
+              </div>
             </div>
           </div>
+
+          {/* CARD 3: POWER BALANCE */}
+          <div className={`bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0 ${balanceStateTheme.border}`} id="card-power-balance">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Power Balance (Δ)</span>
+              <span className={`p-1.5 rounded-xl ${powerBalance >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
+                <Zap className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className={`text-2xl sm:text-xl md:text-2xl font-black font-mono ${powerBalance >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
+                {powerBalance >= 0 ? `+${powerBalance}W` : `${powerBalance}W`}
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1 font-mono">
+                Status: {balanceStateTheme.statusDesc}
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 4: FAN MOTOR SPEED STATE */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-fan-speed">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Fan Speed</span>
+              <span className="p-1.5 rounded-xl bg-sky-50 text-sky-600 animate-[spin_6s_linear_infinite]">
+                <Wind className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-slate-900 font-mono">
+                {calculatedState.fanSpeed}%
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1">
+                Mode: {calculatedState.mode}
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 5: PUMP SPEED */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-pump-state">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Pump Speed</span>
+              <span className="p-1.5 rounded-xl bg-blue-50 text-blue-600">
+                <Percent className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-slate-900 font-mono truncate">
+                {calculatedState.pumpSpeed}
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1">
+                Submersible pump state
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 6: OPERATING MODE */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-operating-mode-text">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Operating Mode</span>
+              <span className="p-1.5 rounded-xl bg-amber-50 text-amber-600">
+                <Gauge className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className={`text-2xl sm:text-xl font-black tracking-tight ${calculatedState.mode === 'Shutdown' ? 'text-rose-600' : 'text-slate-900'}`}>
+                {calculatedState.mode}
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1 font-mono">
+                {calculatedState.percentageOfLoad}% power match
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 7: MINIMUM IRRADIANCE REQUIRED FOR FULL SPEED */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-min-irr-needed">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Min Irradiance Needed</span>
+              <span className="p-1.5 rounded-xl bg-indigo-50 text-indigo-600">
+                <Clock className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-slate-900 font-mono">
+                {minIrrForFullSpeed === 'unreachable' ? 'Unreachable' : `${minIrrForFullSpeed}%`}
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1">
+                Required for 100% Fan Speed
+              </div>
+            </div>
+          </div>
+
+          {/* CARD 8: RECOMMENDED SOLAR PANEL SIZE */}
+          <div className="bg-white border border-slate-200 rounded-3xl p-5.5 sm:p-4 flex flex-col justify-between hover:shadow-md transition-all duration-200 min-h-[135px] sm:min-h-0" id="card-recommended-panel">
+            <div className="flex items-center justify-between">
+              <span className="text-[10.5px] text-slate-550 font-bold uppercase tracking-wider">Recommended Panel Size</span>
+              <span className="p-1.5 rounded-xl bg-purple-50 text-purple-600">
+                <Award className="w-5 h-5" />
+              </span>
+            </div>
+            <div className="mt-3">
+              <div className="text-2xl sm:text-xl md:text-2xl font-black text-indigo-700 font-mono">
+                {recPanelSizePeak}W
+              </div>
+              <div className="text-[10.5px] text-slate-500 mt-1 font-mono">
+                Peak recommendation (+20%)
+              </div>
+            </div>
+          </div>
+
         </div>
-
-        {/* CARD 3: POWER BALANCE */}
-        <div className={`bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-all duration-200 ${balanceStateTheme.border}`} id="card-power-balance">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Power Balance (Δ)</span>
-            <span className={`p-1 rounded-lg ${powerBalance >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-600'}`}>
-              <Zap className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className={`text-xl md:text-2xl font-black font-mono ${powerBalance >= 0 ? 'text-emerald-700' : 'text-rose-700'}`}>
-              {powerBalance >= 0 ? `+${powerBalance}W` : `${powerBalance}W`}
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1 font-mono">
-              Status: {balanceStateTheme.statusDesc}
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 4: FAN MOTOR SPEED STATE */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-fan-speed">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Fan Speed</span>
-            <span className="p-1 rounded-lg bg-sky-50 text-sky-600 animate-[spin_6s_linear_infinite]">
-              <Wind className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-slate-900 font-mono">
-              {calculatedState.fanSpeed}%
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1">
-              Mode: {calculatedState.mode}
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 5: PUMP SPEED */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-pump-state">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Pump Speed</span>
-            <span className="p-1 rounded-lg bg-blue-50 text-blue-600">
-              <Percent className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-slate-900 font-mono truncate">
-              {calculatedState.pumpSpeed}
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1">
-              Submersible pump state
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 6: OPERATING MODE */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-operating-mode-text">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Operating Mode</span>
-            <span className="p-1 rounded-lg bg-amber-50 text-amber-600">
-              <Gauge className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className={`text-xl font-bold tracking-tight ${calculatedState.mode === 'Shutdown' ? 'text-rose-600' : 'text-slate-900'}`}>
-              {calculatedState.mode}
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1 font-mono">
-              {calculatedState.percentageOfLoad}% power match
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 7: MINIMUM IRRADIANCE REQUIRED FOR FULL SPEED */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-min-irr-needed">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Min Irradiance Needed</span>
-            <span className="p-1 rounded-lg bg-indigo-50 text-indigo-600">
-              <Clock className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-slate-900 font-mono">
-              {minIrrForFullSpeed === 'unreachable' ? 'Unreachable' : `${minIrrForFullSpeed}%`}
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1">
-              Required for 100% Fan Speed
-            </div>
-          </div>
-        </div>
-
-        {/* CARD 8: RECOMMENDED SOLAR PANEL SIZE */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col justify-between hover:shadow-xs transition-shadow duration-200" id="card-recommended-panel">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Recommended Panel Size</span>
-            <span className="p-1 rounded-lg bg-purple-50 text-purple-600">
-              <Award className="w-4 h-4" />
-            </span>
-          </div>
-          <div className="mt-2.5">
-            <div className="text-xl md:text-2xl font-black text-indigo-700 font-mono">
-              {recPanelSizePeak}W
-            </div>
-            <div className="text-[10px] text-slate-500 mt-1 font-mono">
-              Peak recommendation (+20%)
-            </div>
-          </div>
-        </div>
-
-      </div>
+      )}
 
       {/* DASHBOARD CHARTS WORKSPACE GRID (All five charts presented simultaneously) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-[1600px]:grid-cols-3 gap-8" id="dashboard-charts-grid">
+      <div className={`grid ${isMobile ? 'grid-cols-1 gap-12' : 'grid-cols-1 lg:grid-cols-2 min-[1600px]:grid-cols-3 gap-8'}`} id="dashboard-charts-grid">
         
         {/* CHART 1: Solar Panel Output vs Irradiance */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between h-[380px]" id="chart-output-vs-irradiance">
+        <div className={`bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between ${isMobile ? 'h-[440px]' : 'h-[380px]'}`} id="chart-output-vs-irradiance">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold font-mono text-indigo-600 uppercase tracking-widest">Chart 1: Multi-Line Plot</span>
@@ -478,16 +636,16 @@ export function SizingAnalytics({
           
           <div className="flex-1 w-full mt-3 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={outputVsIrradianceData} margin={{ top: 10, right: 10, left: -15, bottom: 5 }}>
+              <LineChart data={outputVsIrradianceData} margin={{ top: 10, right: 10, left: -15, bottom: isMobile ? 25 : 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="irradiance" fontSize={9} stroke="#94a3b8" tickLine={false} unit="%" />
-                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="W" />
+                <XAxis dataKey="irradiance" fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="%" interval={isMobile ? 1 : 0} />
+                <YAxis fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="W" />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '10px', padding: '8px' }}
                   labelStyle={{ fontWeight: 'bold', color: '#94a3b8' }}
                   formatter={(value: any, name: string) => [`${value} W`, name]}
                 />
-                <Legend verticalAlign="top" height={24} iconSize={8} wrapperStyle={{ fontSize: '8px', fontWeight: 'bold' }} />
+                <Legend verticalAlign={isMobile ? "bottom" : "top"} height={isMobile ? 36 : 24} iconSize={8} wrapperStyle={{ fontSize: isMobile ? '10px' : '8px', fontWeight: 'bold', paddingTop: isMobile ? '8px' : '0' }} />
                 <Line type="monotone" dataKey="50W Panel" stroke="#94a3b8" strokeDasharray="3 3" strokeWidth={1} dot={false} />
                 <Line type="monotone" dataKey="75W Panel" stroke="#f59e0b" strokeWidth={1.2} dot={false} />
                 <Line type="monotone" dataKey="100W Panel" stroke="#0ea5e9" strokeWidth={1.5} dot={false} />
@@ -521,7 +679,7 @@ export function SizingAnalytics({
         </div>
 
         {/* CHART 2: Panel Selection Comparison */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between h-[380px]" id="chart-panel-comparison">
+        <div className={`bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between ${isMobile ? 'h-[440px]' : 'h-[380px]'}`} id="chart-panel-comparison">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold font-mono text-indigo-600 uppercase tracking-widest">Chart 2: Bar Comparison</span>
@@ -532,10 +690,10 @@ export function SizingAnalytics({
           
           <div className="flex-1 w-full mt-3 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={panelLimitsData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <BarChart data={panelLimitsData} margin={{ top: 10, right: 10, left: -20, bottom: isMobile ? 25 : 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                <XAxis dataKey="panelSizeLabel" fontSize={9} stroke="#94a3b8" tickLine={false} />
-                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="%" domain={[0, 100]} />
+                <XAxis dataKey="panelSizeLabel" fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} interval={0} />
+                <YAxis fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="%" domain={[0, 100]} />
                 <Tooltip
                   contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '10px', padding: '8px' }}
                   formatter={(value: any, name: string, props: any) => {
@@ -570,7 +728,7 @@ export function SizingAnalytics({
         </div>
 
         {/* CHART 3: Daily Solar Simulation */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between h-[380px]" id="chart-daily-simulation">
+        <div className={`bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between ${isMobile ? 'h-[460px]' : 'h-[380px]'}`} id="chart-daily-simulation">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold font-mono text-indigo-600 uppercase tracking-widest">Chart 3: Temporal Available Power</span>
@@ -581,15 +739,15 @@ export function SizingAnalytics({
           
           <div className="flex-1 w-full mt-3 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dailyAvailabilityData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <LineChart data={dailyAvailabilityData} margin={{ top: 10, right: 10, left: -20, bottom: isMobile ? 25 : 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="time" fontSize={9} stroke="#94a3b8" tickLine={false} />
-                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="W" />
+                <XAxis dataKey="time" fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} />
+                <YAxis fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="W" />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '10px', padding: '8px' }}
                   labelStyle={{ fontWeight: 'bold', color: '#94a3b8' }}
                 />
-                <Legend verticalAlign="top" height={24} iconSize={8} wrapperStyle={{ fontSize: '8px', fontWeight: 'bold' }} />
+                <Legend verticalAlign={isMobile ? "bottom" : "top"} height={isMobile ? 36 : 24} iconSize={8} wrapperStyle={{ fontSize: isMobile ? '10px' : '8px', fontWeight: 'bold', paddingTop: isMobile ? '8px' : '0' }} />
                 <Line 
                   type="monotone" 
                   dataKey="Available PV Power (W)" 
@@ -656,7 +814,7 @@ export function SizingAnalytics({
         </div>
 
         {/* CHART 4: Fan Speed Response */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between h-[380px]" id="chart-fan-speed-response">
+        <div className={`bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs flex flex-col justify-between ${isMobile ? 'h-[460px]' : 'h-[380px]'}`} id="chart-fan-speed-response">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold font-mono text-indigo-600 uppercase tracking-widest">Chart 4: Controlled Output Speed</span>
@@ -667,10 +825,10 @@ export function SizingAnalytics({
           
           <div className="flex-1 w-full mt-3 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dailyFanSpeedData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <LineChart data={dailyFanSpeedData} margin={{ top: 10, right: 10, left: -20, bottom: isMobile ? 25 : 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="time" fontSize={9} stroke="#94a3b8" tickLine={false} />
-                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="%" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} />
+                <XAxis dataKey="time" fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} />
+                <YAxis fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="%" domain={[0, 100]} ticks={[0, 25, 50, 75, 100]} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '12px', color: '#fff', fontSize: '10px', padding: '8px' }}
                   labelStyle={{ fontWeight: 'bold', color: '#94a3b8' }}
@@ -734,7 +892,7 @@ export function SizingAnalytics({
         </div>
 
         {/* CHART 5: Power Balance Analysis (Full width bottom spectrum plot) */}
-        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 shadow-2xs flex flex-col justify-between h-[420px]" id="chart-power-balance-analysis">
+        <div className={`lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 shadow-2xs flex flex-col justify-between ${isMobile ? 'h-[460px]' : 'h-[420px]'}`} id="chart-power-balance-analysis">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold font-mono text-indigo-600 uppercase tracking-widest">Chart 5: Dynamic Equilibrium Spectrum (Watts Delta)</span>
@@ -745,7 +903,7 @@ export function SizingAnalytics({
           
           <div className="flex-1 w-full mt-3 min-h-0 relative">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={powerBalanceSpectrumData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <AreaChart data={powerBalanceSpectrumData} margin={{ top: 10, right: 10, left: -20, bottom: isMobile ? 25 : 5 }}>
                 <defs>
                   <linearGradient id="balanceSpectrumGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#10b981" stopOpacity={0.25} />
@@ -755,8 +913,8 @@ export function SizingAnalytics({
                 </defs>
                 
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="irradiance" fontSize={9} stroke="#94a3b8" tickLine={false} unit="%" />
-                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="W" />
+                <XAxis dataKey="irradiance" fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="%" interval={isMobile ? 1 : 0} />
+                <YAxis fontSize={isMobile ? 8 : 9} stroke="#94a3b8" tickLine={false} unit="W" />
                 
                 {/* Visual zones representing operational states on X axis */}
                 <ReferenceArea
@@ -858,78 +1016,78 @@ export function SizingAnalytics({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs" id="insights-analytics-details">
+        <div className={isMobile ? "flex flex-col gap-6" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs"} id="insights-analytics-details">
           
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors" id="insight-fullspeed-threshold">
-            <span className="text-[9px] text-amber-400 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors"} id="insight-fullspeed-threshold">
+            <span className={isMobile ? "text-[10px] text-amber-450 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-amber-400 font-extrabold uppercase tracking-widest block font-mono"}>
               01. Full-Speed Threshold
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               Irradiance Level: {minIrrForFullSpeed === 'unreachable' ? 'Not feasible with current panel size' : `${minIrrForFullSpeed}% sunshine`}
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               The currently connected {panelWattage}W solar panel requires a minimum sun intensity of {minIrrForFullSpeed === 'unreachable' ? 'unreachable levels' : `${minIrrForFullSpeed}%`} to generate the full {coolerWattage}W load cleanly. Below this brightness, speed is dynamically modulated.
             </p>
           </div>
 
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors" id="insight-sizing-grade">
-            <span className="text-[9px] text-emerald-400 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors"} id="insight-sizing-grade">
+            <span className={isMobile ? "text-[10px] text-emerald-450 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-emerald-400 font-extrabold uppercase tracking-widest block font-mono"}>
               02. Recommended Array Size
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               Midday Standard size: {recPanelSizePeak}W Panel
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               Based on standard safety factors, a recommended array capacity is {recPanelSizePeak}W. This includes a 20% engineering headroom sizing multiplier to overcome wiring resistance and thermal efficiency drops typical in real-world hot conditions.
             </p>
           </div>
 
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors" id="insight-day-mode">
-            <span className="text-[9px] text-sky-450 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors"} id="insight-day-mode">
+            <span className={isMobile ? "text-[10px] text-sky-450 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-sky-450 font-extrabold uppercase tracking-widest block font-mono"}>
               03. Daylight Performance
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               Active Hours: {expectedDaytimePerformance.fullHours} hrs Full, {expectedDaytimePerformance.modulatedHours} hrs Modulated
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               Over a standard daylight curve from 6:00 AM to 6:00 PM, the system operates on Full Speed for {expectedDaytimePerformance.fullHours} hours, in conserved mode for {expectedDaytimePerformance.modulatedHours} hours, and enters a protected safety shutdown for {expectedDaytimePerformance.shutdownHours} hours.
             </p>
           </div>
 
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors" id="insight-drive-feasibility">
-            <span className="text-[9px] text-indigo-400 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors"} id="insight-drive-feasibility">
+            <span className={isMobile ? "text-[10px] text-indigo-455 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-indigo-400 font-extrabold uppercase tracking-widest block font-mono"}>
               04. Feasibility Classification
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               Micro-Grid Sizing: {panelWattage < coolerWattage / mpptEfficiency ? 'Throttled / Under-powered' : panelWattage < (coolerWattage / mpptEfficiency) * 1.3 ? 'Sufficient / Well-Balanced' : 'Generous Safety Headroom'}
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               {panelWattage < coolerWattage / mpptEfficiency 
                 ? "The system is overall under-powered. The solar panel is too small to reach peak performance during optimal sun midday windows. An increase in panel size is highly recommended." 
                 : "Excellent match! The system is highly viable for a zero-battery configuration. Shading and overcast tolerances offer a sustainable, reliable operations matrix."}
             </p>
           </div>
 
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors" id="insight-surplus-analysis">
-            <span className="text-[9px] text-purple-400 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors"} id="insight-surplus-analysis">
+            <span className={isMobile ? "text-[10px] text-purple-450 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-purple-400 font-extrabold uppercase tracking-widest block font-mono"}>
               05. Dynamic Balance Analysis
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               {powerBalance >= 0 ? `Active Surplus: ${powerBalance} Watts` : `Active Deficit: ${Math.abs(powerBalance)} Watts`}
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               At {currentIrradiance}% sunshine, the solar panel array generates {calculatedState.availablePower}W of power. With {coolerWattage}W motor draw, this produces a {powerBalance >= 0 ? `surplus of +${powerBalance}W` : `deficit of ${powerBalance}W`}. Direct-drive modulation absorbs this cleanly.
             </p>
           </div>
 
-          <div className="space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors shadow-2xs" id="insight-engineering-conclusion">
-            <span className="text-[9px] text-amber-400 font-extrabold uppercase tracking-widest block font-mono">
+          <div className={isMobile ? "space-y-3 bg-slate-850 p-6 rounded-[24px] border border-slate-800 shadow-2xs" : "space-y-1 bg-slate-850 p-4 rounded-xl border border-slate-850 hover:border-slate-800 transition-colors shadow-2xs"} id="insight-engineering-conclusion">
+            <span className={isMobile ? "text-[10px] text-amber-455 font-bold uppercase tracking-widest block font-mono" : "text-[9px] text-amber-400 font-extrabold uppercase tracking-widest block font-mono"}>
               06. Direct-PV Sizing Score
             </span>
-            <p className="font-extrabold text-white text-xs mt-1 leading-normal">
+            <p className={isMobile ? "font-extrabold text-white text-base leading-normal" : "font-extrabold text-white text-xs mt-1 leading-normal"}>
               Efficiency Grade: {panelWattage >= recPanelSizePeak ? 'A+ (Optimal High Headroom)' : panelWattage >= coolerWattage / mpptEfficiency ? 'B (Balanced Peak Cover)' : 'C- (Suboptimal Ventilation)'}
             </p>
-            <p className="text-[11px] text-slate-400 leading-normal font-normal pt-1.5">
+            <p className={isMobile ? "text-xs text-slate-300 leading-relaxed font-normal pt-1" : "text-[11px] text-slate-400 leading-normal font-normal pt-1.5"}>
               Direct-DC bypasses standard 20-30% battery charger roundtrip heat loss. Your system currently utilizes optimal MPPT tracker metrics ensuring solar energy conversion at {Math.round(mpptEfficiency * 100)}% efficiency levels.
             </p>
           </div>

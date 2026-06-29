@@ -92,6 +92,16 @@ export function BatteryBufferSimulation({
 }: BatteryBufferSimulationProps) {
   // Input settings
   const [selectedCoolerId, setSelectedCoolerId] = useState<string>(initialSelectedCoolerId);
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
   const [panelRating, setPanelRating] = useState<number>(initialPanelWattage);
   const [solarPowerInput, setSolarPowerInput] = useState<number>(Math.round(initialPanelWattage * 0.85));
   const [selectedBatteryId, setSelectedBatteryId] = useState<string>('3s-2ah');
@@ -706,17 +716,12 @@ export function BatteryBufferSimulation({
         <div className="lg:col-span-4 space-y-6">
           
           {/* Sizing inputs panel */}
-          <section className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6.5 space-y-5 shadow-sm">
-            <h2 className="text-xs font-mono tracking-widest uppercase font-black text-indigo-400 border-b border-slate-800 pb-3">
-              01/ Configuration Terminal
-            </h2>
-            
-            <div className="space-y-4 text-xs font-mono">
-              
+          {isMobile ? (
+            <div className="space-y-6" id="sizing-inputs-panel-mobile">
               {/* PV Panel Rating */}
-              <div className="space-y-1.5 focus-within:text-slate-200">
-                <label className="text-[10px] uppercase font-bold text-slate-450 block">Solar PV System Rating:</label>
-                <div className="flex items-center gap-2">
+              <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-sm">
+                <label className="text-xs uppercase font-extrabold text-indigo-400 block tracking-wider">Solar PV System Rating:</label>
+                <div className="flex flex-col gap-4">
                   <input
                     type="range"
                     min="50"
@@ -728,55 +733,55 @@ export function BatteryBufferSimulation({
                       setPanelRating(v);
                       setSolarPowerInput(Math.round(v * 0.85));
                     }}
-                    className="w-full flex-1 accent-indigo-500 bg-slate-950 rounded"
+                    className="w-full accent-indigo-500 bg-slate-950 h-3 rounded-lg"
                     disabled={isReplaying}
                   />
-                  <span className="text-white px-2 py-0.5 border border-slate-800 bg-slate-950 font-bold w-[65px] text-right rounded">
-                    {panelRating}W
-                  </span>
+                  <div className="text-white text-center font-bold text-sm py-4 border border-slate-850 bg-slate-950 rounded-2xl w-full">
+                    {panelRating}W Max Capacity
+                  </div>
                 </div>
               </div>
 
               {/* Dynamic Instant solar adjuster */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] uppercase font-bold text-slate-450 block pb-0.5">PV Instant Output (Raw):</label>
-                <div className="flex items-center gap-2">
+              <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-sm">
+                <label className="text-xs uppercase font-extrabold text-indigo-400 block tracking-wider">PV Instant Output (Raw):</label>
+                <div className="flex flex-col gap-4">
                   <input
                     type="range"
                     min="0"
                     max={panelRating}
                     value={solarPowerInput}
                     onChange={(e) => setSolarPowerInput(parseInt(e.target.value))}
-                    className="w-full flex-1 accent-indigo-500 bg-slate-950 rounded"
+                    className="w-full accent-indigo-500 bg-slate-950 h-3 rounded-lg"
                     disabled={isReplaying}
                   />
-                  <span className="text-amber-400 font-black px-2 py-0.5 border border-slate-800 bg-slate-950 w-[65px] text-right rounded">
-                    {solarPowerInput}W
-                  </span>
+                  <div className="text-amber-400 text-center font-black text-sm py-4 border border-slate-850 bg-slate-950 rounded-2xl w-full">
+                    {solarPowerInput}W Live Generation
+                  </div>
                 </div>
               </div>
 
               {/* DC Cooler select */}
-              <div className="space-y-1.5Box">
-                <span className="text-[10px] uppercase font-bold text-slate-450 block mb-1">Fan Cooler Model:</span>
-                <div className="grid grid-cols-1 gap-2">
+              <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-sm">
+                <span className="text-xs uppercase font-extrabold text-indigo-400 block tracking-wider">Fan Cooler Model:</span>
+                <div className="flex flex-col gap-3">
                   {COOLERS_INFO.map((cooler) => (
                     <button
                       key={cooler.id}
                       onClick={() => setSelectedCoolerId(cooler.id)}
-                      className={`w-full p-3 rounded-2xl border text-left flex justify-between items-center transition cursor-pointer ${
+                      className={`w-full p-4 min-h-[58px] rounded-2xl border text-left flex justify-between items-center transition cursor-pointer ${
                         selectedCoolerId === cooler.id 
-                          ? 'bg-indigo-650/10 border-indigo-500/60 text-white' 
+                          ? 'bg-indigo-650/15 border-indigo-500 text-white shadow-lg shadow-indigo-500/5' 
                           : 'bg-slate-950/60 border-slate-850 text-slate-400 hover:border-slate-700'
                       }`}
                       disabled={isReplaying}
                     >
                       <div>
-                        <span className="text-[11.5px] font-black font-mono block">{cooler.name}</span>
-                        <span className="text-[9.5px] text-slate-500 font-mono block mt-0.5">CFM output multiplier</span>
+                        <span className="text-sm font-extrabold block">{cooler.name}</span>
+                        <span className="text-[10px] text-slate-500 block mt-1">CFM output multiplier</span>
                       </div>
-                      <span className="px-2.5 py-1 bg-slate-900 border border-slate-800 text-[10.5px] font-bold rounded-lg text-indigo-400 whitespace-nowrap">
-                        {cooler.wattage}W load
+                      <span className="px-3.5 py-2 bg-slate-900 border border-slate-800 text-xs font-bold rounded-xl text-indigo-400">
+                        {cooler.wattage}W Load
                       </span>
                     </button>
                   ))}
@@ -784,29 +789,135 @@ export function BatteryBufferSimulation({
               </div>
 
               {/* Lithium buffer options */}
-              <div className="space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-slate-450 block mb-1">Battery Cell Chemistry Buffer:</span>
-                <div className="grid grid-cols-2 gap-2 text-[10px]">
+              <div className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 space-y-4 shadow-sm">
+                <span className="text-xs uppercase font-extrabold text-indigo-400 block tracking-wider">Battery Cell Chemistry Buffer:</span>
+                <div className="flex flex-col gap-3">
                   {BATTERY_OPTIONS.map((bat) => (
                     <button
                       key={bat.id}
                       onClick={() => setSelectedBatteryId(bat.id)}
-                      className={`p-2.5 rounded-xl border text-left transition cursor-pointer flex flex-col gap-0.5 ${
+                      className={`p-4 min-h-[58px] rounded-2xl border text-left transition cursor-pointer flex justify-between items-center ${
                         selectedBatteryId === bat.id 
-                          ? 'bg-emerald-650/10 border-emerald-500/60 text-white' 
+                          ? 'bg-emerald-650/15 border-emerald-500 text-white shadow-lg shadow-emerald-500/5' 
                           : 'bg-slate-950/60 border-slate-850 text-slate-400 hover:border-slate-700'
                       }`}
                       disabled={isReplaying}
                     >
-                      <span className="font-extrabold block text-slate-200">{bat.name}</span>
-                      <span className="text-[8.5px] text-emerald-400 tracking-wider font-bold uppercase">{bat.energyWh} Wh pack</span>
+                      <div>
+                        <span className="font-extrabold block text-sm text-slate-100">{bat.name}</span>
+                        <span className="text-[10px] text-slate-500 block mt-1">Integrated buffer support</span>
+                      </div>
+                      <span className="px-3.5 py-2 bg-slate-900 border border-slate-800 text-xs font-bold rounded-xl text-emerald-400 uppercase tracking-wide">
+                        {bat.energyWh} Wh
+                      </span>
                     </button>
                   ))}
                 </div>
               </div>
-
             </div>
-          </section>
+          ) : (
+            <section className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6.5 space-y-5 shadow-sm">
+              <h2 className="text-xs font-mono tracking-widest uppercase font-black text-indigo-400 border-b border-slate-800 pb-3">
+                01/ Configuration Terminal
+              </h2>
+              
+              <div className="space-y-4 text-xs font-mono">
+                
+                {/* PV Panel Rating */}
+                <div className="space-y-1.5 focus-within:text-slate-200">
+                  <label className="text-[10px] uppercase font-bold text-slate-450 block">Solar PV System Rating:</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="range"
+                      min="50"
+                      max="200"
+                      step="10"
+                      value={panelRating}
+                      onChange={(e) => {
+                        const v = parseInt(e.target.value);
+                        setPanelRating(v);
+                        setSolarPowerInput(Math.round(v * 0.85));
+                      }}
+                      className="w-full flex-1 accent-indigo-500 bg-slate-950 rounded"
+                      disabled={isReplaying}
+                    />
+                    <span className="text-white px-2 py-0.5 border border-slate-800 bg-slate-950 font-bold w-[65px] text-right rounded">
+                      {panelRating}W
+                    </span>
+                  </div>
+                </div>
+
+                {/* Dynamic Instant solar adjuster */}
+                <div className="space-y-1.5">
+                  <label className="text-[10px] uppercase font-bold text-slate-450 block pb-0.5">PV Instant Output (Raw):</label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="range"
+                      min="0"
+                      max={panelRating}
+                      value={solarPowerInput}
+                      onChange={(e) => setSolarPowerInput(parseInt(e.target.value))}
+                      className="w-full flex-1 accent-indigo-500 bg-slate-950 rounded"
+                      disabled={isReplaying}
+                    />
+                    <span className="text-amber-400 font-black px-2 py-0.5 border border-slate-800 bg-slate-950 w-[65px] text-right rounded">
+                      {solarPowerInput}W
+                    </span>
+                  </div>
+                </div>
+
+                {/* DC Cooler select */}
+                <div className="space-y-1.5Box">
+                  <span className="text-[10px] uppercase font-bold text-slate-450 block mb-1">Fan Cooler Model:</span>
+                  <div className="grid grid-cols-1 gap-2">
+                    {COOLERS_INFO.map((cooler) => (
+                      <button
+                        key={cooler.id}
+                        onClick={() => setSelectedCoolerId(cooler.id)}
+                        className={`w-full p-3 rounded-2xl border text-left flex justify-between items-center transition cursor-pointer ${
+                          selectedCoolerId === cooler.id 
+                            ? 'bg-indigo-650/10 border-indigo-500/60 text-white' 
+                            : 'bg-slate-950/60 border-slate-850 text-slate-400 hover:border-slate-700'
+                        }`}
+                        disabled={isReplaying}
+                      >
+                        <div>
+                          <span className="text-[11.5px] font-black font-mono block">{cooler.name}</span>
+                          <span className="text-[9.5px] text-slate-500 font-mono block mt-0.5">CFM output multiplier</span>
+                        </div>
+                        <span className="px-2.5 py-1 bg-slate-900 border border-slate-800 text-[10.5px] font-bold rounded-lg text-indigo-400 whitespace-nowrap">
+                          {cooler.wattage}W load
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Lithium buffer options */}
+                <div className="space-y-1.5">
+                  <span className="text-[10px] uppercase font-bold text-slate-450 block mb-1">Battery Cell Chemistry Buffer:</span>
+                  <div className="grid grid-cols-2 gap-2 text-[10px]">
+                    {BATTERY_OPTIONS.map((bat) => (
+                      <button
+                        key={bat.id}
+                        onClick={() => setSelectedBatteryId(bat.id)}
+                        className={`p-2.5 rounded-xl border text-left transition cursor-pointer flex flex-col gap-0.5 ${
+                          selectedBatteryId === bat.id 
+                            ? 'bg-emerald-650/10 border-emerald-500/60 text-white' 
+                            : 'bg-slate-950/60 border-slate-850 text-slate-400 hover:border-slate-700'
+                        }`}
+                        disabled={isReplaying}
+                      >
+                        <span className="font-extrabold block text-slate-200">{bat.name}</span>
+                        <span className="text-[8.5px] text-emerald-400 tracking-wider font-bold uppercase">{bat.energyWh} Wh pack</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          )}
 
           {/* SOLAR DAY SCENARIO LIBRARY (Items 8 & 9) */}
           <section className="bg-slate-900/40 border border-slate-800 rounded-3xl p-6.5 space-y-4">
@@ -1465,9 +1576,9 @@ export function BatteryBufferSimulation({
             </div>
 
             {/* Sweep results analytics graphs representation */}
-            <div className="lg:col-span-8 p-4 bg-slate-950 border border-slate-900 rounded-3xl h-[280px]">
+            <div className={`lg:col-span-8 p-4 bg-slate-950 border border-slate-900 rounded-3xl ${isMobile ? 'h-[360px]' : 'h-[280px]'}`}>
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={run24HourData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+                <AreaChart data={run24HourData} margin={{ top: 10, right: 10, left: -20, bottom: isMobile ? 15 : 5 }}>
                   <defs>
                     <linearGradient id="solarYield24" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#eab308" stopOpacity={0.25} />

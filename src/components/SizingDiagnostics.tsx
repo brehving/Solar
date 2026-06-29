@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.5
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { 
   ShieldCheck, 
   Info, 
@@ -40,6 +40,16 @@ export function SizingDiagnostics({
   irradiance, 
   mpptEfficiency 
 }: SizingDiagnosticsProps) {
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
   const peakPower = panelWattage;
   const load = cooler.wattage;
   
@@ -161,6 +171,233 @@ export function SizingDiagnostics({
   }, [powerBalance]);
 
   const pointerColor = powerBalance >= 0 ? '#10b981' : powerBalance >= -15 ? '#eab308' : '#ef4444';
+
+  if (isMobile) {
+    return (
+      <div className="space-y-8 animate-[fadeIn_0.3s_ease-out]" id="diagnostics-card-mobile">
+        {/* Title & Description */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm space-y-2">
+          <span className="text-[10px] uppercase font-black text-emerald-600 tracking-wider flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+            Engineering Status
+          </span>
+          <h3 className="text-3xl font-black text-slate-950 uppercase leading-none">
+            Diagnostics
+          </h3>
+          <p className="text-sm text-slate-500 font-medium leading-relaxed">
+            Professional sizing metrics, feasibility thresholds, and comparative solar modeling optimized for mobile devices.
+          </p>
+        </div>
+
+        {/* PV Sizing Adequacy & Advice */}
+        <div className={`border p-6 rounded-3xl flex flex-col gap-4 transition-colors ${statusColor}`}>
+          <div className="flex items-center gap-3">
+            {sizingStatus === 'under' ? (
+              <AlertCircle className="w-8 h-8 text-amber-600 flex-shrink-0" />
+            ) : (
+              <ShieldCheck className="w-8 h-8 text-emerald-600 flex-shrink-0" />
+            )}
+            <span className="text-xs uppercase font-mono font-black tracking-widest text-indigo-700">
+              PV Micro-Grid Analysis
+            </span>
+          </div>
+          <div className="space-y-2">
+            <h4 className="font-extrabold text-slate-950 text-base">{statusText}</h4>
+            <p className="text-sm leading-relaxed text-slate-700 font-medium">{adviceText}</p>
+          </div>
+        </div>
+
+        {/* Recommended Sizing Specifications (Current vs Peak) */}
+        <div className="bg-white border border-slate-200/80 rounded-3xl p-6 shadow-sm space-y-6">
+          <div className="space-y-1">
+            <h4 className="text-lg font-black text-slate-950 uppercase tracking-tight flex items-center gap-2">
+              <Scaling className="w-5 h-5 text-indigo-500" />
+              Sizing Recommendations
+            </h4>
+            <p className="text-xs text-slate-500">Calculated panel requirements with 20% engineering buffer.</p>
+          </div>
+          
+          <div className="space-y-4">
+            {/* Peak Sizing Column */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-xs">
+              <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block border-b border-slate-200/60 pb-2">At Clear Day Peak (100% Sun)</span>
+              <div className="mt-3.5 space-y-3 font-mono text-xs">
+                <div className="flex justify-between items-center text-slate-700">
+                  <span className="font-sans font-semibold">Theoretical Min:</span>
+                  <span className="font-black text-slate-900 text-sm">{peakTheorMinPanel} W</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-dashed border-slate-200 pt-2.5 font-bold">
+                  <span className="text-indigo-650 font-sans font-black">Recommended (+20%):</span>
+                  <span className="text-indigo-700 text-base font-black">{peakRecPanel} W</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Current Sizing Column */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-xs">
+              <span className="text-xs text-slate-500 font-extrabold uppercase tracking-widest block border-b border-slate-200/60 pb-2">At Current Sun ({irradiance}% Sun)</span>
+              <div className="mt-3.5 space-y-3 font-mono text-xs">
+                <div className="flex justify-between items-center text-slate-700">
+                  <span className="font-sans font-semibold">Theoretical Min:</span>
+                  <span className="font-black text-slate-900 text-sm">{currentTheorMinPanel}</span>
+                </div>
+                <div className="flex justify-between items-center border-t border-dashed border-slate-200 pt-2.5 font-bold">
+                  <span className="text-indigo-650 font-sans font-black">Recommended (+20%):</span>
+                  <span className="text-indigo-700 text-base font-black">{currentRecPanel}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-slate-400 leading-relaxed font-mono">
+            * Formula accounts for ambient temp coefficient losses and wiring voltage drops.
+          </p>
+        </div>
+
+        {/* Feasibility Status Dashboard */}
+        <div className={`border rounded-3xl p-6 flex flex-col gap-4 ${feasibilityStatus.color}`} id="feasibility-status-dashboard-mobile">
+          <div className="space-y-2">
+            <span className="text-xs uppercase font-mono font-black tracking-widest text-slate-500 block">Operation Feasibility Status</span>
+            <h4 className="text-lg font-black text-slate-900">{feasibilityStatus.stage}</h4>
+            <p className="text-sm leading-relaxed text-slate-700 font-medium">
+              {feasibilityStatus.bullets}
+            </p>
+          </div>
+
+          <div className="pt-4 border-t border-slate-200/40 mt-1 flex items-center justify-between text-xs font-mono font-extrabold text-slate-800">
+            <span>Usable PV: {actualPowerProduced} W</span>
+            <span>Rotor Load: {load} W</span>
+          </div>
+        </div>
+
+        {/* Circular SVG Needle Power Gauge */}
+        <div className="bg-slate-950 border border-slate-900 rounded-3xl p-6 flex flex-col items-center justify-center text-white relative overflow-hidden" id="power-balance-gauge-box-mobile">
+          <span className="text-xs uppercase font-mono font-black text-slate-400 mb-4 z-10 tracking-widest">Power Balance Meter</span>
+          
+          <div className="relative w-44 h-28 flex items-center justify-center">
+            {/* SVG Arc Dial */}
+            <svg className="w-full h-full" viewBox="0 0 100 50">
+              {/* Deficit Area Arc (Red) */}
+              <path d="M 10 50 A 40 40 0 0 1 50 10" fill="none" stroke="#ef4444" strokeWidth="6" opacity="0.8" />
+              {/* Surplus Area Arc (Green) */}
+              <path d="M 50 10 A 40 40 0 0 1 90 50" fill="none" stroke="#10b981" strokeWidth="6" opacity="0.8" />
+              {/* 0 line */}
+              <line x1="50" y1="10" x2="50" y2="15" stroke="#ffffff" strokeWidth="1.5" />
+              
+              {/* Indicator needle */}
+              <line 
+                x1="50" 
+                y1="50" 
+                x2="50" 
+                y2="15" 
+                stroke={pointerColor} 
+                strokeWidth="2.5" 
+                strokeLinecap="round"
+                transform={`rotate(${gaugeNeedleRotation}, 50, 50)`}
+                style={{ transformOrigin: '50px 50px', transition: 'transform 0.8s' }}
+              />
+              <circle cx="50" cy="50" r="5" fill="#334155" stroke="#ffffff" strokeWidth="1.5" />
+            </svg>
+            
+            <span className="absolute bottom-0 left-0 text-[10px] font-mono text-slate-400 font-bold">-120W</span>
+            <span className="absolute bottom-0 right-0 text-[10px] font-mono text-slate-400 font-bold">+120W</span>
+            <span className="absolute top-1 text-xs font-mono text-slate-350 font-bold">0</span>
+          </div>
+
+          <div className="text-center mt-4 z-10">
+            <span className={`text-xl font-black font-mono block ${powerBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+              {powerBalance >= 0 ? `+${powerBalance} W Surplus` : `${powerBalance} W Deficit`}
+            </span>
+            <span className="text-xs text-slate-400 font-mono block mt-1.5">Live Generation vs. Load Delta</span>
+          </div>
+        </div>
+
+        {/* Engineering Sizing Insights List */}
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 text-white space-y-4" id="engineering-insights-panel-mobile">
+          <h4 className="text-base font-black uppercase tracking-widest text-amber-400 flex items-center gap-1.5 mb-1">
+            <FileCheck className="w-5 h-5 text-amber-505" />
+            Engineering Sizing Insights
+          </h4>
+          
+          <div className="space-y-4">
+            <div className="bg-slate-850 p-4.5 rounded-2xl border border-slate-800/80 space-y-1.5">
+              <span className="text-[9px] text-indigo-400 font-bold uppercase font-mono block">expected solar limits</span>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                Minimum solar intensity needed for the {cooler.name} is calculated to be <strong className="text-white font-mono">{calculateMinIrradianceForFullSpeed(panelWattage, load, mpptEfficiency) === 'unreachable' ? 'Unreachable' : `${calculateMinIrradianceForFullSpeed(panelWattage, load, mpptEfficiency)}% sun`}</strong> to run on Full Speed.
+              </p>
+            </div>
+
+            <div className="bg-slate-850 p-4.5 rounded-2xl border border-slate-800/80 space-y-1.5">
+              <span className="text-[9px] text-emerald-400 font-bold uppercase font-mono block">solar duty profile</span>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                The ventilation turbine operates for <strong className="text-white font-mono">{dailyProfileStats.totalActiveHours} out of 13 daylight hours</strong>. Specifically, operating on <strong>Full Speed for {dailyProfileStats.fullHours} hours</strong>, modulating in <strong>conservation states for {dailyProfileStats.modulatedHours} hours</strong>, and in <strong>safety shutdown for {dailyProfileStats.shutdownHours} hours</strong>.
+              </p>
+            </div>
+
+            <div className="bg-slate-850 p-4.5 rounded-2xl border border-slate-800/80 space-y-1.5">
+              <span className="text-[9px] text-amber-400 font-bold uppercase font-mono block">load feasibility</span>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                {powerBalance >= 0 ? `Direct power match: system is currently operating in equilibrium (at ${irradiance}% brightness), comfortably powering both the centrifugal turbine and submersible disperser.` : `The current irradiance output requires motor speed throttles to avoid stalling the water pump, running on a calculated fan reduction coefficient.`}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Comparative Matrix Study */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-4">
+          <h4 className="text-lg font-black text-slate-900 uppercase tracking-widest flex items-center gap-1.5 border-b border-slate-100 pb-3">
+            <Table className="w-5 h-5 text-emerald-500" />
+            Array Thresholds
+          </h4>
+          <p className="text-xs text-slate-505 leading-relaxed font-medium">
+            Operational sunrise threshold: shows the minimum sunshine brightness level needed for each standard panel size to sustain the {cooler.name} ({load}W) on peak Fan Speed.
+          </p>
+
+          <div className="space-y-4" id="comparative-matrix-mobile">
+            {comparisonResults.map(result => {
+              const isActive = result.size === panelWattage;
+              const isUnder = result.threshold === 'Insufficient Capacity';
+              return (
+                <div 
+                  key={result.size}
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isActive 
+                      ? 'bg-indigo-50/70 border-indigo-500 shadow-sm' 
+                      : 'bg-slate-50/50 border-slate-200'
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center ${isActive ? 'bg-indigo-600' : 'bg-slate-300'}`}>
+                        {isActive && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                      </div>
+                      <span className="text-sm font-extrabold text-slate-900">
+                        {result.size}W Solar Panel
+                      </span>
+                    </div>
+                    {isActive && (
+                      <span className="bg-indigo-600 text-white text-[9px] font-mono uppercase font-black tracking-widest px-2 py-1 rounded-md">
+                        Selected
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="mt-3.5 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
+                    <span className="text-slate-450 font-mono uppercase text-[9px] font-extrabold tracking-wider">
+                      Min Sun Irradiance Needed:
+                    </span>
+                    <span className={`font-mono font-black text-sm ${isUnder ? 'text-amber-600' : 'text-indigo-950'}`}>
+                      {result.threshold}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-md flex flex-col space-y-8" id="diagnostics-card">
@@ -342,37 +579,81 @@ export function SizingDiagnostics({
           Operational sunrise threshold: shows the minimum sunshine brightness level needed for each standard panel size to sustain the {cooler.name} ({load}W) on peak Fan Speed.
         </p>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-150">
-          <table className="w-full text-left text-xs sm:text-sm text-slate-700 border-collapse">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono text-[10px] uppercase font-bold tracking-widest">
-                <th className="py-3 px-4">Solar Panel (Watts)</th>
-                <th className="py-3 px-4 text-right">Min Sun Irradiance Needed</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {comparisonResults.map(result => {
-                const isActive = result.size === panelWattage;
-                const isUnder = result.threshold === 'Insufficient Capacity';
-                return (
-                  <tr 
-                    key={result.size}
-                    className={`transition-colors font-mono text-[12px] sm:text-[13px] ${isActive ? 'bg-indigo-50/70 font-bold text-indigo-950 border-l-2 border-indigo-600' : 'hover:bg-slate-50/50'}`}
-                  >
-                    <td className="py-3 px-4 flex items-center gap-2 font-sans text-sm font-semibold">
-                      <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-indigo-600' : 'bg-slate-300'}`} />
-                      {result.size} W Array
-                      {isActive && <span className="bg-indigo-150 text-indigo-805 text-[10px] px-2 py-0.5 font-mono rounded-full font-bold">Selected</span>}
-                    </td>
-                    <td className={`py-3 px-4 text-right font-bold ${isUnder ? 'text-amber-600' : 'text-slate-800'}`}>
+        {isMobile ? (
+          <div className="space-y-4" id="comparative-matrix-mobile">
+            {comparisonResults.map(result => {
+              const isActive = result.size === panelWattage;
+              const isUnder = result.threshold === 'Insufficient Capacity';
+              return (
+                <div 
+                  key={result.size}
+                  className={`p-4 rounded-2xl border transition-all ${
+                    isActive 
+                      ? 'bg-indigo-50/70 border-indigo-500 shadow-sm' 
+                      : 'bg-slate-50/50 border-slate-200'
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center ${isActive ? 'bg-indigo-600' : 'bg-slate-305'}`}>
+                        {isActive && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                      </div>
+                      <span className="text-sm font-extrabold text-slate-900">
+                        {result.size}W Solar Panel
+                      </span>
+                    </div>
+                    {isActive && (
+                      <span className="bg-indigo-600 text-white text-[9px] font-mono uppercase font-black tracking-widest px-2 py-1 rounded-md">
+                        Selected
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="mt-3.5 pt-3 border-t border-slate-205/60 flex justify-between items-center text-xs">
+                    <span className="text-slate-400 font-mono uppercase text-[9px] font-bold tracking-wider">
+                      Min Sun Irradiance Needed:
+                    </span>
+                    <span className={`font-mono font-black text-sm ${isUnder ? 'text-amber-600' : 'text-indigo-950'}`}>
                       {result.threshold}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="overflow-x-auto rounded-xl border border-slate-150">
+            <table className="w-full text-left text-xs sm:text-sm text-slate-700 border-collapse">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono text-[10px] uppercase font-bold tracking-widest">
+                  <th className="py-3 px-4">Solar Panel (Watts)</th>
+                  <th className="py-3 px-4 text-right">Min Sun Irradiance Needed</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {comparisonResults.map(result => {
+                  const isActive = result.size === panelWattage;
+                  const isUnder = result.threshold === 'Insufficient Capacity';
+                  return (
+                    <tr 
+                      key={result.size}
+                      className={`transition-colors font-mono text-[12px] sm:text-[13px] ${isActive ? 'bg-indigo-50/70 font-bold text-indigo-950 border-l-2 border-indigo-600' : 'hover:bg-slate-50/50'}`}
+                    >
+                      <td className="py-3 px-4 flex items-center gap-2 font-sans text-sm font-semibold">
+                        <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-indigo-600' : 'bg-slate-300'}`} />
+                        {result.size} W Array
+                        {isActive && <span className="bg-indigo-150 text-indigo-805 text-[10px] px-2 py-0.5 font-mono rounded-full font-bold">Selected</span>}
+                      </td>
+                      <td className={`py-3 px-4 text-right font-bold ${isUnder ? 'text-amber-600' : 'text-slate-800'}`}>
+                        {result.threshold}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
     </div>

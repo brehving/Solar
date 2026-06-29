@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   ResponsiveContainer,
   LineChart,
@@ -67,6 +67,17 @@ export function SizingCharts({
   setIrradiancePercent,
   setIsTimeSimActive,
 }: SizingChartsProps) {
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkSize();
+    window.addEventListener('resize', checkSize);
+    return () => window.removeEventListener('resize', checkSize);
+  }, []);
+
   // Navigation Tabs: 'design' (solar curves, crossover, panel size limits) or 'daily' (solar/fan timeline logs)
   const [activeTab, setActiveTab] = useState<'design' | 'daily'>('design');
   const [designSubTab, setDesignSubTab] = useState<'panel-output' | 'crossover' | 'limits'>('crossover');
@@ -147,6 +158,209 @@ export function SizingCharts({
       setIsTimeSimActive(true);
     }
   };
+
+  if (isMobile) {
+    return (
+      <div className="space-y-8" id="advanced-charts-card-mobile">
+        {/* Header */}
+        <div className="flex items-center gap-3.5 border-b border-slate-100 pb-4">
+          <Activity className="w-6 h-6 text-indigo-500 animate-[pulse_2s_infinite]" />
+          <div>
+            <h3 className="text-lg font-black text-slate-900 leading-tight">Solar Curves & Simulation Hub</h3>
+            <p className="text-xs text-slate-500 mt-0.5 font-medium">Advanced engineering curves & daylight simulation</p>
+          </div>
+        </div>
+
+        {/* Chart 1: Power Crossover Analysis */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">1. Power Crossover Analysis</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Usable DC Power vs Cooler Load Threshold</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            <span className="font-extrabold text-slate-950">Interpretation:</span> Blue line represents your <span className="font-bold text-indigo-600 font-mono">{panelWattage}W Panel</span>. Red dashed line is the fixed <span className="font-bold text-rose-600 font-mono">{coolerWattage}W load</span>.
+          </div>
+          <div className="h-[440px] w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={singlePanelData} margin={{ top: 15, right: 15, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="irradiance" unit="%" fontSize={9} stroke="#94a3b8" tickLine={false} label={{ value: 'Sun Irradiance (%)', position: 'bottom', offset: 10, fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                <YAxis unit="W" fontSize={9} stroke="#94a3b8" tickLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '10px' }} />
+                <ReferenceArea {...({ x1: 0, x2: regions.shutdownEnd, fill: "rgba(244, 63, 94, 0.05)" } as any)} />
+                <ReferenceArea {...({ x1: regions.shutdownEnd, x2: regions.reducedEnd, fill: "rgba(234, 179, 8, 0.05)" } as any)} />
+                <ReferenceArea {...({ x1: regions.reducedEnd, x2: 100, fill: "rgba(16, 185, 129, 0.05)" } as any)} />
+                <Line type="monotone" name="Usable Power" dataKey="Power Produced (W)" stroke="#4f46e5" strokeWidth={3} dot={false} />
+                <ReferenceLine y={coolerWattage} stroke="#ef4444" strokeDasharray="5 5" strokeWidth={2} label={{ value: 'Cooler Load', position: 'insideTopLeft', fill: '#ef4444', fontSize: 9, fontWeight: 'bold' }} />
+                <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '15px' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Chart 2: Multi-Panel Output Study */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">2. Multi-Panel Output Study</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Usable Wattage Across Standard Sizes</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            Compare options side-by-side to evaluate shading and cloudy day tolerance.
+          </div>
+          <div className="h-[440px] w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={comparisonData} margin={{ top: 15, right: 15, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="irradiance" unit="%" fontSize={9} stroke="#94a3b8" tickLine={false} label={{ value: 'Sun Irradiance (%)', position: 'bottom', offset: 10, fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                <YAxis unit="W" fontSize={9} stroke="#94a3b8" tickLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '10px' }} />
+                <Line type="monotone" dataKey="50W Panel" stroke="#94a3b8" strokeDasharray="4 4" strokeWidth={1.5} dot={false} />
+                <Line type="monotone" dataKey="75W Panel" stroke="#f59e0b" strokeWidth={1.8} dot={false} />
+                <Line type="monotone" dataKey="100W Panel" stroke="#0ea5e9" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="150W Panel" stroke="#a855f7" strokeWidth={2.2} dot={false} />
+                <Line type="monotone" dataKey="200W Panel" stroke="#10b981" strokeWidth={2.5} dot={false} />
+                <ReferenceLine y={coolerWattage} stroke="#ef4444" strokeDasharray="5 5" strokeWidth={2} />
+                <Legend verticalAlign="bottom" height={44} iconSize={10} wrapperStyle={{ fontSize: '9px', fontWeight: 'bold', paddingTop: '15px' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Chart 3: Minimum Irradiance per Size */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">3. Min Irradiance for Full Speed</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Irradiance (%) Required for Peak Fan RPM</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            Lower irradiance threshold means the cooler stays active longer throughout the day.
+          </div>
+          <div className="h-[440px] w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={sizingLimitsData} margin={{ top: 20, right: 15, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="panelSize" fontSize={9} stroke="#94a3b8" tickLine={false} label={{ value: 'Standard Solar Arrays', position: 'bottom', offset: 10, fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                <YAxis fontSize={9} stroke="#94a3b8" tickLine={false} unit="%" domain={[0, 100]} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '10px' }} />
+                <Bar name="Min Sun Needed (%)" dataKey="Min Irradiance for Full Speed (%)" radius={[6, 6, 0, 0]} maxBarSize={30}>
+                  {sizingLimitsData.map((entry, idx) => {
+                    const isActive = entry.sizeVal === panelWattage;
+                    return (
+                      <Cell key={idx} fill={isActive ? '#4f46e5' : entry.isFeasible ? '#10b981' : '#f43f5e'} />
+                    );
+                  })}
+                </Bar>
+                <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '15px' }} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Chart 4: Daylight Mode Timeline */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">4. Direct-PV Operational Timeline</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Hour-by-hour forecast (6:00 AM - 6:00 PM)</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            Tap any hour slot to synchronize conditions with the main calculator workspace.
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {dailySimulationData.map(pt => {
+              const isSelected = simulatedHour === pt.hour;
+              let modeStyle = '';
+              if (pt.mode === 'Full Speed') modeStyle = 'bg-emerald-50 text-emerald-800 border-emerald-200';
+              else if (pt.mode === 'Normal Mode') modeStyle = 'bg-sky-50 text-sky-800 border-sky-200';
+              else if (pt.mode === 'Eco Mode') modeStyle = 'bg-blue-50 text-blue-800 border-blue-200';
+              else if (pt.mode === 'Low Mode') modeStyle = 'bg-amber-50 text-amber-800 border-amber-200';
+              else modeStyle = 'bg-rose-50 text-rose-800 border-rose-100';
+
+              return (
+                <button
+                  key={pt.hour}
+                  onClick={() => syncToHour(pt.hour, pt.irradiance)}
+                  className={`p-4.5 rounded-2xl border text-left transition-all cursor-pointer ${modeStyle} ${
+                    isSelected ? 'ring-2 ring-indigo-500 font-bold shadow-md scale-[1.01]' : 'opacity-90'
+                  }`}
+                >
+                  <div className="flex items-center justify-between font-mono text-[9px] font-bold text-slate-500">
+                    <span>{pt.timeLabel}</span>
+                    <span>{pt.irradiance}% Sun</span>
+                  </div>
+                  <div className="font-extrabold text-sm mt-1.5 truncate">{pt.mode}</div>
+                  <div className="text-[9px] font-mono mt-1.5 flex justify-between items-center opacity-85">
+                    <span>{pt['Available PV Power (W)']}W</span>
+                    <span>Fan: {pt['Fan Speed (%)']}%</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Chart 5: Daily Available Power Profile */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">5. Daily Available Power Profile</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Chronological Solar Production vs Load</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            Daily curve showing direct-drive solar production versus steady cooler power demand.
+          </div>
+          <div className="h-[440px] w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={dailySimulationData} margin={{ top: 15, right: 15, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="timeLabel" fontSize={9} stroke="#94a3b8" tickLine={false} label={{ value: 'Daylight Hour Profile', position: 'bottom', offset: 10, fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                <YAxis unit="W" fontSize={9} stroke="#94a3b8" tickLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '10px' }} />
+                <Line type="monotone" name="Solar Power Available" dataKey="Available PV Power (W)" stroke="#f59e0b" strokeWidth={3} dot={false} />
+                <ReferenceLine y={coolerWattage} stroke="#ef4444" strokeDasharray="5 5" strokeWidth={2} label={{ value: 'Cooler Demand', position: 'insideTopLeft', fill: '#ef4444', fontSize: 9, fontWeight: 'bold' }} />
+                <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '15px' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Chart 6: Dynamic Fan Speed Adaptation */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 shadow-sm">
+          <div>
+            <span className="text-[10px] uppercase font-black text-indigo-650 tracking-wider block">6. Fan Speed Adaptation</span>
+            <h4 className="text-base font-black text-slate-900 mt-1">Throttling Response under Daylight Cycle</h4>
+          </div>
+          <div className="bg-slate-50 border border-slate-150 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed font-medium">
+            Micro-grid output throttling curve over standard daylight operational window.
+          </div>
+          <div className="h-[440px] w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={dailySimulationData} margin={{ top: 15, right: 15, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="timeLabel" fontSize={9} stroke="#94a3b8" tickLine={false} label={{ value: 'Daylight Hour Profile', position: 'bottom', offset: 10, fill: '#64748b', fontSize: 10, fontWeight: 'bold' }} />
+                <YAxis unit="%" fontSize={9} stroke="#94a3b8" tickLine={false} />
+                <Tooltip contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '10px' }} />
+                <Line type="step" name="Fan Speed (%)" dataKey="Fan Speed (%)" stroke="#0ea5e9" strokeWidth={3} dot={false} />
+                <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '15px' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Summary Footer */}
+        <div className="bg-slate-900 text-white rounded-3xl p-5.5 space-y-3 font-mono text-xs border border-slate-800 shadow-md">
+          <div className="text-[10px] uppercase font-black tracking-widest text-slate-400">Micro-Grid Status Summary</div>
+          <div className="flex justify-between items-center text-sm font-extrabold border-b border-slate-800 pb-2.5">
+            <span>Power Balance:</span>
+            <span className={balance >= 0 ? "text-emerald-400" : "text-rose-400"}>
+              {balance >= 0 ? `+${balance}W Surplus` : `${balance}W Deficit`}
+            </span>
+          </div>
+          <p className="text-[10.5px] text-slate-400 leading-relaxed font-medium">
+            Solar direct drive controllers operate at {Math.round(mpptEfficiency * 100)}% peak MPPT tracking optimization.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col h-full" id="advanced-charts-card">
